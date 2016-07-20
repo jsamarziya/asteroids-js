@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Asteroids</title>
+    <link rel="stylesheet" type="text/css" href="asteroids.css">
+</head>
+<body>
+<canvas id="gameCanvas" width="600" height="400">
+    HTML Canvas not supported in this browser. :(
+</canvas>
+<script src="asteroids.js"></script>
+<script>
+    (function () {
+        new Asteroids(window, document.getElementById("gameCanvas")).update();
+    })();
+</script>
+</body>
+</html>
