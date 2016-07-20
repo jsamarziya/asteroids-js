@@ -1,5 +1,7 @@
-frame rate indicator
-    in-screen or separate element?
+debugging
+    frame rate indicator
+        in-screen or separate element?
+    keypress state
 
 size canvas according to window size
 
@@ -10,4 +12,9 @@ canvas
 
 full screen?
     https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
+
 audio
+
+high score, initials
+    (local storage?)
+
