@@ -1,2 +1,13 @@
 frame rate indicator
     in-screen or separate element?
+
+size canvas according to window size
+
+canvas
+    align center
+    dark gray border
+    black page background
+
+full screen?
+    https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
+audio
