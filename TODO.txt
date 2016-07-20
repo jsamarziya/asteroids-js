@@ -1,0 +1,2 @@
+frame rate indicator
+    in-screen or separate element?
