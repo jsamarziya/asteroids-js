@@ -14,10 +14,12 @@ InputManager.prototype.clearKeysDown = function () {
 
 InputManager.prototype.keyDown = function (event) {
     this.keysDown[event.key] = true;
+    event.preventDefault();
 };
 
 InputManager.prototype.keyUp = function (event) {
     delete this.keysDown[event.key];
+    event.preventDefault();
 };
 
 InputManager.prototype.isKeyDown = function (key) {
