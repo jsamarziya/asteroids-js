@@ -5,13 +5,14 @@
     <link rel="stylesheet" type="text/css" href="asteroids.css">
 </head>
 <body>
-<canvas id="gameCanvas" width="600" height="400">
+<canvas id="gameCanvas" width="800" height="600">
     HTML Canvas not supported in this browser. :(
 </canvas>
 <script src="asteroids.js"></script>
+<script src="input.js"></script>
 <script>
     (function () {
-        new Asteroids(window, document.getElementById("gameCanvas")).update();
+        new Asteroids(window, document.getElementById("gameCanvas")).run();
     })();
 </script>
 </body>
