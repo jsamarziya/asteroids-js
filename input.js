@@ -14,12 +14,22 @@ InputManager.prototype.clearKeysDown = function () {
 
 InputManager.prototype.keyDown = function (event) {
     this.keysDown[event.key] = true;
-    event.preventDefault();
+    this.preventDefaultEventActionIfRequired(event);
 };
 
 InputManager.prototype.keyUp = function (event) {
     delete this.keysDown[event.key];
-    event.preventDefault();
+    this.preventDefaultEventActionIfRequired(event);
+};
+
+InputManager.prototype.preventDefaultEventActionIfRequired = function (event) {
+    if (this.shouldPreventDefaultEventAction(event)) {
+        event.preventDefault();
+    }
+};
+
+InputManager.prototype.shouldPreventDefaultEventAction = function (event) {
+    return event instanceof KeyboardEvent && event.key.startsWith("Arrow");
 };
 
 InputManager.prototype.isKeyDown = function (key) {
