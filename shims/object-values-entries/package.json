@@ -1,0 +1,36 @@
+{
+	"name": "ecma-proposal-object-values-entries",
+	"version": "0.0.0",
+	"description": "ECMAScript spec proposal for Object.{values,entries}",
+	"scripts": {
+		"build": "ecmarkup spec.emu --js=spec.js --css=spec.css | js-beautify -f - --type=html -t > index.html",
+		"prepublish": "npm run build && echo >&2 'no publishing' && exit 255"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ljharb/proposal-object-values-entries.git"
+	},
+	"keywords": [
+		"Object.values",
+		"Object.entries",
+		"values",
+		"entries",
+		"keys",
+		"Object.keys",
+		"ECMAScript",
+		"ESNext",
+		"spec"
+	],
+	"author": "Jordan Harband <ljharb@gmail.com>",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/ljharb/proposal-object-values-entries/issues"
+	},
+	"homepage": "https://github.com/ljharb/proposal-object-values-entries#readme",
+	"dependencies": {},
+	"devDependencies": {
+		"ecmarkup": "^3.0.1",
+		"js-beautify": "^1.6.2",
+		"tape": "^4.4.0"
+	}
+}
