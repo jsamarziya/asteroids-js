@@ -12,7 +12,8 @@
 <script src="input.js"></script>
 <script>
     (function () {
-        new Asteroids(window, document.getElementById("gameCanvas")).run();
+        window.asteroids = new Asteroids(document.getElementById("gameCanvas"));
+        window.asteroids.run();
     })();
 </script>
 </body>
