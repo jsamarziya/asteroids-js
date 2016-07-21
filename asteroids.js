@@ -29,7 +29,6 @@ Asteroids.prototype.update = function (timestamp) {
 Asteroids.prototype.tick = function (dt) {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.fillText("dt: " + dt, 10, 100);
-    this.ctx.fillText("keysDown: " + this.inputManager.getKeysDown(), 10, 200);
 };
 
 Asteroids.prototype.requestFullScreen = function () {

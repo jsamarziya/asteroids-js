@@ -20,22 +20,22 @@ InputManager.prototype.createRequestFullScreenModeKey = function () {
 };
 
 InputManager.prototype.keyDown = function (event) {
-    Object.keys(this.keyMap).forEach(key => {
-        this.keyMap[key].matches(event) && this.keyMap[key].fireKeyDown();
+    Object.values(this.keyMap).forEach(key => {
+        key.matches(event) && key.fireKeyDown();
     });
     this.preventDefaultEventActionIfRequired(event);
 };
 
 InputManager.prototype.keyUp = function (event) {
-    Object.keys(this.keyMap).forEach(key => {
-        this.keyMap[key].matches(event) && this.keyMap[key].fireKeyUp();
+    Object.values(this.keyMap).forEach(key => {
+        key.matches(event) && key.fireKeyUp();
     });
     this.preventDefaultEventActionIfRequired(event);
 };
 
 InputManager.prototype.clearKeysDown = function () {
-    Object.keys(this.keyMap).forEach(key => {
-        this.keyMap[key].fireKeyUp();
+    Object.values(this.keyMap).forEach(key => {
+        key.fireKeyUp();
     });
 };
 
@@ -47,12 +47,6 @@ InputManager.prototype.preventDefaultEventActionIfRequired = function (event) {
 
 InputManager.prototype.shouldPreventDefaultEventAction = function (event) {
     return event.key.startsWith("Arrow");
-};
-
-InputManager.prototype.getKeysDown = function () {
-    // return Object.keys(this.keysDown).reduce((p, c) => {
-    //     return p + c;
-    // }, "");
 };
 
 function Key(key, alt, ctrl, meta, shift) {
