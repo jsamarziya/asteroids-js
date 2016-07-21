@@ -19,7 +19,7 @@ Ship.prototype.setTurnRight = function (turn) {
 };
 
 Ship.prototype.getRotationDelta = function () {
-    return (this.turnRight | 0 - this.turnLeft | 0) * SHIP_ROTATION_INCREMENT;
+    return ((this.turnRight | 0 ) - (this.turnLeft | 0)) * SHIP_ROTATION_INCREMENT;
 };
 
 Ship.prototype.update = function (dt) {
