@@ -7,8 +7,32 @@ function InputManager() {
 
 InputManager.prototype.createKeyMap = function () {
     return {
-        fullScreen: this.createRequestFullScreenModeKey()
+        fullScreen: this.createRequestFullScreenModeKey(),
+        turnShipLeft: this.createTurnShipLeftKey(),
+        turnShipRight: this.createTurnShipRightKey()
     };
+};
+
+InputManager.prototype.createTurnShipLeftKey = function () {
+    const key = new Key("ArrowLeft");
+    key.addKeyDownListener(function () {
+        asteroids.ship.setTurnLeft(true);
+    });
+    key.addKeyUpListener(function () {
+        asteroids.ship.setTurnLeft(false);
+    });
+    return key;
+};
+
+InputManager.prototype.createTurnShipRightKey = function () {
+    const key = new Key("ArrowRight");
+    key.addKeyDownListener(function () {
+        asteroids.ship.setTurnRight(true);
+    });
+    key.addKeyUpListener(function () {
+        asteroids.ship.setTurnRight(false);
+    });
+    return key;
 };
 
 InputManager.prototype.createRequestFullScreenModeKey = function () {
