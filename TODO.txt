@@ -21,5 +21,3 @@ restore canvas size when exiting full screen
 add key event listeners in Asteroids or in InputManager?
 
 update FPS regardless of dt (right now it only draws if dt < 160)
-
-pause ("p" key)

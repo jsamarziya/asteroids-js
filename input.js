@@ -8,9 +8,26 @@ function InputManager() {
 InputManager.prototype.createKeyMap = function () {
     return {
         fullScreen: this.createRequestFullScreenModeKey(),
+        pause: this.createPauseKey(),
         turnShipLeft: this.createTurnShipLeftKey(),
-        turnShipRight: this.createTurnShipRightKey()
+        turnShipRight: this.createTurnShipRightKey(),
     };
+};
+
+InputManager.prototype.createRequestFullScreenModeKey = function () {
+    const key = new Key("f");
+    key.addKeyDownListener(function () {
+        asteroids.requestFullScreenMode();
+    });
+    return key;
+};
+
+InputManager.prototype.createPauseKey = function () {
+    const key = new Key("p");
+    key.addKeyDownListener(function () {
+        asteroids.togglePaused();
+    });
+    return key;
 };
 
 InputManager.prototype.createTurnShipLeftKey = function () {
@@ -31,14 +48,6 @@ InputManager.prototype.createTurnShipRightKey = function () {
     });
     key.addKeyUpListener(function () {
         asteroids.ship.setTurnRight(false);
-    });
-    return key;
-};
-
-InputManager.prototype.createRequestFullScreenModeKey = function () {
-    const key = new Key("f");
-    key.addKeyDownListener(function () {
-        asteroids.requestFullScreen();
     });
     return key;
 };
