@@ -10,11 +10,11 @@ canvas
     dark gray border
     black page background
 
-full screen?
-    https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
-
 audio
 
 high score, initials
     (local storage?)
+
+maximize canvas when switching to full screen
+restore canvas size when exiting full screen
 
