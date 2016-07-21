@@ -1,6 +1,4 @@
 debugging
-    frame rate indicator
-        in-screen or separate element?
     keypress state
 
 size canvas according to window size
@@ -19,5 +17,3 @@ maximize canvas when switching to full screen
 restore canvas size when exiting full screen
 
 add key event listeners in Asteroids or in InputManager?
-
-update FPS regardless of dt (right now it only draws if dt < 160)

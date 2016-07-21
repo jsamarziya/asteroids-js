@@ -1,3 +1,20 @@
-#gameCanvas {
+#canvasdiv {
+    position: relative;
+    width: 800px;
+    height: 600px;
     background: #000000;
+}
+
+canvas {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+#gameCanvas {
+    z-index: 1;
+}
+
+#debugCanvas {
+    z-index: 2;
 }

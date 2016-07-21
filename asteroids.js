@@ -1,8 +1,11 @@
 const MAX_DELTA_TIME = 160;
 
-function Asteroids(canvas) {
-    this.canvas = canvas;
-    this.ctx = canvas.getContext("2d");
+function Asteroids(container, gameCanvas, debugCanvas) {
+    this.container = container;
+    this.gameCanvas = gameCanvas;
+    this.debugCanvas = debugCanvas;
+    this.gameContext = gameCanvas.getContext("2d");
+    this.debugContext = debugCanvas.getContext("2d");
     this.lastUpdate = 0;
     this.scale = 1;
     this.paused = false;
@@ -12,8 +15,8 @@ function Asteroids(canvas) {
 }
 
 Asteroids.prototype.init = function () {
-    this.ctx.strokeStyle = "white";
-    this.ctx.fillStyle = "white";
+    this.gameContext.strokeStyle = "white";
+    this.debugContext.fillStyle = "white";
 };
 
 Asteroids.prototype.run = function () {
@@ -26,29 +29,30 @@ Asteroids.prototype.update = function (timestamp) {
     this.lastUpdate = timestamp;
     if (!this.paused && dt <= MAX_DELTA_TIME) {
         this.updateState(dt);
-        this.draw();
+        this.drawGameLayer();
     }
     this.fps = 1000 / dt;
-    this.drawFPS();
+    this.drawDebugLayer();
 };
 
 Asteroids.prototype.updateState = function (dt) {
     this.ship.update(dt);
 };
 
-Asteroids.prototype.draw = function () {
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.ship.draw(this.ctx, this.scale);
+Asteroids.prototype.drawGameLayer = function () {
+    this.gameContext.clearRect(0, 0, this.gameCanvas.width, this.gameCanvas.height);
+    this.ship.draw(this.gameContext, this.scale);
 };
 
-Asteroids.prototype.drawFPS = function () {
-    this.ctx.fillText("FPS: " + this.fps, 10, this.canvas.height - 10);
+Asteroids.prototype.drawDebugLayer = function () {
+    this.debugContext.clearRect(0, 0, this.debugCanvas.width, this.debugCanvas.height);
+    this.debugContext.fillText("FPS: " + this.fps, 10, this.debugCanvas.height - 10);
 };
 
 Asteroids.prototype.requestFullScreenMode = function () {
-    ( this.canvas.mozRequestFullScreen && this.canvas.mozRequestFullScreen() ) ||
-    ( this.canvas.webkitRequestFullScreen && this.canvas.webkitRequestFullScreen() ) ||
-    ( this.canvas.requestFullScreen && this.canvas.requestFullScreen());
+    ( this.container.mozRequestFullScreen && this.container.mozRequestFullScreen() ) ||
+    ( this.container.webkitRequestFullScreen && this.container.webkitRequestFullScreen() ) ||
+    ( this.container.requestFullScreen && this.container.requestFullScreen());
 };
 
 Asteroids.prototype.togglePaused = function () {
