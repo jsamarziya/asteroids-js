@@ -1,6 +1,6 @@
 # asteroids-js
 
-[Play it now](http://jsamarziya.github.io/asteroids-js/asteroids.html)
+[Play it now](http://jsamarziya.github.io/asteroids-js/)
 
 # References
 
