@@ -15,6 +15,8 @@ function Asteroids(container, gameCanvas, debugCanvas) {
 }
 
 Asteroids.prototype.init = function () {
+    this.ship.x = this.gameCanvas.width / 2;
+    this.ship.y = this.gameCanvas.height / 2;
     this.gameContext.strokeStyle = "white";
     this.debugContext.fillStyle = "white";
 };

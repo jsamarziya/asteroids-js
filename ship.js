@@ -5,8 +5,8 @@ const SHIP_MIN_VELOCITY = 1 / 200;
 const SHIP_DEACCELERATION_FACTOR = 1 - 1 / 400;
 
 function Ship() {
-    this.x = 200;
-    this.y = 200;
+    this.x = 0;
+    this.y = 0;
     this.dx = 0;
     this.dy = 0;
     this.rotation = 0;
