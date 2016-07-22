@@ -9,6 +9,7 @@ InputManager.prototype.createKeyMap = function () {
     return {
         fullScreen: this.createRequestFullScreenModeKey(),
         pause: this.createPauseKey(),
+        thrust: this.createThrustKey(),
         turnShipLeft: this.createTurnShipLeftKey(),
         turnShipRight: this.createTurnShipRightKey(),
     };
@@ -26,6 +27,17 @@ InputManager.prototype.createPauseKey = function () {
     const key = new Key("p");
     key.addKeyDownListener(function () {
         asteroids.togglePaused();
+    });
+    return key;
+};
+
+InputManager.prototype.createThrustKey = function () {
+    const key = new Key("ArrowUp");
+    key.addKeyDownListener(function () {
+        asteroids.ship.setThrust(true);
+    });
+    key.addKeyUpListener(function () {
+        asteroids.ship.setThrust(false);
     });
     return key;
 };

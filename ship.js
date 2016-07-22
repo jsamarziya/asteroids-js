@@ -1,4 +1,7 @@
-const SHIP_ROTATION_INCREMENT = Math.PI / 180 / 8;
+const SHIP_ROTATION_INCREMENT = Math.PI / 180 / 7;
+const SHIP_VELOCITY_FACTOR = 1 / 1000;
+const SHIP_MIN_VELOCITY = 1 / 200;
+const SHIP_DEACCELERATION_FACTOR = 1 - 1 / 400;
 
 function Ship() {
     this.x = 200;
@@ -8,6 +11,7 @@ function Ship() {
     this.rotation = 0;
     this.turnLeft = false;
     this.turnRight = false;
+    this.thrust = false;
 }
 
 Ship.prototype.setTurnLeft = function (turn) {
@@ -18,22 +22,41 @@ Ship.prototype.setTurnRight = function (turn) {
     this.turnRight = turn;
 };
 
+Ship.prototype.setThrust = function (thrust) {
+    this.thrust = thrust;
+};
+
 Ship.prototype.getRotationDelta = function () {
     return ((this.turnRight | 0 ) - (this.turnLeft | 0)) * SHIP_ROTATION_INCREMENT;
 };
 
 Ship.prototype.update = function (dt) {
     this.rotation += this.getRotationDelta() * dt;
+    if (this.thrust) {
+        this.dx += Math.sin(this.rotation);
+        this.dy -= Math.cos(this.rotation);
+    } else {
+        this.dx *= SHIP_DEACCELERATION_FACTOR;
+        this.dy *= SHIP_DEACCELERATION_FACTOR;
+        if (Math.abs(this.dx) < SHIP_MIN_VELOCITY) {
+            this.dx = 0;
+        }
+        if (Math.abs(this.dy) < SHIP_MIN_VELOCITY) {
+            this.dy = 0;
+        }
+    }
+    this.x += this.dx * SHIP_VELOCITY_FACTOR * dt;
+    this.y += this.dy * SHIP_VELOCITY_FACTOR * dt;
 };
 
 Ship.prototype.draw = function (ctx, scale) {
     ctx.save();
-    ctx.translate(this.x * scale, this.y * scale);
+    ctx.translate(Math.floor(this.x * scale), Math.floor(this.y * scale));
     ctx.rotate(this.rotation);
     ctx.beginPath();
-    ctx.moveTo(-20 * scale, 20 * scale);
-    ctx.lineTo(scale, -40 * scale);
-    ctx.lineTo(20 * scale, 20 * scale);
+    ctx.moveTo(Math.floor(-20 * scale), Math.floor(20 * scale));
+    ctx.lineTo(Math.floor(scale), Math.floor(-40 * scale));
+    ctx.lineTo(Math.floor(20 * scale), Math.floor(20 * scale));
     ctx.closePath();
     ctx.stroke();
     ctx.restore();

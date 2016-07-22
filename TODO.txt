@@ -17,3 +17,7 @@ maximize canvas when switching to full screen
 restore canvas size when exiting full screen
 
 add key event listeners in Asteroids or in InputManager?
+
+make ship shape more interesting
+add thrust graphics
+thrust sound
