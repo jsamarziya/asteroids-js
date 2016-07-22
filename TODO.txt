@@ -16,8 +16,6 @@ high score, initials
 maximize canvas when switching to full screen
 restore canvas size when exiting full screen
 
-add key event listeners in Asteroids or in InputManager?
-
 thrust sound
 
 turn debug info on/off with key ("d" or "?" or "v")
@@ -25,3 +23,5 @@ turn debug info on/off with key ("d" or "?" or "v")
 wraparound
 
 need a friction function (ship velocity damping)
+
+modules?

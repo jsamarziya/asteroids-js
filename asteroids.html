@@ -13,16 +13,10 @@
 </div>
 <script src="shims/object-values-entries/polyfill.js"></script>
 <script src="asteroids.js"></script>
-<script src="input.js"></script>
+<script src="inputManager.js"></script>
+<script src="key.js"></script>
+<script src="keyMap.js"></script>
 <script src="ship.js"></script>
-<script>
-    (function () {
-        window.asteroids = new Asteroids(
-                document.getElementById("canvasdiv"),
-                document.getElementById("gameCanvas"),
-                document.getElementById("debugCanvas"));
-        window.asteroids.run();
-    })();
-</script>
+<script src="main.js"></script>
 </body>
 </html>
