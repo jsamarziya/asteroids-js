@@ -9,16 +9,22 @@ function Asteroids(container, gameCanvas, debugCanvas) {
     this.lastUpdate = 0;
     this.scale = 1;
     this.paused = false;
+    this.showDebug = false;
     this.inputManager = new InputManager();
-    this.ship = new Ship();
+    this.ship = this.createShip();
     this.init();
 }
 
 Asteroids.prototype.init = function () {
-    this.ship.x = this.gameCanvas.width / 2;
-    this.ship.y = this.gameCanvas.height / 2;
     this.gameContext.strokeStyle = "white";
-    this.debugContext.fillStyle = "white";
+    this.debugContext.fillStyle = "#A0A0A0";
+};
+
+Asteroids.prototype.createShip = function () {
+    const ship = new Ship();
+    ship.x = this.gameCanvas.width / 2;
+    ship.y = this.gameCanvas.height / 2;
+    return ship;
 };
 
 Asteroids.prototype.run = function () {
@@ -34,7 +40,9 @@ Asteroids.prototype.update = function (timestamp) {
         this.drawGameLayer();
     }
     this.fps = 1000 / dt;
-    this.drawDebugLayer();
+    if (this.showDebug) {
+        this.drawDebugLayer();
+    }
 };
 
 Asteroids.prototype.updateState = function (dt) {
@@ -63,4 +71,9 @@ Asteroids.prototype.requestFullScreenMode = function () {
 
 Asteroids.prototype.togglePaused = function () {
     this.paused = !this.paused;
+};
+
+Asteroids.prototype.toggleShowDebug = function () {
+    this.showDebug = !this.showDebug;
+    this.debugCanvas.style.visibility = this.showDebug ? "visible" : "hidden";
 };

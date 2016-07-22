@@ -2,6 +2,7 @@ function initializeKeyMap() {
     asteroids.inputManager.keyMap = {
         fullScreen: createRequestFullScreenModeKey(),
         pause: createPauseKey(),
+        showDebug: createShowDebugKey(),
         thrust: createThrustKey(),
         turnShipLeft: createTurnShipLeftKey(),
         turnShipRight: createTurnShipRightKey(),
@@ -19,6 +20,14 @@ function initializeKeyMap() {
         const key = new Key("p");
         key.addKeyDownListener(function () {
             asteroids.togglePaused();
+        });
+        return key;
+    }
+
+    function createShowDebugKey() {
+        const key = new Key("d");
+        key.addKeyDownListener(function () {
+            asteroids.toggleShowDebug();
         });
         return key;
     }
