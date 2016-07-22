@@ -1,4 +1,5 @@
 const SHIP_ROTATION_INCREMENT = Math.PI / 180 / 7;
+const FULL_CIRCLE = 2 * Math.PI;
 const SHIP_VELOCITY_FACTOR = 1 / 1000;
 const SHIP_MIN_VELOCITY = 1 / 200;
 const SHIP_DEACCELERATION_FACTOR = 1 - 1 / 400;
@@ -32,6 +33,11 @@ Ship.prototype.getRotationDelta = function () {
 
 Ship.prototype.update = function (dt) {
     this.rotation += this.getRotationDelta() * dt;
+    if (this.rotation > FULL_CIRCLE) {
+        this.rotation -= FULL_CIRCLE;
+    } else if (this.rotation < 0) {
+        this.rotation += FULL_CIRCLE;
+    }
     if (this.thrust) {
         this.dx += Math.sin(this.rotation);
         this.dy -= Math.cos(this.rotation);
@@ -55,8 +61,9 @@ Ship.prototype.draw = function (ctx, scale) {
     ctx.rotate(this.rotation);
     ctx.beginPath();
     ctx.moveTo(Math.floor(-20 * scale), Math.floor(20 * scale));
-    ctx.lineTo(Math.floor(scale), Math.floor(-40 * scale));
+    ctx.lineTo(0, Math.floor(-40 * scale));
     ctx.lineTo(Math.floor(20 * scale), Math.floor(20 * scale));
+    ctx.lineTo(0, Math.floor(10 * scale));
     ctx.closePath();
     ctx.stroke();
     ctx.restore();
