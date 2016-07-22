@@ -131,3 +131,7 @@ Key.prototype.fireKeyUp = function () {
         listener();
     });
 };
+
+(function () {
+    new InputManager();
+})();

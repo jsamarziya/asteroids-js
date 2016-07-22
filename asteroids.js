@@ -10,7 +10,6 @@ function Asteroids(container, gameCanvas, debugCanvas) {
     this.scale = 1;
     this.paused = false;
     this.ship = new Ship();
-    this.inputManager = new InputManager();
     this.init();
 }
 
