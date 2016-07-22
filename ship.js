@@ -13,6 +13,7 @@ function Ship() {
     this.turnLeft = false;
     this.turnRight = false;
     this.thrust = false;
+    this.thrustDrawChance = 0;
 }
 
 Ship.prototype.setTurnLeft = function (turn) {
@@ -25,6 +26,7 @@ Ship.prototype.setTurnRight = function (turn) {
 
 Ship.prototype.setThrust = function (thrust) {
     this.thrust = thrust;
+    this.thrustDrawChance = thrust | 0;
 };
 
 Ship.prototype.getRotationDelta = function () {
@@ -65,10 +67,11 @@ Ship.prototype.draw = function (ctx, scale) {
     ctx.lineTo(Math.floor(20 * scale), Math.floor(20 * scale));
     ctx.lineTo(0, Math.floor(10 * scale));
     ctx.lineTo(Math.floor(-20 * scale), Math.floor(20 * scale));
-    if (this.thrust && Math.random() > 0.7) {
+    if (this.thrust && Math.random() < this.thrustDrawChance) {
         ctx.moveTo(Math.floor(-10 * scale), Math.floor(15 * scale));
         ctx.lineTo(0, Math.floor((Math.random() * 15 + 35) * scale));
         ctx.lineTo(Math.floor(10 * scale), Math.floor(15 * scale));
+        this.thrustDrawChance = 0.3;
     }
     ctx.stroke();
     ctx.restore();

@@ -18,6 +18,10 @@ restore canvas size when exiting full screen
 
 add key event listeners in Asteroids or in InputManager?
 
-make ship shape more interesting
-add thrust graphics
 thrust sound
+
+turn debug info on/off with key ("d" or "?" or "v")
+
+wraparound
+
+need a friction function (ship velocity damping)
