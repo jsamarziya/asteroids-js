@@ -47,9 +47,10 @@ Asteroids.prototype.drawGameLayer = function () {
 Asteroids.prototype.drawDebugLayer = function () {
     this.debugContext.clearRect(0, 0, this.debugCanvas.width, this.debugCanvas.height);
     const textY = this.debugCanvas.height - 10;
-    this.debugContext.fillText("FPS: " + this.fps, 10, textY, 150);
-    this.debugContext.fillText("pos: (" + Math.floor(this.ship.x) + ", " + Math.floor(this.ship.y) + ")", 150, textY, 80);
-    this.debugContext.fillText("v: (" + Math.round(this.ship.dx) + ", " + Math.round(this.ship.dy) + ")", 230, textY, 75);
+    this.debugContext.fillText("FPS: " + this.fps.toFixed(3), 10, textY, 100);
+    this.debugContext.fillText("pos: (" + Math.floor(this.ship.x) + ", " + Math.floor(this.ship.y) + ")", 100, textY, 100);
+    this.debugContext.fillText("v: (" + Math.round(this.ship.dx) + ", " + Math.round(this.ship.dy) + ")", 200, textY, 100);
+    this.debugContext.fillText("dir: " + Math.floor(this.ship.rotation * 180 / Math.PI), 300, textY, 100);
 };
 
 Asteroids.prototype.requestFullScreenMode = function () {
