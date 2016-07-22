@@ -1,5 +1,7 @@
 # asteroids-js
 
+[Play it now](asteroids.html)
+
 # References
 
 * [MDN Canvas Tutorial](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial)
