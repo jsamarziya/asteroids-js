@@ -30,7 +30,7 @@ Ship.prototype.setThrust = function (thrust) {
 };
 
 Ship.prototype.getRotationDelta = function () {
-    return ((this.turnRight | 0 ) - (this.turnLeft | 0)) * SHIP_ROTATION_INCREMENT;
+    return ((this.turnLeft | 0 ) - (this.turnRight | 0)) * SHIP_ROTATION_INCREMENT;
 };
 
 Ship.prototype.update = function (dt) {
@@ -41,8 +41,8 @@ Ship.prototype.update = function (dt) {
         this.rotation += FULL_CIRCLE;
     }
     if (this.thrust) {
-        this.dx += Math.sin(this.rotation);
-        this.dy -= Math.cos(this.rotation);
+        this.dx -= Math.sin(this.rotation);
+        this.dy += Math.cos(this.rotation);
     } else {
         this.dx *= SHIP_DEACCELERATION_FACTOR;
         this.dy *= SHIP_DEACCELERATION_FACTOR;
@@ -62,15 +62,15 @@ Ship.prototype.draw = function (ctx, scale) {
     ctx.translate(Math.floor(this.x * scale), Math.floor(this.y * scale));
     ctx.rotate(this.rotation);
     ctx.beginPath();
-    ctx.moveTo(Math.floor(-20 * scale), Math.floor(20 * scale));
-    ctx.lineTo(0, Math.floor(-40 * scale));
-    ctx.lineTo(Math.floor(20 * scale), Math.floor(20 * scale));
-    ctx.lineTo(0, Math.floor(10 * scale));
-    ctx.lineTo(Math.floor(-20 * scale), Math.floor(20 * scale));
+    ctx.moveTo(Math.floor(-20 * scale), Math.floor(-20 * scale));
+    ctx.lineTo(0, Math.floor(40 * scale));
+    ctx.lineTo(Math.floor(20 * scale), Math.floor(-20 * scale));
+    ctx.lineTo(0, Math.floor(-10 * scale));
+    ctx.lineTo(Math.floor(-20 * scale), Math.floor(-20 * scale));
     if (this.thrust && Math.random() < this.thrustDrawChance) {
-        ctx.moveTo(Math.floor(-10 * scale), Math.floor(15 * scale));
-        ctx.lineTo(0, Math.floor((Math.random() * 15 + 35) * scale));
-        ctx.lineTo(Math.floor(10 * scale), Math.floor(15 * scale));
+        ctx.moveTo(Math.floor(-10 * scale), Math.floor(-15 * scale));
+        ctx.lineTo(0, Math.floor((-Math.random() * 15 - 35) * scale));
+        ctx.lineTo(Math.floor(10 * scale), Math.floor(-15 * scale));
         this.thrustDrawChance = 0.3;
     }
     ctx.stroke();

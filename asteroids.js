@@ -17,14 +17,13 @@ function Asteroids(container, gameCanvas, debugCanvas) {
 
 Asteroids.prototype.init = function () {
     this.gameContext.strokeStyle = "white";
+    this.gameContext.translate(this.gameCanvas.width / 2, this.gameCanvas.height / 2);
+    this.gameContext.scale(1, -1);
     this.debugContext.fillStyle = "#A0A0A0";
 };
 
 Asteroids.prototype.createShip = function () {
-    const ship = new Ship();
-    ship.x = this.gameCanvas.width / 2;
-    ship.y = this.gameCanvas.height / 2;
-    return ship;
+    return new Ship();
 };
 
 Asteroids.prototype.run = function () {
@@ -50,7 +49,7 @@ Asteroids.prototype.updateState = function (dt) {
 };
 
 Asteroids.prototype.drawGameLayer = function () {
-    this.gameContext.clearRect(0, 0, this.gameCanvas.width, this.gameCanvas.height);
+    this.gameContext.clearRect(-this.gameCanvas.width / 2, -this.gameCanvas.height / 2, this.gameCanvas.width, this.gameCanvas.height);
     this.ship.draw(this.gameContext, this.scale);
 };
 
