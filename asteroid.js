@@ -21,8 +21,8 @@ class Asteroid extends Sprite {
         return points;
     }
 
-    get rotationDelta() {
-        return 0.00015;
+    get rpm() {
+        return 1;
     }
 
     drawSprite(ctx, scale) {

@@ -1,8 +1,8 @@
 "use strict";
 
-const SHIP_ROTATION_INCREMENT = Math.PI / 180 / 7;
 const SHIP_MIN_VELOCITY = 1 / 200;
 const SHIP_DECELERATION_FACTOR = 1 - 1 / 400;
+const SHIP_RPM = 23;
 
 class Ship extends Sprite {
     constructor() {
@@ -26,8 +26,8 @@ class Ship extends Sprite {
         this.thrustDrawChance = thrust | 0;
     }
 
-    get rotationDelta() {
-        return ((this.turnRight | 0 ) - (this.turnLeft | 0)) * SHIP_ROTATION_INCREMENT;
+    get rpm() {
+        return ((this.turnRight | 0 ) - (this.turnLeft | 0)) * SHIP_RPM;
     }
 
     update(dt) {

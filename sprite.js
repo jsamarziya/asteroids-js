@@ -2,6 +2,7 @@
 
 const FULL_CIRCLE = 2 * Math.PI;
 const SPRITE_VELOCITY_FACTOR = 1 / 1000;
+const ROTATION_PER_MILLISECOND = 2 * Math.PI / 60 / 1000;
 
 class Sprite {
     constructor() {
@@ -13,7 +14,7 @@ class Sprite {
     }
 
     update(dt) {
-        this.rotation += this.rotationDelta * dt;
+        this.rotation += this.rpm * dt * ROTATION_PER_MILLISECOND;
         if (this.rotation > FULL_CIRCLE) {
             this.rotation -= FULL_CIRCLE;
         } else if (this.rotation < 0) {
@@ -23,7 +24,7 @@ class Sprite {
         this.y += this.dy * SPRITE_VELOCITY_FACTOR * dt;
     }
 
-    get rotationDelta() {
+    get rpm() {
         return 0;
     }
 
