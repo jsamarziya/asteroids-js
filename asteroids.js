@@ -16,6 +16,7 @@ class Asteroids {
         this.inputManager = new InputManager();
         this.ship = this.createShip();
         this.asteroids = [];
+        this.stars = this.createStars();
         this.init();
 
         this.createAsteroid(100, 200, 200);
@@ -23,6 +24,7 @@ class Asteroids {
 
     init() {
         this.gameContext.strokeStyle = "white";
+        this.gameContext.fillStyle = "white";
         this.debugContext.fillStyle = "#A0A0A0";
     }
 
@@ -39,6 +41,16 @@ class Asteroids {
         asteroid.y = y;
         this.asteroids.push(asteroid);
         return asteroid;
+    }
+
+    createStars() {
+        let stars = [];
+        let width = this.gameCanvas.width;
+        let height = this.gameCanvas.height;
+        for (let i = 0; i < 15; i++) {
+            stars.push({x: Math.random() * width, y: Math.random() * height});
+        }
+        return stars;
     }
 
     run() {
@@ -72,10 +84,13 @@ class Asteroids {
 
     drawGameLayer() {
         this.gameContext.clearRect(0, 0, this.gameCanvas.width, this.gameCanvas.height);
-        this.ship.draw(this.gameContext, this.scale);
+        this.stars.forEach(star => {
+            this.gameContext.fillRect(star.x, star.y, 1, 1);
+        });
         this.asteroids.forEach(asteroid => {
             asteroid.draw(this.gameContext, this.scale);
         });
+        this.ship.draw(this.gameContext, this.scale);
     }
 
     drawDebugLayer() {

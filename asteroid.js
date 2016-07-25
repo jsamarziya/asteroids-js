@@ -32,6 +32,7 @@ class Asteroid extends Sprite {
             ctx.lineTo(0, Math.floor(point.radius * scale));
         });
         ctx.closePath();
+        ctx.fill();
         ctx.stroke();
     }
 }

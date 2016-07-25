@@ -54,6 +54,7 @@ class Ship extends Sprite {
         ctx.lineTo(Math.floor(20 * scale), Math.floor(20 * scale));
         ctx.lineTo(0, Math.floor(10 * scale));
         ctx.lineTo(Math.floor(-20 * scale), Math.floor(20 * scale));
+        ctx.fill();
         if (this.thrust && Math.random() < this.thrustDrawChance) {
             ctx.moveTo(Math.floor(-10 * scale), Math.floor(15 * scale));
             ctx.lineTo(0, Math.floor((Math.random() * 15 + 35) * scale));
