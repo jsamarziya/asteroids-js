@@ -15,7 +15,10 @@ class Asteroids {
         this.showDebug = false;
         this.inputManager = new InputManager();
         this.ship = this.createShip();
+        this.asteroids = [];
         this.init();
+
+        this.createAsteroid(100, 200, 200);
     }
 
     init() {
@@ -28,6 +31,14 @@ class Asteroids {
         ship.x = this.gameCanvas.width / 2;
         ship.y = this.gameCanvas.height / 2;
         return ship;
+    }
+
+    createAsteroid(size, x, y) {
+        let asteroid = new Asteroid(size);
+        asteroid.x = x;
+        asteroid.y = y;
+        this.asteroids.push(asteroid);
+        return asteroid;
     }
 
     run() {
@@ -54,11 +65,17 @@ class Asteroids {
 
     updateState(dt) {
         this.ship.update(dt);
+        this.asteroids.forEach(asteroid => {
+            asteroid.update(dt);
+        });
     }
 
     drawGameLayer() {
         this.gameContext.clearRect(0, 0, this.gameCanvas.width, this.gameCanvas.height);
         this.ship.draw(this.gameContext, this.scale);
+        this.asteroids.forEach(asteroid => {
+            asteroid.draw(this.gameContext, this.scale);
+        });
     }
 
     drawDebugLayer() {
