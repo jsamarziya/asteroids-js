@@ -26,12 +26,11 @@ class Ship extends Sprite {
         this.thrustDrawChance = thrust | 0;
     }
 
-    getRotationDelta() {
+    get rotationDelta() {
         return ((this.turnRight | 0 ) - (this.turnLeft | 0)) * SHIP_ROTATION_INCREMENT;
     }
 
     update(dt) {
-        this.rotation += this.getRotationDelta() * dt;
         if (this.thrust) {
             this.dx += Math.sin(this.rotation);
             this.dy -= Math.cos(this.rotation);

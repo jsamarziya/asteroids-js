@@ -13,6 +13,7 @@ class Sprite {
     }
 
     update(dt) {
+        this.rotation += this.rotationDelta * dt;
         if (this.rotation > FULL_CIRCLE) {
             this.rotation -= FULL_CIRCLE;
         } else if (this.rotation < 0) {
@@ -20,6 +21,10 @@ class Sprite {
         }
         this.x += this.dx * SPRITE_VELOCITY_FACTOR * dt;
         this.y += this.dy * SPRITE_VELOCITY_FACTOR * dt;
+    }
+
+    get rotationDelta() {
+        return 0;
     }
 
     draw(ctx, scale) {

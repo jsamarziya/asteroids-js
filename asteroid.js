@@ -4,7 +4,6 @@ class Asteroid extends Sprite {
     constructor(size) {
         super();
         this.path = Asteroid.createPath(size);
-        this.rotation = 100;
     }
 
     static createPath(size) {
@@ -20,6 +19,10 @@ class Asteroid extends Sprite {
             points.push({angle: angle, radius: radius});
         }
         return points;
+    }
+
+    get rotationDelta() {
+        return 0.00015;
     }
 
     drawSprite(ctx, scale) {
