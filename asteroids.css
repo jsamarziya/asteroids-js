@@ -1,8 +1,14 @@
+#ccdiv {
+    margin-top: 50px;
+}
+
 #canvasdiv {
     position: relative;
     width: 800px;
     height: 600px;
     background: #000000;
+    border: 1px solid #303030;
+    margin: auto;
 }
 
 canvas {
