@@ -29,11 +29,15 @@ class Asteroids {
     }
 
     run() {
-        this.update();
+        this.requestAnimationFrame();
+    }
+
+    requestAnimationFrame() {
+        window.requestAnimationFrame(this.update.bind(this));
     }
 
     update(timestamp) {
-        window.requestAnimationFrame(this.update.bind(this));
+        this.requestAnimationFrame();
         const dt = timestamp - this.lastUpdate;
         this.lastUpdate = timestamp;
         if (!this.paused && dt <= MAX_DELTA_TIME) {
