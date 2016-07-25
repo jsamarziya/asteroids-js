@@ -1,3 +1,5 @@
+"use strict";
+
 (function () {
     window.asteroids = new Asteroids(
         document.getElementById("canvasdiv"),

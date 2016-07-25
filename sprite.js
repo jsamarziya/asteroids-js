@@ -1,3 +1,5 @@
+"use strict";
+
 const FULL_CIRCLE = 2 * Math.PI;
 const SPRITE_VELOCITY_FACTOR = 1 / 1000;
 

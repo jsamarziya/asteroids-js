@@ -1,3 +1,5 @@
+"use strict";
+
 class InputManager {
     constructor() {
         this.keyMap = {};

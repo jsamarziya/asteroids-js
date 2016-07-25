@@ -1,3 +1,5 @@
+"use strict";
+
 class Key {
     constructor(key, alt, ctrl, meta, shift) {
         this.key = key;

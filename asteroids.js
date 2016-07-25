@@ -1,3 +1,5 @@
+"use strict";
+
 const MAX_DELTA_TIME = 160;
 
 class Asteroids {

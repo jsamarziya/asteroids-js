@@ -1,3 +1,5 @@
+"use strict";
+
 const SHIP_ROTATION_INCREMENT = Math.PI / 180 / 7;
 const SHIP_MIN_VELOCITY = 1 / 200;
 const SHIP_DECELERATION_FACTOR = 1 - 1 / 400;

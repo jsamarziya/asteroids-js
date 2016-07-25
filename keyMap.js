@@ -1,3 +1,5 @@
+"use strict";
+
 function initializeKeyMap() {
     asteroids.inputManager.keyMap = {
         fullScreen: createRequestFullScreenModeKey(),
