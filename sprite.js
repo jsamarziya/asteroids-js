@@ -36,7 +36,7 @@ class Sprite {
     draw(ctx, scale) {
         ctx.save();
         ctx.fillStyle = "black";
-        ctx.translate(Math.floor(this.x * scale), Math.floor(this.y * scale));
+        ctx.translate(this.x, this.y);
         ctx.rotate(this.rotation);
         this.drawSprite(ctx, scale);
         ctx.restore();
