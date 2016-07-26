@@ -10,6 +10,7 @@ class Asteroids {
         this.debugCanvas = debugCanvas;
         this.gameContext = gameCanvas.getContext("2d");
         this.debugContext = debugCanvas.getContext("2d");
+        this.scheduler = new Scheduler();
         this.lastUpdate = 0;
         this.paused = false;
         this.showDebug = false;
@@ -20,7 +21,7 @@ class Asteroids {
         this.stars = this.createStars();
         this.init();
 
-        this.createAsteroid(100, 200, 200);
+        this.scheduler.schedule(this.createAsteroid.bind(this, 100, 200, 200), 3000);
     }
 
     init() {
@@ -85,6 +86,7 @@ class Asteroids {
     }
 
     updateState(dt) {
+        this.scheduler.advanceTime(dt);
         this.ship.update(dt);
         this.asteroids.forEach(asteroid => {
             asteroid.update(dt);
