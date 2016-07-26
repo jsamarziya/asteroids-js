@@ -1,6 +1,7 @@
 "use strict";
 
 const MAX_DELTA_TIME = 160;
+const DEBUG_STYLE = "#BB0000";
 
 class Asteroids {
     constructor(container, gameCanvas, debugCanvas) {
@@ -13,6 +14,7 @@ class Asteroids {
         this.scale = 1;
         this.paused = false;
         this.showDebug = false;
+        this.drawDebug = false;
         this.inputManager = new InputManager();
         this.ship = this.createShip();
         this.asteroids = [];
@@ -115,5 +117,9 @@ class Asteroids {
     toggleShowDebug() {
         this.showDebug = !this.showDebug;
         this.debugCanvas.style.visibility = this.showDebug ? "visible" : "hidden";
+    }
+
+    toggleDrawDebug() {
+        this.drawDebug = !this.drawDebug;
     }
 }
