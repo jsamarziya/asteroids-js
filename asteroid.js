@@ -7,7 +7,6 @@ class Asteroid extends Sprite {
     constructor(size) {
         super();
         this.radii = Asteroid.createRadii(size);
-        this.debugDraw = false;
     }
 
     static createRadii(size) {
@@ -35,7 +34,7 @@ class Asteroid extends Sprite {
         ctx.closePath();
         ctx.fill();
         ctx.stroke();
-        if (this.debugDraw) {
+        if (asteroids.drawDebug) {
             ctx.save();
             ctx.strokeStyle = DEBUG_STYLE;
             ctx.beginPath();
