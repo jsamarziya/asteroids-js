@@ -11,7 +11,6 @@ class Asteroids {
         this.gameContext = gameCanvas.getContext("2d");
         this.debugContext = debugCanvas.getContext("2d");
         this.lastUpdate = 0;
-        this.scale = 1;
         this.paused = false;
         this.showDebug = false;
         this.drawDebug = false;
@@ -28,6 +27,7 @@ class Asteroids {
         this.gameContext.strokeStyle = "white";
         this.gameContext.fillStyle = "white";
         this.debugContext.fillStyle = "#A0A0A0";
+        this.setScale();
     }
 
     createShip() {
@@ -56,6 +56,10 @@ class Asteroids {
             stars.push({x: Math.random() * width, y: Math.random() * height});
         }
         return stars;
+    }
+
+    setScale() {
+        this.scale = this.gameCanvas.width * this.gameCanvas.height / 1000000;
     }
 
     run() {
