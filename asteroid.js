@@ -4,6 +4,7 @@ class Asteroid extends Sprite {
     constructor(size) {
         super();
         this.path = Asteroid.createPath(size);
+        this.debugDraw = true;
     }
 
     static createPath(size) {
@@ -12,10 +13,10 @@ class Asteroid extends Sprite {
         let radius = size;
         let setRadius = true;
         while (true) {
-            let angle = Math.random() * .2 + .2;
+            let angle = .3;
             rotation += angle;
             if (setRadius) {
-                radius = (1 - Math.random() * .4) * size;
+                radius = (1 - Math.random() * .5) * size;
             }
             setRadius = !setRadius;
             points.push({angle: angle, radius: radius});
@@ -34,17 +35,29 @@ class Asteroid extends Sprite {
     drawSprite(ctx, scale) {
         ctx.beginPath();
         this.path.forEach(point => {
-            ctx.rotate(point.angle);
-            ctx.lineTo(0, Math.floor(point.radius * scale));
-            // ctx.lineTo(0, 0);
-            // ctx.lineTo(0, Math.floor(point.radius * scale));
-        });
+                ctx.rotate(point.angle);
+                ctx.lineTo(0, Math.floor(point.radius * scale));
+            }
+        );
         ctx.closePath();
         ctx.fill();
         ctx.stroke();
-        // ctx.beginPath();
-        // ctx.arc(0, 0, 100, 0, 2 * Math.PI);
-        // ctx.stroke();
+        if (this.debugDraw) {
+            ctx.save();
+            ctx.strokeStyle = DEBUG_STYLE;
+            ctx.beginPath();
+            this.path.forEach(point => {
+                    ctx.rotate(point.angle);
+                    ctx.moveTo(0, 0);
+                    ctx.lineTo(0, Math.floor(point.radius * scale));
+                }
+            );
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(0, 0, 100, 0, 2 * Math.PI);
+            ctx.stroke();
+            ctx.restore();
+        }
     }
 }
 

@@ -1,6 +1,7 @@
 "use strict";
 
 const MAX_DELTA_TIME = 160;
+const DEBUG_STYLE = "#BB0000";
 
 class Asteroids {
     constructor(container, gameCanvas, debugCanvas) {
