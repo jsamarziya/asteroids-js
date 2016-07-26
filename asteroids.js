@@ -41,6 +41,9 @@ class Asteroids {
         let asteroid = new Asteroid(size);
         asteroid.x = x;
         asteroid.y = y;
+        // asteroid.dx = (0.5-Math.random() )*10+5;
+        // asteroid.dy = (0.5-Math.random() )*10+40;
+        asteroid.rpm = (0.5 - Math.random()) * 6;
         this.asteroids.push(asteroid);
         return asteroid;
     }

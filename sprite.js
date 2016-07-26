@@ -2,7 +2,7 @@
 
 const FULL_CIRCLE = 2 * Math.PI;
 const SPRITE_VELOCITY_FACTOR = 1 / 1000;
-const ROTATION_PER_MILLISECOND = 2 * Math.PI / 60 / 1000;
+const ROTATION_PER_MILLISECOND = FULL_CIRCLE / 60 / 1000;
 
 class Sprite {
     constructor() {
@@ -11,6 +11,7 @@ class Sprite {
         this.dx = 0;
         this.dy = 0;
         this.rotation = 0;
+        this._rpm = 0;
     }
 
     update(dt) {
@@ -25,7 +26,11 @@ class Sprite {
     }
 
     get rpm() {
-        return 0;
+        return this._rpm;
+    }
+
+    set rpm(rpm) {
+        this._rpm = rpm;
     }
 
     draw(ctx, scale) {

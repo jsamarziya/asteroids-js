@@ -12,14 +12,10 @@ class Asteroid extends Sprite {
     static createRadii(size) {
         let radii = [];
         for (let i = 0; i < ASTEROID_RADII; i++) {
-            const radius = (1 - Math.random() * .5) * size;
+            const radius = (1 - Math.random() * 0.5) * size;
             radii.push(radius);
         }
         return radii;
-    }
-
-    get rpm() {
-        return 1;
     }
 
     drawSprite(ctx, scale) {
@@ -48,7 +44,7 @@ class Asteroid extends Sprite {
             );
             ctx.stroke();
             ctx.beginPath();
-            ctx.arc(0, 0, 100, 0, 2 * Math.PI);
+            ctx.arc(0, 0, 100, 0, FULL_CIRCLE);
             ctx.stroke();
             ctx.restore();
         }
