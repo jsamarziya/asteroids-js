@@ -1,6 +1,8 @@
 "use strict";
-const ASTEROID_SEGMENTS = 11;
-const ASTEROID_SEGMENT_ROTATION = FULL_CIRCLE / ASTEROID_SEGMENTS / 2;
+
+const ASTEROID_RADII = 11;
+const ASTEROID_SEGMENT_ROTATION = FULL_CIRCLE / ASTEROID_RADII / 2;
+
 class Asteroid extends Sprite {
     constructor(size) {
         super();
@@ -10,7 +12,7 @@ class Asteroid extends Sprite {
 
     static createRadii(size) {
         let radii = [];
-        for (let i = 0; i < ASTEROID_SEGMENTS; i++) {
+        for (let i = 0; i < ASTEROID_RADII; i++) {
             const radius = (1 - Math.random() * .5) * size;
             radii.push(radius);
         }
