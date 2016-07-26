@@ -1,31 +1,20 @@
 "use strict";
-
+const ASTEROID_SEGMENTS = 11;
+const ASTEROID_SEGMENT_ROTATION = FULL_CIRCLE / ASTEROID_SEGMENTS / 2;
 class Asteroid extends Sprite {
     constructor(size) {
         super();
-        this.path = Asteroid.createPath(size);
-        this.debugDraw = true;
+        this.radii = Asteroid.createRadii(size);
+        this.debugDraw = false;
     }
 
-    static createPath(size) {
-        let points = [];
-        let rotation = 0;
-        let radius = size;
-        let setRadius = true;
-        while (true) {
-            let angle = .3;
-            rotation += angle;
-            if (setRadius) {
-                radius = (1 - Math.random() * .5) * size;
-            }
-            setRadius = !setRadius;
-            points.push({angle: angle, radius: radius});
-            if (rotation > FULL_CIRCLE) {
-                points.push({angle: 0, radius: radius});
-                break;
-            }
+    static createRadii(size) {
+        let radii = [];
+        for (let i = 0; i < ASTEROID_SEGMENTS; i++) {
+            const radius = (1 - Math.random() * .5) * size;
+            radii.push(radius);
         }
-        return points;
+        return radii;
     }
 
     get rpm() {
@@ -34,9 +23,11 @@ class Asteroid extends Sprite {
 
     drawSprite(ctx, scale) {
         ctx.beginPath();
-        this.path.forEach(point => {
-                ctx.rotate(point.angle);
-                ctx.lineTo(0, Math.floor(point.radius * scale));
+        this.radii.forEach(radius => {
+                for (let i = 0; i < 2; i++) {
+                    ctx.rotate(ASTEROID_SEGMENT_ROTATION);
+                    ctx.lineTo(0, Math.floor(radius * scale));
+                }
             }
         );
         ctx.closePath();
@@ -46,10 +37,12 @@ class Asteroid extends Sprite {
             ctx.save();
             ctx.strokeStyle = DEBUG_STYLE;
             ctx.beginPath();
-            this.path.forEach(point => {
-                    ctx.rotate(point.angle);
-                    ctx.moveTo(0, 0);
-                    ctx.lineTo(0, Math.floor(point.radius * scale));
+            this.radii.forEach(radius => {
+                    for (let i = 0; i < 2; i++) {
+                        ctx.rotate(ASTEROID_SEGMENT_ROTATION);
+                        ctx.moveTo(0, 0);
+                        ctx.lineTo(0, Math.floor(radius * scale));
+                    }
                 }
             );
             ctx.stroke();
