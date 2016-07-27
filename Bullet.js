@@ -3,24 +3,22 @@
 const BULLET_SPEED = 400;
 
 class Bullet extends Sprite {
-    constructor() {
-        super();
+    constructor(game) {
+        super(game);
         this.timeRemaining = 1500;
-    }
-
-    isExpired() {
-        return this.timeRemaining <= 0;
     }
 
     update(dt) {
         this.timeRemaining -= dt;
-        if (!this.isExpired()) {
+        if (this.timeRemaining > 0) {
             super.update(dt);
+        } else {
+            this.isRemoveFromWorld = true;
         }
     }
 
-    //noinspection JSMethodCanBeStatic
-    drawSprite(ctx) {
+    drawSprite() {
+        const ctx = this.game.gameContext;
         ctx.save();
         ctx.fillStyle = "white";
         ctx.fillRect(0, 0, 2, 2);

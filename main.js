@@ -5,6 +5,7 @@
         document.getElementById("canvasDiv"),
         document.getElementById("gameCanvas"),
         document.getElementById("debugCanvas"));
-    initializeKeyMap();
-    window.asteroids.run();
+    initializeKeyMap(window.asteroids);
+    window.asteroids.inputManager.addEventListeners(window, document);
+    window.asteroids.start();
 })();

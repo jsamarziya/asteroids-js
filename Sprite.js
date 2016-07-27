@@ -5,7 +5,8 @@ const SPRITE_VELOCITY_FACTOR = 1 / 1000;
 const ROTATION_PER_MILLISECOND = FULL_CIRCLE / 60 / 1000;
 
 class Sprite {
-    constructor() {
+    constructor(game) {
+        this.game = game;
         this.x = 0;
         this.y = 0;
         this.dx = 0;
@@ -33,12 +34,12 @@ class Sprite {
         this._rpm = rpm;
     }
 
-    draw(ctx, scale) {
+    draw() {
+        const ctx = this.game.gameContext;
         ctx.save();
-        ctx.fillStyle = "black";
         ctx.translate(this.x, this.y);
         ctx.rotate(this.rotation);
-        this.drawSprite(ctx, scale);
+        this.drawSprite();
         ctx.restore();
     }
 }
