@@ -10,7 +10,7 @@ class Asteroid extends Sprite {
     }
 
     static createRadii(size) {
-        let radii = [];
+        const radii = [];
         for (let i = 0; i < ASTEROID_RADII; i++) {
             const radius = (1 - Math.random() * 0.5) * size;
             radii.push(radius);

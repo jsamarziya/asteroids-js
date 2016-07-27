@@ -2,7 +2,7 @@
 
 (function () {
     window.asteroids = new Asteroids(
-        document.getElementById("canvasdiv"),
+        document.getElementById("canvasDiv"),
         document.getElementById("gameCanvas"),
         document.getElementById("debugCanvas"));
     initializeKeyMap();

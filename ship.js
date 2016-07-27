@@ -98,12 +98,14 @@ class Ship extends Sprite {
 
     addBullet() {
         if (this.bullets.length < MAX_BULLETS) {
-            let dx = Math.sin(this.rotation);
-            let dy = -Math.cos(this.rotation);
+            const dx = Math.sin(this.rotation);
+            const dy = -Math.cos(this.rotation);
+            const bullet = new Bullet();
             // TODO fix this - should not reference asteroids.scale
-            let x = this.x + Math.floor(dx * 40 * asteroids.scale);
-            let y = this.y + Math.floor(dy * 40 * asteroids.scale);
-            let bullet = new Bullet(x, y, dx * BULLET_SPEED, dy * BULLET_SPEED);
+            bullet.x = this.x + Math.floor(dx * 40 * asteroids.scale);
+            bullet.y = this.y + Math.floor(dy * 40 * asteroids.scale);
+            bullet.dx = dx * BULLET_SPEED;
+            bullet.dy = dy * BULLET_SPEED;
             this.bullets.push(bullet);
         }
     }

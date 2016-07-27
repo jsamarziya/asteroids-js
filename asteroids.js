@@ -39,7 +39,7 @@ class Asteroids {
     }
 
     createAsteroid(size, x, y) {
-        let asteroid = new Asteroid(size);
+        const asteroid = new Asteroid(size);
         asteroid.x = x;
         asteroid.y = y;
         // asteroid.dx = (0.5-Math.random() )*10+5;
@@ -50,9 +50,9 @@ class Asteroids {
     }
 
     createStars() {
-        let stars = [];
-        let width = this.gameCanvas.width;
-        let height = this.gameCanvas.height;
+        const stars = [];
+        const width = this.gameCanvas.width;
+        const height = this.gameCanvas.height;
         for (let i = 0; i < 15; i++) {
             stars.push({x: Math.random() * width, y: Math.random() * height});
         }

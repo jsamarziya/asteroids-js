@@ -3,12 +3,8 @@
 const BULLET_SPEED = 400;
 
 class Bullet extends Sprite {
-    constructor(x, y, dx, dy) {
+    constructor() {
         super();
-        this.x = x;
-        this.y = y;
-        this.dx = dx;
-        this.dy = dy;
         this.timeRemaining = 1500;
     }
 
