@@ -9,6 +9,12 @@ class Key {
         this.shift = !!shift;
         this.keyDownListeners = [];
         this.keyUpListeners = [];
+        this.isKeyDown = false;
+        this.setAutoRepeatEnabled(false);
+    }
+
+    setAutoRepeatEnabled(enabled) {
+        this.autoRepeatEnabled = enabled;
     }
 
     addKeyDownListener(listener) {
@@ -28,12 +34,16 @@ class Key {
     }
 
     fireKeyDown() {
-        this.keyDownListeners.forEach(listener => {
-            listener();
-        });
+        if (this.autoRepeatEnabled || !this.isKeyDown) {
+            this.isKeyDown = true;
+            this.keyDownListeners.forEach(listener => {
+                listener();
+            });
+        }
     }
 
     fireKeyUp() {
+        this.isKeyDown = false;
         this.keyUpListeners.forEach(listener => {
             listener();
         });

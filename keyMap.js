@@ -5,6 +5,7 @@ function initializeKeyMap() {
         drawDebug: createDrawDebugKey(),
         fullScreen: createRequestFullScreenModeKey(),
         pause: createPauseKey(),
+        shoot: createShootKey(),
         showDebug: createShowDebugKey(),
         thrust: createThrustKey(),
         turnShipLeft: createTurnShipLeftKey(),
@@ -32,6 +33,14 @@ function initializeKeyMap() {
         const key = new Key("p");
         key.addKeyDownListener(function () {
             asteroids.togglePaused();
+        });
+        return key;
+    }
+
+    function createShootKey() {
+        const key = new Key(" ");
+        key.addKeyDownListener(function () {
+            asteroids.ship.shoot();
         });
         return key;
     }
