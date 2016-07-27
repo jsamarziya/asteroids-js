@@ -1,6 +1,6 @@
 "use strict";
 
-function initializeKeyMap() {
+function initializeKeyMap(asteroids) {
     asteroids.inputManager.keyMap = {
         drawDebug: createDrawDebugKey(),
         fullScreen: createRequestFullScreenModeKey(),

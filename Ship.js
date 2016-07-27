@@ -3,16 +3,15 @@
 const SHIP_MIN_VELOCITY = 1 / 200;
 const SHIP_DECELERATION_FACTOR = 1 - 1 / 400;
 const SHIP_RPM = 23;
-const MAX_BULLETS = 5;
+const MAX_BULLETS = 4;
 
 class Ship extends Sprite {
-    constructor() {
-        super();
+    constructor(game) {
+        super(game);
         this.turnLeft = false;
         this.turnRight = false;
         this.thrust = false;
         this.thrustDrawChance = 0;
-        this.bullets = [];
         this.shotTaken = false;
     }
 
@@ -51,29 +50,16 @@ class Ship extends Sprite {
                 this.dy = 0;
             }
         }
-        this.updateBullets(dt);
-        super.update(dt)
-    }
-
-    updateBullets(dt) {
-        this.bullets.forEach((bullet, index, array) => {
-            bullet.update(dt);
-            if (bullet.isExpired()) {
-                array.splice(index, 1);
-            }
-        });
         if (this.shotTaken) {
             this.shotTaken = false;
             this.addBullet();
         }
+        super.update(dt)
     }
 
-    draw(ctx, scale) {
-        this.drawBullets(ctx);
-        super.draw(ctx, scale);
-    }
-
-    drawSprite(ctx, scale) {
+    drawSprite() {
+        const ctx = this.game.gameContext;
+        const scale = this.game.scale;
         ctx.beginPath();
         ctx.moveTo(Math.floor(-20 * scale), Math.floor(20 * scale));
         ctx.lineTo(0, Math.floor(-40 * scale));
@@ -90,23 +76,16 @@ class Ship extends Sprite {
         ctx.stroke();
     }
 
-    drawBullets(ctx) {
-        this.bullets.forEach(bullet=> {
-            bullet.draw(ctx);
-        });
-    }
-
     addBullet() {
-        if (this.bullets.length < MAX_BULLETS) {
+        if (this.game.bulletCount < MAX_BULLETS) {
             const dx = Math.sin(this.rotation);
             const dy = -Math.cos(this.rotation);
-            const bullet = new Bullet();
-            // TODO fix this - should not reference asteroids.scale
-            bullet.x = this.x + Math.floor(dx * 40 * asteroids.scale);
-            bullet.y = this.y + Math.floor(dy * 40 * asteroids.scale);
+            const bullet = new Bullet(this.game);
+            bullet.x = this.x + Math.floor(dx * 40 * this.game.scale);
+            bullet.y = this.y + Math.floor(dy * 40 * this.game.scale);
             bullet.dx = dx * BULLET_SPEED;
             bullet.dy = dy * BULLET_SPEED;
-            this.bullets.push(bullet);
+            this.game.sprites.push(bullet);
         }
     }
 }

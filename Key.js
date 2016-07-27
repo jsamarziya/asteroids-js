@@ -10,11 +10,7 @@ class Key {
         this.keyDownListeners = [];
         this.keyUpListeners = [];
         this.isKeyDown = false;
-        this.setAutoRepeatEnabled(false);
-    }
-
-    setAutoRepeatEnabled(enabled) {
-        this.autoRepeatEnabled = enabled;
+        this.autoRepeatEnabled = false;
     }
 
     addKeyDownListener(listener) {

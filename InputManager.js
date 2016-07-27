@@ -3,6 +3,9 @@
 class InputManager {
     constructor() {
         this.keyMap = {};
+    }
+
+    addEventListeners(window, document){
         document.addEventListener('keydown', this.keyDown.bind(this));
         document.addEventListener('keyup', this.keyUp.bind(this));
         window.addEventListener('blur', this.clearKeysDown.bind(this));
