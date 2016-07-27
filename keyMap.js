@@ -40,7 +40,13 @@ function initializeKeyMap() {
     function createShootKey() {
         const key = new Key(" ");
         key.addKeyDownListener(function () {
-            asteroids.ship.shoot();
+            if (!key.isKeyDown) {
+                key.isKeyDown = true;
+                asteroids.ship.shoot();
+            }
+        });
+        key.addKeyUpListener(function () {
+            key.isKeyDown = false;
         });
         return key;
     }
