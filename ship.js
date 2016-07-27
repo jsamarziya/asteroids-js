@@ -3,6 +3,7 @@
 const SHIP_MIN_VELOCITY = 1 / 200;
 const SHIP_DECELERATION_FACTOR = 1 - 1 / 400;
 const SHIP_RPM = 23;
+const MAX_BULLETS = 5;
 
 class Ship extends Sprite {
     constructor() {
@@ -11,6 +12,8 @@ class Ship extends Sprite {
         this.turnRight = false;
         this.thrust = false;
         this.thrustDrawChance = 0;
+        this.bullets = [];
+        this.shotTaken = false;
     }
 
     setTurnLeft(turn) {
@@ -24,6 +27,10 @@ class Ship extends Sprite {
     setThrust(thrust) {
         this.thrust = thrust;
         this.thrustDrawChance = thrust | 0;
+    }
+
+    shoot() {
+        this.shotTaken = true;
     }
 
     get rpm() {
@@ -44,7 +51,26 @@ class Ship extends Sprite {
                 this.dy = 0;
             }
         }
+        this.updateBullets(dt);
         super.update(dt)
+    }
+
+    updateBullets(dt) {
+        this.bullets.forEach((bullet, index, array) => {
+            bullet.update(dt);
+            if (bullet.isExpired()) {
+                array.splice(index, 1);
+            }
+        });
+        if (this.shotTaken) {
+            this.shotTaken = false;
+            this.addBullet();
+        }
+    }
+
+    draw(ctx, scale) {
+        this.drawBullets(ctx);
+        super.draw(ctx, scale);
     }
 
     drawSprite(ctx, scale) {
@@ -63,5 +89,22 @@ class Ship extends Sprite {
         }
         ctx.stroke();
     }
-}
 
+    drawBullets(ctx) {
+        this.bullets.forEach(bullet=> {
+            bullet.draw(ctx);
+        });
+    }
+
+    addBullet() {
+        if (this.bullets.length < MAX_BULLETS) {
+            let dx = Math.sin(this.rotation);
+            let dy = -Math.cos(this.rotation);
+            // TODO fix this - should not reference asteroids.scale
+            let x = this.x + Math.floor(dx * 40 * asteroids.scale);
+            let y = this.y + Math.floor(dy * 40 * asteroids.scale);
+            let bullet = new Bullet(x, y, dx * BULLET_SPEED, dy * BULLET_SPEED);
+            this.bullets.push(bullet);
+        }
+    }
+}
