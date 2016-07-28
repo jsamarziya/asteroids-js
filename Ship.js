@@ -1,7 +1,6 @@
 "use strict";
 
-const SHIP_MIN_VELOCITY = 1 / 200;
-const SHIP_DECELERATION_FACTOR = 1 - 1 / 400;
+const SHIP_DECELERATION = 1 - 1 / 400;
 const SHIP_RPM = 23;
 const MAX_BULLETS = 4;
 
@@ -37,18 +36,13 @@ class Ship extends Sprite {
     }
 
     update(dt) {
+        const timeUnits = dt / REFERENCE_DELTA_TIME;
         if (this.thrust) {
-            this.dx += Math.sin(this.rotation);
-            this.dy -= Math.cos(this.rotation);
+            this.dx += Math.sin(this.rotation) * timeUnits;
+            this.dy -= Math.cos(this.rotation) * timeUnits;
         } else {
-            this.dx *= SHIP_DECELERATION_FACTOR;
-            this.dy *= SHIP_DECELERATION_FACTOR;
-            if (Math.abs(this.dx) < SHIP_MIN_VELOCITY) {
-                this.dx = 0;
-            }
-            if (Math.abs(this.dy) < SHIP_MIN_VELOCITY) {
-                this.dy = 0;
-            }
+            this.dx *= Math.pow(SHIP_DECELERATION, timeUnits);
+            this.dy *= Math.pow(SHIP_DECELERATION, timeUnits);
         }
         if (this.shotTaken) {
             this.shotTaken = false;

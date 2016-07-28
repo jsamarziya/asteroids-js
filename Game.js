@@ -1,6 +1,7 @@
 "use strict";
 
 const MAX_DELTA_TIME = 160;
+const REFERENCE_DELTA_TIME = 1000/60;
 
 class Game {
     constructor(container, gameCanvas, debugCanvas) {
