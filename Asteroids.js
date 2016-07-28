@@ -19,7 +19,7 @@ class Asteroids extends Game {
         const ship = new Ship(this);
         ship.x = this.gameCanvas.width / 2;
         ship.y = this.gameCanvas.height / 2;
-        this.ship=ship;
+        this.ship = ship;
         this.sprites.push(ship);
     }
 
@@ -35,10 +35,8 @@ class Asteroids extends Game {
 
     createStars() {
         this.stars = [];
-        const width = this.gameCanvas.width;
-        const height = this.gameCanvas.height;
         for (let i = 0; i < 15; i++) {
-            this.stars.push({x: Math.random() * width, y: Math.random() * height});
+            this.stars.push({x: Math.random() * REFERENCE_WIDTH, y: Math.random() * REFERENCE_HEIGHT});
         }
     }
 
@@ -47,7 +45,7 @@ class Asteroids extends Game {
         ctx.save();
         ctx.fillStyle = "white";
         this.stars.forEach(star => {
-            ctx.fillRect(star.x, star.y, 1, 1);
+            ctx.fillRect(star.x / REFERENCE_WIDTH * this.gameCanvas.width, star.y / REFERENCE_HEIGHT * this.gameCanvas.height, 1, 1);
         });
         ctx.restore();
     }

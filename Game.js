@@ -2,6 +2,8 @@
 
 const MAX_DELTA_TIME = 160;
 const REFERENCE_DELTA_TIME = 1000 / 60;
+const REFERENCE_WIDTH = 4000;
+const REFERENCE_HEIGHT = 3000;
 
 class Game {
     constructor(container, gameCanvas, debugCanvas) {
