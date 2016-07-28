@@ -50,13 +50,12 @@ class Asteroids extends Game {
         ctx.restore();
     }
 
-    drawDebugLayer() {
-        super.drawDebugLayer();
-        const textY = this.debugTextY;
-        this.debugContext.fillText("FPS: " + this.fps.toFixed(3), 10, textY, 100);
-        this.debugContext.fillText("pos: (" + Math.floor(this.ship.x) + ", " + Math.floor(this.ship.y) + ")", 100, textY, 100);
-        this.debugContext.fillText("v: (" + Math.round(this.ship.dx) + ", " + Math.round(this.ship.dy) + ")", 200, textY, 100);
-        this.debugContext.fillText("dir: " + Math.floor(this.ship.rotation * 180 / Math.PI), 300, textY, 100);
+    drawDebugLayerExtensions() {
+        this.debugContext.fillText("pos: (" + Math.floor(this.ship.x) + ", " + Math.floor(this.ship.y) + ")", 0, 0, 100);
+        this.debugContext.translate(100, 0);
+        this.debugContext.fillText("v: (" + Math.round(this.ship.dx) + ", " + Math.round(this.ship.dy) + ")", 0, 0, 100);
+        this.debugContext.translate(100, 0);
+        this.debugContext.fillText("dir: " + Math.floor(this.ship.rotation * 180 / Math.PI), 0, 0, 100);
     }
 
     get bulletCount() {

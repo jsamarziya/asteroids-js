@@ -76,6 +76,7 @@ class Game {
     }
 
     update(timestamp) {
+        performance.mark("gameUpdateStart");
         this.requestAnimationFrame();
         const dt = timestamp - this.lastUpdate;
         this.lastUpdate = timestamp;
@@ -87,6 +88,10 @@ class Game {
         if (this.showDebug) {
             this.drawDebugLayer();
         }
+        performance.mark("gameUpdateEnd");
+        performance.measure("gameUpdateElapsed", "gameUpdateStart", "gameUpdateEnd");
+        performance.clearMarks("gameUpdateStart");
+        performance.clearMarks("gameUpdateEnd");
     }
 
     updateState(dt) {
@@ -108,16 +113,25 @@ class Game {
         });
     }
 
+    // template method
     drawBackground() {
     }
 
     drawDebugLayer() {
+        const gameUpdateElapsed = performance.getEntriesByName("gameUpdateElapsed")[0];
+        performance.clearMeasures("gameUpdateElapsed");
+        this.debugContext.save();
         this.debugContext.clearRect(0, 0, this.debugCanvas.width, this.debugCanvas.height);
-        this.debugContext.fillText("FPS: " + this.fps.toFixed(3), 10, this.debugTextY, 100);
+        this.debugContext.translate(10, this.debugCanvas.height - 10);
+        this.debugContext.fillText("FPS: " + this.fps.toFixed(3), 0, 0, 100);
+        this.debugContext.translate(100, 0);
+        this.debugContext.fillText("Update: " + gameUpdateElapsed.duration.toFixed(2) + "ms", 0, 0, 100);
+        this.debugContext.translate(100, 0);
+        this.drawDebugLayerExtensions();
+        this.debugContext.restore();
     }
 
-    get debugTextY() {
-        return this.debugCanvas.height - 10;
+    drawDebugLayerExtensions() {
     }
 
     requestFullScreenMode() {
