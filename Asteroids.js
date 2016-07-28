@@ -3,14 +3,14 @@
 class Asteroids extends Game {
     constructor(container, gameCanvas, debugCanvas) {
         super(container, gameCanvas, debugCanvas);
-        this.initGameContext();
         this.createStars();
         this.createShip();
 
         this.scheduler.schedule(this.createAsteroid.bind(this, 100, 200, 200), 3000);
     }
 
-    initGameContext() {
+    initializeGameContext() {
+        super.initializeGameContext();
         this.gameContext.strokeStyle = "white";
         this.gameContext.fillStyle = "black";
     }
