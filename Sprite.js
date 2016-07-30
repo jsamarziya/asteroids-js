@@ -34,10 +34,18 @@ class Sprite {
         this._rpm = rpm;
     }
 
+    get scaledX() {
+        return this.game.getScaledWidth(this.x);
+    }
+
+    get scaledY() {
+        return this.game.getScaledHeight(this.y);
+    }
+
     draw() {
         const ctx = this.game.gameContext;
         ctx.save();
-        ctx.translate(this.x, this.y);
+        ctx.translate(this.scaledX, this.scaledY);
         ctx.rotate(this.rotation);
         this.drawSprite();
         ctx.restore();
