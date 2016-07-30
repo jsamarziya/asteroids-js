@@ -17,8 +17,8 @@ class Asteroids extends Game {
 
     createShip() {
         const ship = new Ship(this);
-        ship.x = this.gameCanvas.width / 2;
-        ship.y = this.gameCanvas.height / 2;
+        ship.x = REFERENCE_WIDTH / 2;
+        ship.y = REFERENCE_HEIGHT / 2;
         this.ship = ship;
         this.sprites.push(ship);
     }
@@ -45,17 +45,17 @@ class Asteroids extends Game {
         ctx.save();
         ctx.fillStyle = "white";
         this.stars.forEach(star => {
-            ctx.fillRect(star.x / REFERENCE_WIDTH * this.gameCanvas.width, star.y / REFERENCE_HEIGHT * this.gameCanvas.height, 1, 1);
+            ctx.fillRect(this.getScaledWidth(star.x), this.getScaledHeight(star.y), 1, 1);
         });
         ctx.restore();
     }
 
     drawDebugLayerExtensions() {
-        this.debugContext.fillText("pos: (" + Math.floor(this.ship.x) + ", " + Math.floor(this.ship.y) + ")", 0, 0, 100);
+        this.debugContext.fillText("pos: (" + Math.floor(this.ship.scaledX) + ", " + Math.floor(this.ship.scaledY) + ")", 0, 0, 100);
         this.debugContext.translate(100, 0);
         this.debugContext.fillText("v: (" + Math.round(this.ship.dx) + ", " + Math.round(this.ship.dy) + ")", 0, 0, 100);
         this.debugContext.translate(100, 0);
-        this.debugContext.fillText("dir: " + Math.floor(this.ship.rotation * 180 / Math.PI), 0, 0, 100);
+        this.debugContext.fillText("dir: " + Math.floor(this.ship.rotation * 180 / Math.PI) +"\xB0", 0, 0, 100);
     }
 
     get bulletCount() {
