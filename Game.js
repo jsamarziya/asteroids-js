@@ -44,6 +44,14 @@ class Game {
         this.scale = this.gameCanvas.width * this.gameCanvas.height / 1000000;
     }
 
+    getScaledWidth(width) {
+        return width / REFERENCE_WIDTH * this.gameCanvas.width;
+    }
+
+    getScaledHeight(height) {
+        return height / REFERENCE_HEIGHT * this.gameCanvas.height;
+    }
+
     resizeDisplayElementsToWindow(window) {
         const windowWidth = window.innerWidth;
         const windowHeight = window.innerHeight;
