@@ -6,7 +6,7 @@ class Asteroids extends Game {
         this.createStars();
         this.createShip();
 
-        this.scheduler.schedule(this.createAsteroid.bind(this, 100, 200, 200), 3000);
+        this.scheduler.schedule(this.createAsteroid.bind(this, 100, 1000, 1000), 3000);
     }
 
     initializeGameContext() {
