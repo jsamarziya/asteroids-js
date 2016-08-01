@@ -38,8 +38,8 @@ class Ship extends Sprite {
     update(dt) {
         const timeUnits = dt / REFERENCE_DELTA_TIME;
         if (this.thrust) {
-            this.dx += Math.sin(this.rotation) * timeUnits;
-            this.dy -= Math.cos(this.rotation) * timeUnits;
+            this.dx += Math.sin(this.rotation) * timeUnits * 5;
+            this.dy -= Math.cos(this.rotation) * timeUnits * 5;
         } else {
             this.dx *= Math.pow(SHIP_DECELERATION, timeUnits);
             this.dy *= Math.pow(SHIP_DECELERATION, timeUnits);
