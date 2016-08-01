@@ -74,9 +74,11 @@ class Ship extends Sprite {
         if (this.game.bulletCount < MAX_BULLETS) {
             const dx = Math.sin(this.rotation);
             const dy = -Math.cos(this.rotation);
+            // distance, in reference units, from the origin to the tip of the ship
+            const offset = 40 * this.game.scale * 5;
             const bullet = new Bullet(this.game);
-            bullet.x = this.x + Math.floor(dx * 40 * this.game.scale);
-            bullet.y = this.y + Math.floor(dy * 40 * this.game.scale);
+            bullet.x = this.x + Math.floor(dx * offset);
+            bullet.y = this.y + Math.floor(dy * offset);
             bullet.dx = dx * BULLET_SPEED;
             bullet.dy = dy * BULLET_SPEED;
             this.game.sprites.push(bullet);
