@@ -13,6 +13,7 @@ class Sprite {
         this.dy = 0;
         this.rotation = 0;
         this._rpm = 0;
+        this.radius = 0;
     }
 
     update(dt) {
@@ -24,6 +25,16 @@ class Sprite {
         }
         this.x += this.dx * SPRITE_VELOCITY_FACTOR * dt;
         this.y += this.dy * SPRITE_VELOCITY_FACTOR * dt;
+        if (this.x < 0) {
+            this.x += REFERENCE_WIDTH;
+        } else if (this.x > REFERENCE_WIDTH) {
+            this.x -= REFERENCE_WIDTH;
+        }
+        if (this.y < 0) {
+            this.y += REFERENCE_HEIGHT;
+        } else if (this.y > REFERENCE_HEIGHT) {
+            this.y -= REFERENCE_HEIGHT;
+        }
     }
 
     get rpm() {
