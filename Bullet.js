@@ -1,6 +1,6 @@
 "use strict";
 
-const BULLET_SPEED = 400;
+const BULLET_SPEED = 2000;
 
 class Bullet extends Sprite {
     constructor(game) {
