@@ -12,7 +12,7 @@ class Ship extends Sprite {
         this.thrust = false;
         this.thrustDrawChance = 0;
         this.shotTaken = false;
-        this.radius = 100;
+        this.radius = 80;
     }
 
     setTurnLeft(turn) {
