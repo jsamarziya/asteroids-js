@@ -53,18 +53,17 @@ class Ship extends Sprite {
 
     drawSprite() {
         const ctx = this.game.gameContext;
-        const scale = this.game.scale;
         ctx.beginPath();
-        ctx.moveTo(Math.floor(-20 * scale), Math.floor(20 * scale));
-        ctx.lineTo(0, Math.floor(-40 * scale));
-        ctx.lineTo(Math.floor(20 * scale), Math.floor(20 * scale));
-        ctx.lineTo(0, Math.floor(10 * scale));
-        ctx.lineTo(Math.floor(-20 * scale), Math.floor(20 * scale));
+        ctx.moveTo(Math.floor(this.game.getScaledWidth(-40)), Math.floor(this.game.getScaledHeight(40)));
+        ctx.lineTo(0, Math.floor(this.game.getScaledHeight(-80)));
+        ctx.lineTo(Math.floor(this.game.getScaledWidth(40)), Math.floor(this.game.getScaledHeight(40)));
+        ctx.lineTo(0, Math.floor(this.game.getScaledHeight(20)));
+        ctx.lineTo(Math.floor(this.game.getScaledWidth(-40)), Math.floor(this.game.getScaledHeight(40)));
         ctx.fill();
         if (this.thrust && Math.random() < this.thrustDrawChance) {
-            ctx.moveTo(Math.floor(-10 * scale), Math.floor(15 * scale));
-            ctx.lineTo(0, Math.floor((Math.random() * 15 + 35) * scale));
-            ctx.lineTo(Math.floor(10 * scale), Math.floor(15 * scale));
+            ctx.moveTo(Math.floor(this.game.getScaledWidth(-20)), Math.floor(this.game.getScaledHeight(30)));
+            ctx.lineTo(0, Math.floor(this.game.getScaledHeight(Math.random() * 40 + 60)));
+            ctx.lineTo(Math.floor(this.game.getScaledWidth(20)), Math.floor(this.game.getScaledHeight(30)));
             this.thrustDrawChance = 0.3;
         }
         ctx.stroke();
@@ -74,11 +73,9 @@ class Ship extends Sprite {
         if (this.game.bulletCount < MAX_BULLETS) {
             const dx = Math.sin(this.rotation);
             const dy = -Math.cos(this.rotation);
-            // distance from the origin to the tip of the ship
-            const offset = this.game.getReferenceHeight(40 * this.game.scale);
             const bullet = new Bullet(this.game);
-            bullet.x = this.x + Math.floor(dx * offset);
-            bullet.y = this.y + Math.floor(dy * offset);
+            bullet.x = this.x + Math.floor(dx * 80);
+            bullet.y = this.y + Math.floor(dy * 80);
             bullet.dx = dx * BULLET_SPEED;
             bullet.dy = dy * BULLET_SPEED;
             this.game.sprites.push(bullet);

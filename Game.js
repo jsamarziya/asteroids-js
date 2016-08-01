@@ -19,7 +19,6 @@ class Game {
         this.showDebug = false;
         this.drawDebug = false;
         this.sprites = [];
-        this.setScale();
         this.initializeContexts();
     }
 
@@ -40,24 +39,12 @@ class Game {
         return "#BB0000";
     }
 
-    setScale() {
-        this.scale = this.gameCanvas.width * this.gameCanvas.height / 1000000;
-    }
-
     getScaledWidth(width) {
         return width / REFERENCE_WIDTH * this.gameCanvas.width;
     }
 
     getScaledHeight(height) {
         return height / REFERENCE_HEIGHT * this.gameCanvas.height;
-    }
-
-    getReferenceWidth(scaledWidth) {
-        return scaledWidth * REFERENCE_WIDTH / this.gameCanvas.width;
-    }
-
-    getReferenceHeight(scaledHeight) {
-        return scaledHeight * REFERENCE_HEIGHT / this.gameCanvas.height;
     }
 
     resizeDisplayElementsToWindow(window) {
@@ -80,7 +67,6 @@ class Game {
             element.height = height;
         });
         this.initializeContexts();
-        this.setScale();
     }
 
     start() {
