@@ -2,6 +2,7 @@
 
 const ASTEROID_RADII = 11;
 const ASTEROID_SEGMENT_ROTATION = FULL_CIRCLE / ASTEROID_RADII / 2;
+const ASTEROID_SIZE_LARGE = 230;
 
 class Asteroid extends Sprite {
     constructor(game, size) {
@@ -21,12 +22,11 @@ class Asteroid extends Sprite {
 
     drawSprite() {
         const ctx = this.game.gameContext;
-        const scale = this.game.scale;
         ctx.beginPath();
         this.radii.forEach(radius => {
                 for (let i = 0; i < 2; i++) {
                     ctx.rotate(ASTEROID_SEGMENT_ROTATION);
-                    ctx.lineTo(0, Math.floor(radius * scale));
+                    ctx.lineTo(0, Math.floor(this.game.getScaledHeight(radius)));
                 }
             }
         );
@@ -41,13 +41,13 @@ class Asteroid extends Sprite {
                     for (let i = 0; i < 2; i++) {
                         ctx.rotate(ASTEROID_SEGMENT_ROTATION);
                         ctx.moveTo(0, 0);
-                        ctx.lineTo(0, Math.floor(radius * scale));
+                        ctx.lineTo(0, Math.floor(this.game.getScaledHeight(radius)));
                     }
                 }
             );
             ctx.stroke();
             ctx.beginPath();
-            ctx.arc(0, 0, Math.floor(this.size * scale), 0, FULL_CIRCLE);
+            ctx.arc(0, 0, Math.floor(this.game.getScaledHeight(this.size)), 0, FULL_CIRCLE);
             ctx.stroke();
             ctx.restore();
         }

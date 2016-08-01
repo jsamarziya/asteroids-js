@@ -2,6 +2,8 @@
 
 const MAX_DELTA_TIME = 160;
 const REFERENCE_DELTA_TIME = 1000 / 60;
+const REFERENCE_WIDTH = 4000;
+const REFERENCE_HEIGHT = 3000;
 
 class Game {
     constructor(container, gameCanvas, debugCanvas) {
@@ -17,11 +19,18 @@ class Game {
         this.showDebug = false;
         this.drawDebug = false;
         this.sprites = [];
-        this.setScale();
-        this.initDebugContext();
+        this.initializeContexts();
     }
 
-    initDebugContext() {
+    initializeContexts() {
+        this.initializeGameContext();
+        this.initializeDebugContext();
+    }
+
+    initializeGameContext() {
+    }
+
+    initializeDebugContext() {
         this.debugContext.fillStyle = "#A0A0A0";
     }
 
@@ -30,8 +39,34 @@ class Game {
         return "#BB0000";
     }
 
-    setScale() {
-        this.scale = this.gameCanvas.width * this.gameCanvas.height / 1000000;
+    getScaledWidth(width) {
+        return width / REFERENCE_WIDTH * this.gameCanvas.width;
+    }
+
+    getScaledHeight(height) {
+        return height / REFERENCE_HEIGHT * this.gameCanvas.height;
+    }
+
+    resizeDisplayElementsToWindow(window) {
+        const windowWidth = window.innerWidth;
+        const windowHeight = window.innerHeight;
+        let width = windowWidth * 0.9;
+        let height = width * 3 / 4;
+        if (height > windowHeight * 0.9) {
+            height = windowHeight * 0.9;
+            width = height * 4 / 3;
+        }
+        this.resizeDisplayElements(Math.floor(width), Math.floor(height));
+    }
+
+    resizeDisplayElements(width, height) {
+        this.container.style.width = width + "px";
+        this.container.style.height = height + "px";
+        [this.gameCanvas, this.debugCanvas].forEach(element=> {
+            element.width = width;
+            element.height = height;
+        });
+        this.initializeContexts();
     }
 
     start() {
