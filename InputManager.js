@@ -38,6 +38,6 @@ class InputManager {
     }
 
     static shouldPreventDefaultEventAction(event) {
-        return event.key.startsWith("Arrow");
+        return event.key.startsWith("Arrow") || event.key == " ";
     }
 }
