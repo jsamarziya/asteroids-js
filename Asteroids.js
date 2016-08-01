@@ -53,7 +53,7 @@ class Asteroids extends Game {
     drawDebugLayerExtensions() {
         this.debugContext.fillText("pos: (" + Math.floor(this.ship.scaledX) + ", " + Math.floor(this.ship.scaledY) + ")", 0, 0, 100);
         this.debugContext.translate(100, 0);
-        this.debugContext.fillText("v: (" + Math.round(this.ship.dx) + ", " + Math.round(this.ship.dy) + ")", 0, 0, 100);
+        this.debugContext.fillText("v: (" + Math.round(this.getScaledWidth(this.ship.dx)) + ", " + Math.round(this.getScaledHeight(this.ship.dy)) + ")", 0, 0, 100);
         this.debugContext.translate(100, 0);
         this.debugContext.fillText("\u03b8: " + Math.floor(this.ship.rotation * 180 / Math.PI) +"\xB0", 0, 0, 100);
     }
