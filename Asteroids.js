@@ -6,7 +6,7 @@ class Asteroids extends Game {
         this.createStars();
         this.createShip();
 
-        this.scheduler.schedule(this.createAsteroid.bind(this, 200, 1000, 1000), 3000);
+        this.scheduler.schedule(this.createAsteroid.bind(this, ASTEROID_SIZE_LARGE, 1000, 1000), 3000);
     }
 
     initializeGameContext() {
@@ -55,7 +55,7 @@ class Asteroids extends Game {
         this.debugContext.translate(100, 0);
         this.debugContext.fillText("v: (" + Math.round(this.getScaledWidth(this.ship.dx)) + ", " + Math.round(this.getScaledHeight(this.ship.dy)) + ")", 0, 0, 100);
         this.debugContext.translate(100, 0);
-        this.debugContext.fillText("\u03b8: " + Math.floor(this.ship.rotation * 180 / Math.PI) +"\xB0", 0, 0, 100);
+        this.debugContext.fillText("\u03b8: " + Math.floor(this.ship.rotation * 180 / Math.PI) + "\xB0", 0, 0, 100);
     }
 
     get bulletCount() {

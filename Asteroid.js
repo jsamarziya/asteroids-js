@@ -2,6 +2,7 @@
 
 const ASTEROID_RADII = 11;
 const ASTEROID_SEGMENT_ROTATION = FULL_CIRCLE / ASTEROID_RADII / 2;
+const ASTEROID_SIZE_LARGE = 230;
 
 class Asteroid extends Sprite {
     constructor(game, size) {
