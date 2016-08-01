@@ -52,6 +52,14 @@ class Game {
         return height / REFERENCE_HEIGHT * this.gameCanvas.height;
     }
 
+    getReferenceWidth(scaledWidth) {
+        return scaledWidth * REFERENCE_WIDTH / this.gameCanvas.width;
+    }
+
+    getReferenceHeight(scaledHeight) {
+        return scaledHeight * REFERENCE_HEIGHT / this.gameCanvas.height;
+    }
+
     resizeDisplayElementsToWindow(window) {
         const windowWidth = window.innerWidth;
         const windowHeight = window.innerHeight;
