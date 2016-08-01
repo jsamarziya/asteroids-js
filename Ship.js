@@ -48,6 +48,11 @@ class Ship extends Sprite {
             this.shotTaken = false;
             this.addBullet();
         }
+        this.drawThrust = this.thrust && Math.random() < this.thrustDrawChance;
+        if (this.drawThrust) {
+            this.thrustDrawChance = 0.3;
+            this.thrustLength = Math.random();
+        }
         super.update(dt)
     }
 
@@ -60,11 +65,10 @@ class Ship extends Sprite {
         ctx.lineTo(0, Math.floor(this.game.getScaledHeight(20)));
         ctx.lineTo(Math.floor(this.game.getScaledWidth(-40)), Math.floor(this.game.getScaledHeight(40)));
         ctx.fill();
-        if (this.thrust && Math.random() < this.thrustDrawChance) {
+        if (this.drawThrust) {
             ctx.moveTo(Math.floor(this.game.getScaledWidth(-20)), Math.floor(this.game.getScaledHeight(30)));
-            ctx.lineTo(0, Math.floor(this.game.getScaledHeight(Math.random() * 40 + 60)));
+            ctx.lineTo(0, Math.floor(this.game.getScaledHeight(this.thrustLength * 40 + 60)));
             ctx.lineTo(Math.floor(this.game.getScaledWidth(20)), Math.floor(this.game.getScaledHeight(30)));
-            this.thrustDrawChance = 0.3;
         }
         ctx.stroke();
     }
