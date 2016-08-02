@@ -1,7 +1,7 @@
 "use strict";
 
 /**
- * The maximum time delta (in milliseconds) that {@link Game#update()} will accept. Time deltas greater than this are
+ * The maximum time delta (in milliseconds) that {@link Game#update} will accept. Time deltas greater than this are
  * discarded, to prevent {@link https://hacks.mozilla.org/2011/08/animating-with-javascript-from-setinterval-to-requestanimationframe wormholes}.
  * @type {number}
  */
@@ -135,14 +135,14 @@ class Game {
     }
 
     /**
-     * Registers {@link Game#update()} as a {@link Window#requestAnimationFrame()} callback.
+     * Registers {@link Game#update} as a {@link Window#requestAnimationFrame} callback.
      */
     requestAnimationFrame() {
         window.requestAnimationFrame(this.update.bind(this));
     }
 
     /**
-     * The game's {@link Window#requestAnimationFrame()} callback function.
+     * The game's {@link Window#requestAnimationFrame} callback function.
      * @param {number} timestamp the timestamp
      */
     update(timestamp) {
