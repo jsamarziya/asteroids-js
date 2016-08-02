@@ -57,8 +57,7 @@ class Ship extends Sprite {
         super.update(dt)
     }
 
-    drawSprite() {
-        const ctx = this.game.gameContext;
+    drawSprite(ctx) {
         ctx.beginPath();
         ctx.moveTo(Math.floor(this.game.getScaledWidth(-40)), Math.floor(this.game.getScaledHeight(40)));
         ctx.lineTo(0, Math.floor(this.game.getScaledHeight(-80)));

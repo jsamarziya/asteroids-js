@@ -4,7 +4,15 @@ const FULL_CIRCLE = 2 * Math.PI;
 const SPRITE_VELOCITY_FACTOR = 1 / 1000;
 const ROTATION_PER_MILLISECOND = FULL_CIRCLE / 60 / 1000;
 
+/**
+ * The sprite object.
+ */
 class Sprite {
+    /**
+     * Constructs a new Sprite.
+     *
+     * @param {Game} game the Game to which the sprite will belong
+     */
     constructor(game) {
         this.game = game;
         this.x = 0;
@@ -59,7 +67,7 @@ class Sprite {
         ctx.translate(this.scaledX, this.scaledY);
         ctx.save();
         ctx.rotate(this.rotation);
-        this.drawInternal();
+        this.drawInternal(ctx);
         ctx.restore();
 
         let wraparound = false;
@@ -79,15 +87,14 @@ class Sprite {
         }
         if (wraparound) {
             ctx.rotate(this.rotation);
-            this.drawInternal();
+            this.drawInternal(ctx);
         }
         ctx.restore();
     }
 
-    drawInternal() {
-        this.drawSprite();
+    drawInternal(ctx) {
+        this.drawSprite(ctx);
         if (this.game.drawDebug) {
-            const ctx = this.game.gameContext;
             ctx.save();
             ctx.strokeStyle = this.game.drawDebugStyle;
             ctx.beginPath();
@@ -95,5 +102,14 @@ class Sprite {
             ctx.stroke();
             ctx.restore();
         }
+    }
+
+    /**
+     * Draws the sprite.  The rendering context will have been translated and rotated before this method is called.
+     * @abstract
+     * @param {CanvasRenderingContext2D} ctx the rendering context
+     */
+    drawSprite(ctx) {
+        throw new Error('must be implemented by subclass!');
     }
 }

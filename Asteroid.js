@@ -20,8 +20,7 @@ class Asteroid extends Sprite {
         return radii;
     }
 
-    drawSprite() {
-        const ctx = this.game.gameContext;
+    drawSprite(ctx) {
         ctx.beginPath();
         this.radii.forEach(radius => {
                 for (let i = 0; i < 2; i++) {

@@ -17,8 +17,7 @@ class Bullet extends Sprite {
         }
     }
 
-    drawSprite() {
-        const ctx = this.game.gameContext;
+    drawSprite(ctx) {
         ctx.save();
         ctx.fillStyle = "white";
         ctx.fillRect(0, 0, 2, 2);
