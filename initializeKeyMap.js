@@ -1,5 +1,9 @@
 "use strict";
 
+/**
+ * Creates the keys used in the Asteroids game and adds them to the input manager's key map.
+ * @param {Asteroids} asteroids the asteroids game
+ */
 function initializeKeyMap(asteroids) {
     asteroids.inputManager.keyMap = {
         drawDebug: createDrawDebugKey(),
