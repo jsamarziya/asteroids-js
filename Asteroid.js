@@ -7,14 +7,14 @@ const ASTEROID_SIZE_LARGE = 230;
 class Asteroid extends Sprite {
     constructor(game, size) {
         super(game);
-        this.size = size;
+        this.radius = size;
         this.radii = this.createRadii();
     }
 
     createRadii() {
         const radii = [];
         for (let i = 0; i < ASTEROID_RADII; i++) {
-            const radius = (1 - Math.random() * 0.5) * this.size;
+            const radius = (1 - Math.random() * 0.5) * this.radius;
             radii.push(radius);
         }
         return radii;
@@ -45,9 +45,6 @@ class Asteroid extends Sprite {
                     }
                 }
             );
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.arc(0, 0, Math.floor(this.game.getScaledHeight(this.size)), 0, FULL_CIRCLE);
             ctx.stroke();
             ctx.restore();
         }
