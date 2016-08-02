@@ -5,7 +5,7 @@ const BULLET_SPEED = 2000;
 class Bullet extends Sprite {
     constructor(game) {
         super(game);
-        this.timeRemaining = 1500;
+        this.timeRemaining = 1200;
     }
 
     update(dt) {
