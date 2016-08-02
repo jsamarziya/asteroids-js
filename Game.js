@@ -214,7 +214,7 @@ class Game {
     }
 
     /**
-     * A hook method that can be overridden to add drawing to debug layer.
+     * A hook method that can be overridden to add more elements to the debug layer.
      */
     drawDebugLayerExtensions() {
     }
