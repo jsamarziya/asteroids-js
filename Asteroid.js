@@ -33,7 +33,7 @@ class Asteroid extends Sprite {
 
     /**
      * Creates the radii of the segments of this asteroid.
-     * @returns {Array}
+     * @returns {number[]} the radii
      */
     createRadii() {
         const radii = [];
