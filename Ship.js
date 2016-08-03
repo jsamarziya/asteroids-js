@@ -1,10 +1,28 @@
 "use strict";
-
+/**
+ * The amount the ship speed decreases each reference time unit.
+ * @type {number}
+ */
 const SHIP_DECELERATION = 1 - 1 / 400;
+/**
+ * The number of rotations per minute the ship rotates while turning.
+ * @type {number}
+ */
 const SHIP_RPM = 23;
+/**
+ * The maximum number of bullets allowed at any given time.
+ * @type {number}
+ */
 const MAX_BULLETS = 4;
 
+/**
+ * The ship sprite.
+ */
 class Ship extends Sprite {
+    /**
+     * Constructs a new Ship.
+     * @param {Game} game the Game to which the sprite will belong
+     */
     constructor(game) {
         super(game);
         this.turnLeft = false;
@@ -15,27 +33,50 @@ class Ship extends Sprite {
         this.radius = 80;
     }
 
+    /**
+     * Sets the flag which indicates that the ship is turning left.
+     * @param {boolean} turn true if turning left, false if not
+     */
     setTurnLeft(turn) {
         this.turnLeft = turn;
     }
 
+    /**
+     * Sets the flag which indicates that the ship is turning right.
+     * @param {boolean} turn true if turning right, false if not
+     */
     setTurnRight(turn) {
         this.turnRight = turn;
     }
 
+    /**
+     * Sets the flag which indicates that the ship is thrusting.
+     * @param {boolean} thrust true if thrusting, false if not
+     */
     setThrust(thrust) {
         this.thrust = thrust;
         this.thrustDrawChance = thrust | 0;
     }
 
+    /**
+     * Sets the flag which indicates that a shot is being taken.
+     */
     shoot() {
         this.shotTaken = true;
     }
 
+    /**
+     * @override
+     * @inheritDoc
+     */
     get rpm() {
         return ((this.turnRight | 0 ) - (this.turnLeft | 0)) * SHIP_RPM;
     }
 
+    /**
+     * @override
+     * @inheritDoc
+     */
     update(dt) {
         const timeUnits = dt / REFERENCE_DELTA_TIME;
         if (this.thrust) {
@@ -57,6 +98,10 @@ class Ship extends Sprite {
         super.update(dt)
     }
 
+    /**
+     * @override
+     * @inheritDoc
+     */
     drawSprite(ctx) {
         ctx.beginPath();
         ctx.moveTo(Math.floor(this.game.getScaledWidth(-40)), Math.floor(this.game.getScaledHeight(40)));
@@ -73,6 +118,9 @@ class Ship extends Sprite {
         ctx.stroke();
     }
 
+    /**
+     * Creates a bullet and adds it to the world.
+     */
     addBullet() {
         if (this.game.bulletCount < MAX_BULLETS) {
             const dx = Math.sin(this.rotation);
