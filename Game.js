@@ -249,4 +249,16 @@ class Game {
     toggleDrawDebug() {
         this.drawDebug = !this.drawDebug;
     }
+
+    /**
+     * Returns the number of sprites of the specified type currently in existence.
+     * @param {function} type the type of sprite to count
+     * @returns {number} the number of sprites of the specified type currently in existence
+     */
+    getSpriteCount(type) {
+        return this.sprites.reduce((prev, curr)=> {
+            return prev + (curr instanceof type);
+        }, 0);
+    }
+
 }

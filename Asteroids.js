@@ -89,14 +89,4 @@ class Asteroids extends Game {
         this.debugContext.translate(100, 0);
         this.debugContext.fillText("\u03b8: " + Math.floor(this.ship.rotation * 180 / Math.PI) + "\xB0", 0, 0, 100);
     }
-
-    /**
-     * Returns the number of bullets currently in existence
-     * @returns {number} the number of bullets
-     */
-    get bulletCount() {
-        return this.sprites.reduce((prev, curr)=> {
-            return prev + (curr instanceof Bullet);
-        }, 0);
-    }
 }
