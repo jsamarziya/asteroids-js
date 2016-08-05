@@ -151,4 +151,13 @@ class Sprite {
     drawSprite(ctx) {
         throw new Error('must be implemented by subclass!');
     }
+
+    /**
+     * Checks whether or not this sprite can collide with another sprite.
+     * @param {Sprite} sprite the sprite
+     * @return {boolean} true if this sprite can collide with the specified sprite, false otherwise
+     */
+    canCollideWith(sprite) {
+        return false;
+    }
 }

@@ -1,4 +1,5 @@
 "use strict";
+
 /**
  * The amount the ship speed decreases each reference time unit.
  * @type {number}
@@ -119,10 +120,18 @@ class Ship extends Sprite {
     }
 
     /**
+     * @inheritDoc
+     * @override
+     */
+    canCollideWith(sprite) {
+        return sprite instanceof Asteroid;
+    }
+
+    /**
      * Creates a bullet and adds it to the world.
      */
     addBullet() {
-        if (this.game.bulletCount < MAX_BULLETS) {
+        if (this.game.getSpriteCount(Bullet) < MAX_BULLETS) {
             const dx = Math.sin(this.rotation);
             const dy = -Math.cos(this.rotation);
             const bullet = new Bullet(this.game);

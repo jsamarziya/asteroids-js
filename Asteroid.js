@@ -76,5 +76,13 @@ class Asteroid extends Sprite {
             ctx.restore();
         }
     }
+
+    /**
+     * @inheritDoc
+     * @override
+     */
+    canCollideWith(sprite) {
+        return sprite instanceof Ship || sprite instanceof Bullet;
+    }
 }
 

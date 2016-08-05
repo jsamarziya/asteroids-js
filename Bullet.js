@@ -42,4 +42,12 @@ class Bullet extends Sprite {
         ctx.fillRect(0, 0, 2, 2);
         ctx.restore();
     }
+
+    /**
+     * @inheritDoc
+     * @override
+     */
+    canCollideWith(sprite) {
+        return sprite instanceof Asteroid;
+    }
 }
