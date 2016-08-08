@@ -4,12 +4,12 @@
  * The number of radii created by {@link Asteroid#createRadii}.
  * @type {number}
  */
-const ASTEROID_RADII = 11;
+const ASTEROID_RADII = 9;
 /**
  * The amount (in radians) that the context is rotated between each segment drawn.
  * @type {number}
  */
-const ASTEROID_SEGMENT_ROTATION = FULL_CIRCLE / ASTEROID_RADII / 2;
+const ASTEROID_SEGMENT_ROTATION = FULL_CIRCLE / ASTEROID_RADII;
 /**
  * The size of a large asteroid.
  * @type {number}
@@ -29,7 +29,9 @@ class Asteroid extends Sprite {
         super(game);
         this.radius = size;
         this.radii = this.createRadii();
+        this.legLength = this.radius / ASTEROID_RADII * 2;
         this.hitRegion = new SAT.Circle(new SAT.Vector(super.x, super.y), this.radius);
+        this.boundingRegions = this.createBoundingRegions();
     }
 
     /**
@@ -78,16 +80,38 @@ class Asteroid extends Sprite {
     }
 
     /**
+     * Creates the bounding regions of this asteroid.
+     * @return {[SAT.Polygon]} the bounding regions
+     */
+    createBoundingRegions() {
+        // TODO implement me
+        return [new SAT.Circle(new SAT.Vector(super.x, super.y), this.radius)];
+    }
+
+    /**
+     * @inheritDoc
+     * @override
+     */
+    update(dt) {
+        super.update(dt);
+        this.collision = false;
+    }
+
+    /**
      * @inheritDoc
      * @override
      */
     drawSprite(ctx) {
+        const legLength = Math.floor(this.game.getScaledWidth(this.legLength));
         ctx.beginPath();
+        if (this.collision) {
+            ctx.strokeStyle = "red";
+        }
         this.radii.forEach(radius => {
-                for (let i = 0; i < 2; i++) {
-                    ctx.rotate(ASTEROID_SEGMENT_ROTATION);
-                    ctx.lineTo(0, Math.floor(this.game.getScaledHeight(radius)));
-                }
+                const scaledRadius = Math.floor(this.game.getScaledHeight(radius));
+                ctx.rotate(ASTEROID_SEGMENT_ROTATION);
+                ctx.lineTo(0, scaledRadius);
+                ctx.lineTo(-legLength, scaledRadius);
             }
         );
         ctx.closePath();
@@ -98,11 +122,11 @@ class Asteroid extends Sprite {
             ctx.strokeStyle = this.game.drawDebugStyle;
             ctx.beginPath();
             this.radii.forEach(radius => {
-                    for (let i = 0; i < 2; i++) {
-                        ctx.rotate(ASTEROID_SEGMENT_ROTATION);
-                        ctx.moveTo(0, 0);
-                        ctx.lineTo(0, Math.floor(this.game.getScaledHeight(radius)));
-                    }
+                    const scaledRadius = Math.floor(this.game.getScaledHeight(radius));
+                    ctx.rotate(ASTEROID_SEGMENT_ROTATION);
+                    ctx.moveTo(0, scaledRadius);
+                    ctx.lineTo(0, 0);
+                    ctx.lineTo(-legLength, scaledRadius);
                 }
             );
             ctx.stroke();
@@ -116,5 +140,13 @@ class Asteroid extends Sprite {
      */
     canCollideWith(sprite) {
         return sprite instanceof Ship || sprite instanceof Bullet;
+    }
+
+    /**
+     * @inheritDoc
+     * @override
+     */
+    collisionDetected(sprite) {
+        this.collision = true;
     }
 }
