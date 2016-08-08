@@ -34,6 +34,7 @@ class Sprite {
         this.rotation = 0;
         this._rpm = 0;
         this.radius = 0;
+        this.boundingRegionsUpdated = false;
     }
 
     /**
@@ -139,6 +140,7 @@ class Sprite {
         } else if (this.y > REFERENCE_HEIGHT) {
             this.y -= REFERENCE_HEIGHT;
         }
+        this.boundingRegionsUpdated = false;
     }
 
     /**
@@ -245,37 +247,7 @@ class Sprite {
      * <code>false</code> otherwise
      */
     isHitRegionOverlapping(sprite) {
-        function unhandledHitRegion(hitRegion) {
-            throw new Error("unhandled hit region type " + hitRegion.constructor.name);
-        }
-
-        const myHitRegion = this.hitRegion;
-        if (myHitRegion == null) {
-            return false;
-        }
-        const spriteHitRegion = sprite.hitRegion;
-        if (spriteHitRegion == null) {
-            return false;
-        }
-        if (myHitRegion instanceof SAT.Circle) {
-            if (spriteHitRegion instanceof SAT.Circle) {
-                return SAT.testCircleCircle(myHitRegion, spriteHitRegion);
-            } else if (spriteHitRegion instanceof SAT.Vector) {
-                return SAT.pointInCircle(spriteHitRegion, myHitRegion);
-            } else {
-                unhandledHitRegion(spriteHitRegion);
-            }
-        } else if (myHitRegion instanceof SAT.Vector) {
-            if (spriteHitRegion instanceof SAT.Circle) {
-                return SAT.pointInCircle(myHitRegion, spriteHitRegion);
-            } else if (spriteHitRegion instanceof SAT.Vector) {
-                return myHitRegion.x == spriteHitRegion.x && myHitRegion.y == spriteHitRegion.y;
-            } else {
-                unhandledHitRegion(spriteHitRegion);
-            }
-        } else {
-            unhandledHitRegion(myHitRegion);
-        }
+        return Sprite.testOverlap(this.hitRegion, sprite.hitRegion);
     }
 
     /**
@@ -285,11 +257,96 @@ class Sprite {
      * <code>false</code> otherwise
      */
     isSpriteOverlapping(sprite) {
-        // check actual boundaries via SAT
-        //    SAT polygon(s) should be created once, and then we set angle and offset on it when we're checking. but we
-        //    should only set angle and offset once per update, so keep a flag to optimize this (clear flag in update(),
-        //    set flag when applying the angle and offset)
-        // TODO implement me
-        return true;
+        return this.updatedBoundingRegions.some(myBoundingRegion => {
+            return sprite.updatedBoundingRegions.some(spriteBoundingRegion => {
+                    return Sprite.testOverlap(myBoundingRegion, spriteBoundingRegion);
+                }
+            );
+        });
+    }
+
+    /**
+     * Returns the bounding regions of this sprite, updating them if needed.
+     * @return {[SAT.Circle|SAT.Polygon|SAT.Vector]} the updated bounding regions
+     */
+    get updatedBoundingRegions() {
+        if (!this.boundingRegionsUpdated) {
+            this.updateBoundingRegions();
+        }
+        return this.boundingRegions;
+    }
+
+    /**
+     * Updates this sprite's bounding regions.
+     */
+    updateBoundingRegions() {
+        if (this.boundingRegions != null) {
+            this.boundingRegions.forEach(boundingRegion => {
+                if (boundingRegion instanceof SAT.Circle) {
+                    boundingRegion.pos.x = this.x;
+                    boundingRegion.pos.y = this.y;
+                } else if (boundingRegion instanceof SAT.Polygon) {
+                    boundingRegion.pos.x = this.x;
+                    boundingRegion.pos.y = this.y;
+                    boundingRegion.setAngle(this.rotation);
+                } else if (boundingRegion instanceof SAT.Vector) {
+                    boundingRegion.x = this.x;
+                    boundingRegion.y = this.y;
+                } else {
+                    Sprite.unhandledRegionType(boundingRegion);
+                }
+            });
+        }
+        this.boundingRegionsUpdated = true;
+    }
+
+    /**
+     * Tests for overlap between two regions.
+     * @param {SAT.Circle|SAT.Polygon|SAT.Vector} region1 the first region
+     * @param {SAT.Circle|SAT.Polygon|SAT.Vector} region2 the second region
+     * @return {boolean} <code>true</code> if the two regions overlap, <code>false</code> otherwise
+     */
+    static testOverlap(region1, region2) {
+        if (region1 instanceof SAT.Circle) {
+            if (region2 instanceof SAT.Circle) {
+                return SAT.testCircleCircle(region1, region2);
+            } else if (region2 instanceof SAT.Polygon) {
+                return SAT.testCirclePolygon(region1, region2);
+            } else if (region2 instanceof SAT.Vector) {
+                return SAT.pointInCircle(region2, region1);
+            } else {
+                Sprite.unhandledRegionType(region2);
+            }
+        } else if (region1 instanceof SAT.Polygon) {
+            if (region2 instanceof SAT.Circle) {
+                return SAT.testPolygonCircle(region1, region2);
+            } else if (region2 instanceof SAT.Polygon) {
+                return SAT.testPolygonPolygon(region1, region2);
+            } else if (region2 instanceof SAT.Vector) {
+                return SAT.pointInPolygon(region2, region1);
+            } else {
+                Sprite.unhandledRegionType(region2);
+            }
+        } else if (region1 instanceof SAT.Vector) {
+            if (region2 instanceof SAT.Circle) {
+                return SAT.pointInCircle(region1, region2);
+            } else if (region2 instanceof Polygon) {
+                return SAT.pointInPolygon(region1, region2);
+            } else if (region2 instanceof SAT.Vector) {
+                return region1.x == region2.x && region1.y == region2.y;
+            } else {
+                Sprite.unhandledRegionType(region2);
+            }
+        } else {
+            Sprite.unhandledRegionType(region1);
+        }
+    }
+
+    /**
+     * Called when an unknown type of region is encountered.
+     * @param {Object} region the region
+     */
+    static unhandledRegionType(region) {
+        throw new Error("unhandled region type " + region.constructor.name);
     }
 }
