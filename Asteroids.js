@@ -42,8 +42,8 @@ class Asteroids extends Game {
     /**
      * Creates an asteroid.
      * @param {number} size the size of the asteroid to create
-     * @param {number} x the x-coordinate of the asteroid's location
-     * @param {number} y the y-coordinate of the asteroid's location
+     * @param {number} x the x-coordinate of the asteroid's position
+     * @param {number} y the y-coordinate of the asteroid's position
      */
     createAsteroid(size, x, y) {
         const asteroid = new Asteroid(this, size);
