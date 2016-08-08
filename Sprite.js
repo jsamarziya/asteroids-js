@@ -27,13 +27,93 @@ class Sprite {
      */
     constructor(game) {
         this.game = game;
-        this.x = 0;
-        this.y = 0;
+        this._x = 0;
+        this._y = 0;
         this.dx = 0;
         this.dy = 0;
         this.rotation = 0;
         this._rpm = 0;
         this.radius = 0;
+    }
+
+    /**
+     * Returns the x-coordinate of this sprite's position.
+     * @return {number} the x-coordinate
+     */
+    get x() {
+        return this._x;
+    }
+
+    /**
+     * Sets the x-coordinate of this sprite's position.
+     * @param {number} x the x-coordinate
+     */
+    set x(x) {
+        this._x = x;
+    }
+
+    /**
+     * Returns the y-coordinate of this sprite's position.
+     * @return {number} the y-coordinate
+     */
+    get y() {
+        return this._y;
+    }
+
+    /**
+     * Sets the y-coordinate of this sprite's position.
+     * @param {number} y the y-coordinate
+     */
+    set y(y) {
+        this._y = y;
+    }
+
+    /**
+     * Returns the number of rotations per minute that this sprite is rotating.
+     * @returns {number} the rotation of this sprite, in rotations per minute
+     */
+    get rpm() {
+        return this._rpm;
+    }
+
+    /**
+     * Sets the number of rotations per minute that this sprite is rotating.
+     * @param {number} rpm the rotation of this sprite, in rotations per minute
+     */
+    set rpm(rpm) {
+        this._rpm = rpm;
+    }
+
+    /**
+     * Returns the x-coordinate of the position of this sprite, scaled to the game canvas
+     * @returns {number} the scaled x-coordinate
+     */
+    get scaledX() {
+        return this.game.getScaledWidth(this.x);
+    }
+
+    /**
+     * Returns the y-coordinate of the position of this sprite, scaled to the game canvas
+     * @returns {number} the scaled y-coordinate
+     */
+    get scaledY() {
+        return this.game.getScaledHeight(this.y);
+    }
+
+    /**
+     * Returns the hit region of this sprite.
+     * @return {SAT.Circle|SAT.Vector} the hit region, or <code>null</code> if this sprite has no hit region
+     */
+    get hitRegion() {
+        return this._hitRegion;
+    }
+
+    /**
+     * Sets the hit region of this sprite.
+     * @param {SAT.Circle|SAT.Vector} region the hit region
+     */
+    set hitRegion(region) {
+        this._hitRegion = region;
     }
 
     /**
@@ -59,38 +139,6 @@ class Sprite {
         } else if (this.y > REFERENCE_HEIGHT) {
             this.y -= REFERENCE_HEIGHT;
         }
-    }
-
-    /**
-     * Returns the number of rotations per minute that this sprite is rotating.
-     * @returns {number} the rotation of this sprite, in rotations per minute
-     */
-    get rpm() {
-        return this._rpm;
-    }
-
-    /**
-     * Sets the number of rotations per minute that this sprite is rotating.
-     * @param {number} rpm the rotation of this sprite, in rotations per minute
-     */
-    set rpm(rpm) {
-        this._rpm = rpm;
-    }
-
-    /**
-     * Returns the x-coordinate of the location of this sprite, scaled to the game canvas
-     * @returns {number} the scaled x-coordinate
-     */
-    get scaledX() {
-        return this.game.getScaledWidth(this.x);
-    }
-
-    /**
-     * Returns the y-coordinate of the location of this sprite, scaled to the game canvas
-     * @returns {number} the scaled y-coordinate
-     */
-    get scaledY() {
-        return this.game.getScaledHeight(this.y);
     }
 
     /**
@@ -129,7 +177,7 @@ class Sprite {
 
     /**
      * Draws this sprite.
-     * @param ctx the context to draw to
+     * @param {CanvasRenderingContext2D} ctx the context to draw to
      */
     drawInternal(ctx) {
         this.drawSprite(ctx);
@@ -153,11 +201,95 @@ class Sprite {
     }
 
     /**
-     * Checks whether or not this sprite can collide with another sprite.
+     * Checks for a collision between this sprite and another sprite.
+     * @param {Sprite} sprite the sprite to check
+     */
+    checkForCollision(sprite) {
+        if (this.canCollideWith(sprite) && this.isColliding(sprite)) {
+            this.collisionDetected(sprite);
+            sprite.collisionDetected(this);
+        }
+    }
+
+    /**
+     * Notifies this sprite that a collision has been detected between it and another sprite.
+     * @param {Sprite} sprite the sprite that collided with this sprite
+     */
+    collisionDetected(sprite) {
+    }
+
+    /**
+     * Checks if this sprite can collide with another sprite.
      * @param {Sprite} sprite the sprite
-     * @return {boolean} true if this sprite can collide with the specified sprite, false otherwise
+     * @return {boolean} <code>true</code> if this sprite can collide with the specified sprite, <code>false</code>
+     * otherwise
      */
     canCollideWith(sprite) {
         return false;
+    }
+
+    /**
+     * Checks if this sprite is colliding with another sprite.
+     * @param {Sprite} sprite the sprite to check
+     * @return {boolean} <code>true</code> if this sprite is colliding with the specified sprite, <code>false</code>
+     * otherwise
+     */
+    isColliding(sprite) {
+        return this.isHitRegionOverlapping(sprite) && this.isSpriteOverlapping(sprite);
+    }
+
+    /**
+     * Checks if this sprite's hit region overlaps with that of a specified sprite.
+     * @param  {Sprite} sprite the sprite to check
+     * @return {boolean} <code>true</code> if this sprite's hit region overlaps with that of the specified sprite,
+     * <code>false</code> otherwise
+     */
+    isHitRegionOverlapping(sprite) {
+        function unhandledHitRegion(hitRegion) {
+            throw new Error("unhandled hit region type " + hitRegion.constructor.name);
+        }
+
+        const myHitRegion = this.hitRegion;
+        if (myHitRegion == null) {
+            return false;
+        }
+        const spriteHitRegion = sprite.hitRegion;
+        if (spriteHitRegion == null) {
+            return false;
+        }
+        if (myHitRegion instanceof SAT.Circle) {
+            if (spriteHitRegion instanceof SAT.Circle) {
+                return SAT.testCircleCircle(myHitRegion, spriteHitRegion);
+            } else if (spriteHitRegion instanceof SAT.Vector) {
+                return SAT.pointInCircle(spriteHitRegion, myHitRegion);
+            } else {
+                unhandledHitRegion(spriteHitRegion);
+            }
+        } else if (myHitRegion instanceof SAT.Vector) {
+            if (spriteHitRegion instanceof SAT.Circle) {
+                return SAT.pointInCircle(myHitRegion, spriteHitRegion);
+            } else if (spriteHitRegion instanceof SAT.Vector) {
+                return myHitRegion.x == spriteHitRegion.x && myHitRegion.y == spriteHitRegion.y;
+            } else {
+                unhandledHitRegion(spriteHitRegion);
+            }
+        } else {
+            unhandledHitRegion(myHitRegion);
+        }
+    }
+
+    /**
+     * Checks if this sprite's actual boundaries overlap with those of a specified sprite.
+     * @param {Sprite} sprite the sprite to check
+     * @return {boolean} <code>true</code> if this sprite's boundaries overlap with those of the specified sprite,
+     * <code>false</code> otherwise
+     */
+    isSpriteOverlapping(sprite) {
+        // check actual boundaries via SAT
+        //    SAT polygon(s) should be created once, and then we set angle and offset on it when we're checking. but we
+        //    should only set angle and offset once per update, so keep a flag to optimize this (clear flag in update(),
+        //    set flag when applying the angle and offset)
+        // TODO implement me
+        return true;
     }
 }

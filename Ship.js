@@ -32,6 +32,39 @@ class Ship extends Sprite {
         this.thrustDrawChance = 0;
         this.shotTaken = false;
         this.radius = 80;
+        this.hitRegion = new SAT.Circle(new SAT.Vector(super.x, super.y), this.radius);
+    }
+
+    /**
+     * @override
+     * @inheritDoc
+     */
+    get x() {
+        return this.hitRegion.pos.x;
+    }
+
+    /**
+     * @override
+     * @inheritDoc
+     */
+    set x(x) {
+        this.hitRegion.pos.x = x;
+    }
+
+    /**
+     * @override
+     * @inheritDoc
+     */
+    get y() {
+        return this.hitRegion.pos.y;
+    }
+
+    /**
+     * @override
+     * @inheritDoc
+     */
+    set y(y) {
+        this.hitRegion.pos.y = y;
     }
 
     /**

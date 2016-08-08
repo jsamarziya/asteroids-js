@@ -17,6 +17,39 @@ class Bullet extends Sprite {
     constructor(game) {
         super(game);
         this.timeRemaining = 1200;
+        this.hitRegion = new SAT.Vector(super.x, super.y);
+    }
+
+    /**
+     * @override
+     * @inheritDoc
+     */
+    get x() {
+        return this.hitRegion.x;
+    }
+
+    /**
+     * @override
+     * @inheritDoc
+     */
+    set x(x) {
+        this.hitRegion.x = x;
+    }
+
+    /**
+     * @override
+     * @inheritDoc
+     */
+    get y() {
+        return this.hitRegion.y;
+    }
+
+    /**
+     * @override
+     * @inheritDoc
+     */
+    set y(y) {
+        this.hitRegion.y = y;
     }
 
     /**

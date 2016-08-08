@@ -176,6 +176,7 @@ class Game {
                 array.splice(index, 1);
             }
         });
+        this.detectCollisions();
     }
 
     /**
@@ -261,4 +262,14 @@ class Game {
         }, 0);
     }
 
+    /**
+     * Detects collisions between sprites.
+     */
+    detectCollisions() {
+        for (let i = 0; i < this.sprites.length; i++) {
+            for (let j = i + 1; j < this.sprites.length; j++) {
+                this.sprites[i].checkForCollision(this.sprites[j]);
+            }
+        }
+    }
 }

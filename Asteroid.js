@@ -29,6 +29,39 @@ class Asteroid extends Sprite {
         super(game);
         this.radius = size;
         this.radii = this.createRadii();
+        this.hitRegion = new SAT.Circle(new SAT.Vector(super.x, super.y), this.radius);
+    }
+
+    /**
+     * @override
+     * @inheritDoc
+     */
+    get x() {
+        return this.hitRegion.pos.x;
+    }
+
+    /**
+     * @override
+     * @inheritDoc
+     */
+    set x(x) {
+        this.hitRegion.pos.x = x;
+    }
+
+    /**
+     * @override
+     * @inheritDoc
+     */
+    get y() {
+        return this.hitRegion.pos.y;
+    }
+
+    /**
+     * @override
+     * @inheritDoc
+     */
+    set y(y) {
+        this.hitRegion.pos.y = y;
     }
 
     /**
@@ -85,4 +118,3 @@ class Asteroid extends Sprite {
         return sprite instanceof Ship || sprite instanceof Bullet;
     }
 }
-
