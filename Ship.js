@@ -33,6 +33,7 @@ class Ship extends Sprite {
         this.shotTaken = false;
         this.radius = 80;
         this.hitRegion = new SAT.Circle(new SAT.Vector(super.x, super.y), this.radius);
+        this.boundingRegions = Ship.createBoundingRegions();
     }
 
     /**
@@ -174,5 +175,24 @@ class Ship extends Sprite {
             bullet.dy = dy * BULLET_SPEED;
             this.game.sprites.push(bullet);
         }
+    }
+
+    /**
+     * Creates the bounding regions of a ship.
+     * @return {[SAT.Polygon]} the bounding regions
+     */
+    static createBoundingRegions() {
+        return [
+            new SAT.Polygon(new SAT.Vector(0, 0), [
+                new SAT.Vector(0, 20),
+                new SAT.Vector(-40, 40),
+                new SAT.Vector(0, -80)
+            ]),
+            new SAT.Polygon(new SAT.Vector(0, 0), [
+                new SAT.Vector(0, 20),
+                new SAT.Vector(0, -80),
+                new SAT.Vector(40, 40)
+            ])
+        ];
     }
 }

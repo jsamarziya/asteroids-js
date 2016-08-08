@@ -18,6 +18,7 @@ class Bullet extends Sprite {
         super(game);
         this.timeRemaining = 1200;
         this.hitRegion = new SAT.Vector(super.x, super.y);
+        this.boundingRegions = [this.hitRegion];
     }
 
     /**
