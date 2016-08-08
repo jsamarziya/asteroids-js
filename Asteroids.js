@@ -14,8 +14,8 @@ class Asteroids extends Game {
         super(container, gameCanvas, debugCanvas);
         this.createStars();
         this.createShip();
-
-        this.scheduler.schedule(this.createAsteroid.bind(this, ASTEROID_SIZE_LARGE, 1000, 1000), 3000);
+        this.asteroidCount = 6;
+        this.scheduler.schedule(this.createAsteroids.bind(this), 1000);
     }
 
     /**
@@ -40,6 +40,15 @@ class Asteroids extends Game {
     }
 
     /**
+     * Creates some large asteroids and adds them to the play field.
+     */
+    createAsteroids() {
+        for (let i = 0; i < this.asteroidCount; i++) {
+            this.createAsteroid(ASTEROID_SIZE_LARGE, (0.5 - Math.random()) * 1000, Math.random() * REFERENCE_HEIGHT);
+        }
+    }
+
+    /**
      * Creates an asteroid.
      * @param {number} size the size of the asteroid to create
      * @param {number} x the x-coordinate of the asteroid's position
@@ -49,9 +58,9 @@ class Asteroids extends Game {
         const asteroid = new Asteroid(this, size);
         asteroid.x = x;
         asteroid.y = y;
-        // asteroid.dx = (0.5-Math.random() )*10+5;
-        // asteroid.dy = (0.5-Math.random() )*10+40;
-        asteroid.rpm = (0.5 - Math.random()) * 6;
+        asteroid.dx = (0.5 - Math.random() ) * 200;
+        asteroid.dy = (0.5 - Math.random() ) * 400;
+        asteroid.rpm = (0.5 - Math.random()) * 8;
         this.sprites.push(asteroid);
     }
 
