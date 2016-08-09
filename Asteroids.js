@@ -44,18 +44,18 @@ class Asteroids extends Game {
      */
     createAsteroids() {
         for (let i = 0; i < this.asteroidCount; i++) {
-            this.createAsteroid(ASTEROID_SIZE_LARGE, (0.5 - Math.random()) * REFERENCE_WIDTH/2.5, Math.random() * REFERENCE_HEIGHT);
+            this.createAsteroid(ASTEROID_TYPE.LARGE, (0.5 - Math.random()) * REFERENCE_WIDTH/2.5, Math.random() * REFERENCE_HEIGHT);
         }
     }
 
     /**
      * Creates an asteroid.
-     * @param {number} size the size of the asteroid to create
+     * @param {Object} type the type of asteroid to create
      * @param {number} x the x-coordinate of the asteroid's position
      * @param {number} y the y-coordinate of the asteroid's position
      */
-    createAsteroid(size, x, y) {
-        const asteroid = new Asteroid(this, size);
+    createAsteroid(type, x, y) {
+        const asteroid = new Asteroid(this, type);
         asteroid.x = x;
         asteroid.y = y;
         asteroid.dx = (0.5 - Math.random() ) * 200;
