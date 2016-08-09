@@ -33,7 +33,6 @@ class Sprite {
         this.dy = 0;
         this.rotation = 0;
         this._rpm = 0;
-        this.radius = 0;
         this.boundingRegionsUpdated = false;
     }
 
@@ -102,6 +101,14 @@ class Sprite {
     }
 
     /**
+     * Returns the radius of the bounding circle of this sprite.
+     * @return {number} the radius
+     */
+    get radius() {
+        return 0;
+    }
+
+    /**
      * Returns the hit region of this sprite.
      * @return {SAT.Circle|SAT.Vector} the hit region, or <code>null</code> if this sprite has no hit region
      */
@@ -115,6 +122,22 @@ class Sprite {
      */
     set hitRegion(region) {
         this._hitRegion = region;
+    }
+
+    /**
+     * Returns <code>true</code> if this sprite should be removed from the world.
+     * @return {boolean} <code>true</code> if this sprite should be removed, <code>false</code> otherwise
+     */
+    get removeFromWorld() {
+        return this._removeFromWorld;
+    }
+
+    /**
+     * Sets the flag indicating whether this sprite should be removed from the world.
+     * @param {boolean} remove <code>true</code> if this sprite should be removed from the world
+     */
+    set removeFromWorld(remove) {
+        this._removeFromWorld = remove;
     }
 
     /**
@@ -207,7 +230,8 @@ class Sprite {
      * @param {Sprite} sprite the sprite to check
      */
     checkForCollision(sprite) {
-        if (this.canCollideWith(sprite) && this.isColliding(sprite)) {
+        if (!this.removeFromWorld && !sprite.removeFromWorld
+            && this.canCollideWith(sprite) && this.isColliding(sprite)) {
             this.collisionDetected(sprite);
             sprite.collisionDetected(this);
         }
