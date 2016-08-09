@@ -44,7 +44,7 @@ class Asteroids extends Game {
      */
     createAsteroids() {
         for (let i = 0; i < this.asteroidCount; i++) {
-            this.createAsteroid(ASTEROID_SIZE_LARGE, (0.5 - Math.random()) * 1000, Math.random() * REFERENCE_HEIGHT);
+            this.createAsteroid(ASTEROID_SIZE_LARGE, (0.5 - Math.random()) * REFERENCE_WIDTH/2.5, Math.random() * REFERENCE_HEIGHT);
         }
     }
 
