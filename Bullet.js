@@ -62,7 +62,7 @@ class Bullet extends Sprite {
         if (this.timeRemaining > 0) {
             super.update(dt);
         } else {
-            this.isRemoveFromWorld = true;
+            this.removeFromWorld = true;
         }
     }
 
@@ -91,6 +91,6 @@ class Bullet extends Sprite {
      */
     collisionDetected(sprite) {
         // TODO add to score
-        this.isRemoveFromWorld = true;
+        this.removeFromWorld = true;
     }
 }
