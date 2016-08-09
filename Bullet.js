@@ -84,4 +84,13 @@ class Bullet extends Sprite {
     canCollideWith(sprite) {
         return sprite instanceof Asteroid;
     }
+
+    /**
+     * @inheritDoc
+     * @override
+     */
+    collisionDetected(sprite) {
+        // TODO add to score
+        this.isRemoveFromWorld = true;
+    }
 }
