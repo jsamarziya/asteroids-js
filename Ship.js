@@ -162,6 +162,16 @@ class Ship extends Sprite {
     }
 
     /**
+     * @inheritDoc
+     * @override
+     */
+    collisionDetected(sprite) {
+        // TODO add explosion
+        // TODO notify the game that we lost a life
+        this.isRemoveFromWorld = true;
+    }
+
+    /**
      * Creates a bullet and adds it to the world.
      */
     addBullet() {
