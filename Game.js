@@ -172,13 +172,13 @@ class Game {
         this.scheduler.advanceTime(dt);
         this.sprites.forEach((sprite, index, array) => {
             sprite.update(dt);
-            if (sprite.isRemoveFromWorld) {
+            if (sprite.removeFromWorld) {
                 array.splice(index, 1);
             }
         });
         this.detectCollisions();
         this.sprites.forEach((sprite, index, array) => {
-            if (sprite.isRemoveFromWorld) {
+            if (sprite.removeFromWorld) {
                 array.splice(index, 1);
             }
         });
