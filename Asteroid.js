@@ -119,7 +119,6 @@ class Asteroid extends Sprite {
      */
     update(dt) {
         super.update(dt);
-        this.collision = false;
     }
 
     /**
@@ -128,9 +127,6 @@ class Asteroid extends Sprite {
      */
     drawSprite(ctx) {
         ctx.beginPath();
-        if (this.collision) {
-            ctx.strokeStyle = "red";
-        }
         this.radii.forEach(radius => {
                 for (let i = 0; i < 2; i++) {
                     ctx.lineTo(0, Math.floor(this.game.getScaledHeight(radius)));
@@ -171,6 +167,8 @@ class Asteroid extends Sprite {
      * @override
      */
     collisionDetected(sprite) {
-        this.collision = true;
+        // TODO add explosion
+        // TODO if LARGE or MEDIUM, add two new asteroids
+        this.isRemoveFromWorld = true;
     }
 }
