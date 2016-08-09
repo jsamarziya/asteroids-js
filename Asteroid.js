@@ -82,8 +82,7 @@ class Asteroid extends Sprite {
     createRadii() {
         const radii = [];
         for (let i = 0; i < ASTEROID_RADII; i++) {
-            const radius = (1 - Math.random() * 0.4) * this.radius;
-            radii.push(radius);
+            radii.push((1 - Math.random() * 0.4) * this.radius);
         }
         return radii;
     }
@@ -111,14 +110,6 @@ class Asteroid extends Sprite {
             angle += ASTEROID_SEGMENT_ROTATION;
         }
         return regions;
-    }
-
-    /**
-     * @inheritDoc
-     * @override
-     */
-    update(dt) {
-        super.update(dt);
     }
 
     /**
