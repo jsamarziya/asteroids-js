@@ -1,4 +1,5 @@
 "use strict";
+
 /**
  * The amount the ship speed decreases each reference time unit.
  * @type {number}
@@ -31,6 +32,40 @@ class Ship extends Sprite {
         this.thrustDrawChance = 0;
         this.shotTaken = false;
         this.radius = 80;
+        this.hitRegion = new SAT.Circle(new SAT.Vector(super.x, super.y), this.radius);
+        this.boundingRegions = Ship.createBoundingRegions();
+    }
+
+    /**
+     * @override
+     * @inheritDoc
+     */
+    get x() {
+        return this.hitRegion.pos.x;
+    }
+
+    /**
+     * @override
+     * @inheritDoc
+     */
+    set x(x) {
+        this.hitRegion.pos.x = x;
+    }
+
+    /**
+     * @override
+     * @inheritDoc
+     */
+    get y() {
+        return this.hitRegion.pos.y;
+    }
+
+    /**
+     * @override
+     * @inheritDoc
+     */
+    set y(y) {
+        this.hitRegion.pos.y = y;
     }
 
     /**
@@ -119,10 +154,28 @@ class Ship extends Sprite {
     }
 
     /**
+     * @inheritDoc
+     * @override
+     */
+    canCollideWith(sprite) {
+        return sprite instanceof Asteroid;
+    }
+
+    /**
+     * @inheritDoc
+     * @override
+     */
+    collisionDetected(sprite) {
+        // TODO add explosion
+        // TODO notify the game that we lost a life
+        this.isRemoveFromWorld = true;
+    }
+
+    /**
      * Creates a bullet and adds it to the world.
      */
     addBullet() {
-        if (this.game.bulletCount < MAX_BULLETS) {
+        if (this.game.getSpriteCount(Bullet) < MAX_BULLETS) {
             const dx = Math.sin(this.rotation);
             const dy = -Math.cos(this.rotation);
             const bullet = new Bullet(this.game);
@@ -132,5 +185,24 @@ class Ship extends Sprite {
             bullet.dy = dy * BULLET_SPEED;
             this.game.sprites.push(bullet);
         }
+    }
+
+    /**
+     * Creates the bounding regions of a ship.
+     * @return {[SAT.Polygon]} the bounding regions
+     */
+    static createBoundingRegions() {
+        return [
+            new SAT.Polygon(new SAT.Vector(0, 0), [
+                new SAT.Vector(0, 20),
+                new SAT.Vector(-40, 40),
+                new SAT.Vector(0, -80)
+            ]),
+            new SAT.Polygon(new SAT.Vector(0, 0), [
+                new SAT.Vector(0, 20),
+                new SAT.Vector(0, -80),
+                new SAT.Vector(40, 40)
+            ])
+        ];
     }
 }

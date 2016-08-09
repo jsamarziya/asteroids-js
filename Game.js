@@ -176,6 +176,12 @@ class Game {
                 array.splice(index, 1);
             }
         });
+        this.detectCollisions();
+        this.sprites.forEach((sprite, index, array) => {
+            if (sprite.isRemoveFromWorld) {
+                array.splice(index, 1);
+            }
+        });
     }
 
     /**
@@ -248,5 +254,27 @@ class Game {
      */
     toggleDrawDebug() {
         this.drawDebug = !this.drawDebug;
+    }
+
+    /**
+     * Returns the number of sprites of the specified type currently in existence.
+     * @param {function} type the type of sprite to count
+     * @returns {number} the number of sprites of the specified type currently in existence
+     */
+    getSpriteCount(type) {
+        return this.sprites.reduce((prev, curr)=> {
+            return prev + (curr instanceof type);
+        }, 0);
+    }
+
+    /**
+     * Detects collisions between sprites.
+     */
+    detectCollisions() {
+        for (let i = 0; i < this.sprites.length; i++) {
+            for (let j = i + 1; j < this.sprites.length; j++) {
+                this.sprites[i].checkForCollision(this.sprites[j]);
+            }
+        }
     }
 }
