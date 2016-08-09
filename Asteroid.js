@@ -20,11 +20,11 @@ const SLICE_UNIT_WIDTH = Math.sin(ASTEROID_SEGMENT_ROTATION);
  * @type {number}
  */
 const SLICE_UNIT_HEIGHT = Math.cos(ASTEROID_SEGMENT_ROTATION);
-/**
- * The size of a large asteroid.
- * @type {number}
- */
-const ASTEROID_SIZE_LARGE = 230;
+
+const ASTEROID_TYPE = {};
+ASTEROID_TYPE.SMALL = {size: 57, children: 0, child: null};
+ASTEROID_TYPE.MEDIUM = {size: 115, children: 2, child: ASTEROID_TYPE.SMALL};
+ASTEROID_TYPE.LARGE = {size: 230, children: 2, child: ASTEROID_TYPE.MEDIUM};
 
 /**
  * The asteroid sprite.
@@ -33,11 +33,11 @@ class Asteroid extends Sprite {
     /**
      * Constructs a new Asteroid.
      * @param {Game} game the Game to which the sprite will belong
-     * @param {number} size the size (radius) of the asteroid
+     * @param {Object} type the asteroid type
      */
-    constructor(game, size) {
+    constructor(game, type) {
         super(game);
-        this.radius = size;
+        this.type = type;
         this.radii = this.createRadii();
         this.hitRegion = new SAT.Circle(new SAT.Vector(super.x, super.y), this.radius);
         this.boundingRegions = this.createBoundingRegions();
@@ -73,6 +73,14 @@ class Asteroid extends Sprite {
      */
     set y(y) {
         this.hitRegion.pos.y = y;
+    }
+
+    /**
+     * @override
+     * @inheritDoc
+     */
+    get radius() {
+        return this.type.size;
     }
 
     /**
@@ -159,7 +167,22 @@ class Asteroid extends Sprite {
      */
     collisionDetected(sprite) {
         // TODO add explosion
-        // TODO if LARGE or MEDIUM, add two new asteroids
-        this.isRemoveFromWorld = true;
+        this.spawnChildren();
+        this.removeFromWorld = true;
+    }
+
+    /**
+     * Creates new children of this sprite.
+     */
+    spawnChildren() {
+        for (let i = 0; i < this.type.children; i++) {
+            const child = new Asteroid(this.game, this.type.child);
+            child.x = this.x;
+            child.y = this.y;
+            // TODO set dx, dy (calculate current direction, select random angle 20-180 deg, select random speed multiplier)
+            // TODO set RPM of each child so as to conserve angular momentum?
+            child.rpm = (0.5 - Math.random()) * 8;
+            this.game.sprites.push(child);
+        }
     }
 }
