@@ -177,6 +177,11 @@ class Game {
             }
         });
         this.detectCollisions();
+        this.sprites.forEach((sprite, index, array) => {
+            if (sprite.isRemoveFromWorld) {
+                array.splice(index, 1);
+            }
+        });
     }
 
     /**
