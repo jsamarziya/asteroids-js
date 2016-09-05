@@ -176,7 +176,7 @@ class Asteroid extends Sprite {
      * @override
      */
     collisionDetected(sprite) {
-        // TODO add explosion
+        Shrapnel.createExplosion(this.game, this.x, this.y);
         this.spawnChildren();
         this.removeFromWorld = true;
     }
@@ -198,7 +198,6 @@ class Asteroid extends Sprite {
             const direction = myDirection + (i / Math.max(this.type.children - 1, 1) - 0.5) * spread;
             child.dx = Math.cos(direction) * speed;
             child.dy = Math.sin(direction) * speed;
-            // TODO set RPM of each child so as to conserve angular momentum?
             child.rpm = (0.5 - Math.random()) * 20;
             this.game.sprites.push(child);
         }
