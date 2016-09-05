@@ -22,8 +22,8 @@ const SLICE_UNIT_WIDTH = Math.sin(ASTEROID_SEGMENT_ROTATION);
 const SLICE_UNIT_HEIGHT = Math.cos(ASTEROID_SEGMENT_ROTATION);
 
 const ASTEROID_TYPE = {};
-ASTEROID_TYPE.SMALL = {size: 57, children: 0, child: null};
-ASTEROID_TYPE.MEDIUM = {size: 115, children: 2, child: ASTEROID_TYPE.SMALL};
+ASTEROID_TYPE.SMALL = {size: 57, children: 0, child: null, speedMultiplier: 2};
+ASTEROID_TYPE.MEDIUM = {size: 115, children: 2, child: ASTEROID_TYPE.SMALL, speedMultiplier: 2};
 ASTEROID_TYPE.LARGE = {size: 230, children: 2, child: ASTEROID_TYPE.MEDIUM};
 
 /**
@@ -175,10 +175,17 @@ class Asteroid extends Sprite {
      * Creates new children of this sprite.
      */
     spawnChildren() {
+        if (this.type.children <= 0) {
+            return;
+        }
+        const myDirection = this.direction;
+        const speed = this.speed * this.type.child.speedMultiplier;
         for (let i = 0; i < this.type.children; i++) {
             const child = new Asteroid(this.game, this.type.child);
             child.x = this.x;
             child.y = this.y;
+            child.dx = Math.cos(myDirection) * speed;
+            child.dy = Math.sin(myDirection) * speed;
             // TODO set dx, dy (calculate current direction, select random angle 20-180 deg, select random speed multiplier)
             // TODO set RPM of each child so as to conserve angular momentum?
             child.rpm = (0.5 - Math.random()) * 8;
