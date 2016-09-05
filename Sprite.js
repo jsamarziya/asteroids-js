@@ -69,6 +69,22 @@ class Sprite {
     }
 
     /**
+     * Returns the direction that this sprite is traveling.
+     * @returns {number} the direction, in radians
+     */
+    get direction() {
+        return Math.atan2(this.dy, this.dx);
+    }
+
+    /**
+     * Returns the speed of this sprite.
+     * @return {number} the speed
+     */
+    get speed() {
+        return Math.sqrt(Math.pow(this.dx, 2) + Math.pow(this.dy, 2));
+    }
+
+    /**
      * Returns the number of rotations per minute that this sprite is rotating.
      * @returns {number} the rotation of this sprite, in rotations per minute
      */
