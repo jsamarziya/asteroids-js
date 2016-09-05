@@ -20,9 +20,19 @@ const SLICE_UNIT_WIDTH = Math.sin(ASTEROID_SEGMENT_ROTATION);
  * @type {number}
  */
 const SLICE_UNIT_HEIGHT = Math.cos(ASTEROID_SEGMENT_ROTATION);
+/**
+ * The minimum directional spread of spawned child asteroids.
+ * @type {number} the minimum spread (in radians)
+ */
+const MIN_SPREAD = toRadians(20);
+/**
+ * The maximum directional spread of spawned child asteroids.
+ * @type {number} the maximum spread (in radians)
+ */
+const MAX_SPREAD = toRadians(150);
 
 const ASTEROID_TYPE = {};
-ASTEROID_TYPE.SMALL = {size: 57, children: 0, child: null, speedMultiplier: 2};
+ASTEROID_TYPE.SMALL = {size: 57, children: 0, child: null, speedMultiplier: 1.5};
 ASTEROID_TYPE.MEDIUM = {size: 115, children: 2, child: ASTEROID_TYPE.SMALL, speedMultiplier: 2};
 ASTEROID_TYPE.LARGE = {size: 230, children: 2, child: ASTEROID_TYPE.MEDIUM};
 
@@ -175,20 +185,21 @@ class Asteroid extends Sprite {
      * Creates new children of this sprite.
      */
     spawnChildren() {
-        if (this.type.children <= 0) {
+        if (this.type.children < 1) {
             return;
         }
-        const myDirection = this.direction;
         const speed = this.speed * this.type.child.speedMultiplier;
+        const myDirection = this.direction;
+        const spread = Math.max(Math.random() * MAX_SPREAD, MIN_SPREAD);
         for (let i = 0; i < this.type.children; i++) {
             const child = new Asteroid(this.game, this.type.child);
             child.x = this.x;
             child.y = this.y;
-            child.dx = Math.cos(myDirection) * speed;
-            child.dy = Math.sin(myDirection) * speed;
-            // TODO set dx, dy (calculate current direction, select random angle 20-180 deg, select random speed multiplier)
+            const direction = myDirection + (i / Math.max(this.type.children - 1, 1) - 0.5) * spread;
+            child.dx = Math.cos(direction) * speed;
+            child.dy = Math.sin(direction) * speed;
             // TODO set RPM of each child so as to conserve angular momentum?
-            child.rpm = (0.5 - Math.random()) * 8;
+            child.rpm = (0.5 - Math.random()) * 20;
             this.game.sprites.push(child);
         }
     }
