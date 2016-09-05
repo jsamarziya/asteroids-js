@@ -9,7 +9,7 @@ const SHIP_DECELERATION = 1 - 1 / 400;
  * The number of rotations per minute the ship rotates while turning.
  * @type {number}
  */
-const SHIP_RPM = 23;
+const SHIP_RPM = 30;
 /**
  * The maximum number of bullets allowed at any given time.
  * @type {number}
