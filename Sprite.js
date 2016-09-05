@@ -1,11 +1,6 @@
 "use strict";
 
 /**
- * The number of radians in a full circle.
- * @type {number}
- */
-const FULL_CIRCLE = 2 * Math.PI;
-/**
  * The factor used to calculate the distance traveled by a sprite in one millisecond.
  * @type {number}
  */
