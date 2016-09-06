@@ -34,3 +34,15 @@ function insertSorted(array, item, comparator) {
     }
     array.splice(index, 0, item);
 }
+
+/**
+ * Removes the first instance of the specified item from an array.
+ * @param {Array} array the array
+ * @param {*} item the item to remove
+ */
+function remove(array, item) {
+    const index = array.indexOf(item);
+    if (index > -1) {
+        array.splice(index, 1);
+    }
+}

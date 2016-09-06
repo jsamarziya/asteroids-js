@@ -186,7 +186,7 @@ class Asteroid extends Sprite {
     collisionDetected(sprite) {
         Shrapnel.createExplosion(this.game, this.x, this.y);
         this.spawnChildren();
-        this.removeFromWorld = true;
+        this.game.removeSprite(this);
     }
 
     /**

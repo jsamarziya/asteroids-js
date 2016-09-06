@@ -177,18 +177,10 @@ class Game {
      */
     updateState(dt) {
         this.scheduler.advanceTime(dt);
-        this.sprites.forEach((sprite, index, array) => {
+        this.sprites.forEach(sprite => {
             sprite.update(dt);
-            if (sprite.removeFromWorld) {
-                array.splice(index, 1);
-            }
         });
         this.detectCollisions();
-        this.sprites.forEach((sprite, index, array) => {
-            if (sprite.removeFromWorld) {
-                array.splice(index, 1);
-            }
-        });
     }
 
     /**
@@ -270,6 +262,14 @@ class Game {
      */
     addSprite(sprite) {
         insertSorted(this.sprites, sprite, SPRITE_Z_INDEX_COMPARATOR);
+    }
+
+    /**
+     * Removes a sprite from this game.
+     * @param {Sprite} sprite the sprite
+     */
+    removeSprite(sprite) {
+        remove(this.sprites, sprite);
     }
 
     /**

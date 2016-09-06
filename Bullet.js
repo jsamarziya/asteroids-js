@@ -86,6 +86,6 @@ class Bullet extends Sprite {
      */
     collisionDetected(sprite) {
         // TODO add to score
-        this.removeFromWorld = true;
+        this.game.removeSprite(this);
     }
 }
