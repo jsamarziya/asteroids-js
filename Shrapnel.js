@@ -23,19 +23,6 @@ class Shrapnel extends Sprite {
      * @override
      * @inheritDoc
      */
-    update(dt) {
-        this.timeRemaining -= dt;
-        if (this.timeRemaining > 0) {
-            super.update(dt);
-        } else {
-            this.removeFromWorld = true;
-        }
-    }
-
-    /**
-     * @override
-     * @inheritDoc
-     */
     drawSprite(ctx) {
         ctx.save();
         ctx.fillStyle = "#eeeeee";

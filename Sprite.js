@@ -156,6 +156,13 @@ class Sprite {
      * @param {number} dt the time delta
      */
     update(dt) {
+        if (this.timeRemaining != null) {
+            this.timeRemaining -= dt;
+            if (this.timeRemaining <= 0) {
+                this.removeFromWorld = true;
+                return;
+            }
+        }
         this.rotation += this.rpm * dt * ROTATION_PER_MILLISECOND;
         if (this.rotation > FULL_CIRCLE) {
             this.rotation -= FULL_CIRCLE;
