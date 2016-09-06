@@ -152,7 +152,7 @@ class Sprite {
         if (this.timeRemaining != null) {
             this.timeRemaining -= dt;
             if (this.timeRemaining <= 0) {
-                this.game.removeSprite(this);
+                this.expired();
                 return;
             }
         }
@@ -234,6 +234,13 @@ class Sprite {
      */
     drawSprite(ctx) {
         throw new Error('must be implemented by subclass!');
+    }
+
+    /**
+     * Called to indicate that this sprite has expired (i.e. its time remaining has elapsed)
+     */
+    expired() {
+        this.game.removeSprite(this);
     }
 
     /**
