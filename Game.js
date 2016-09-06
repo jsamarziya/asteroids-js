@@ -270,7 +270,7 @@ class Game {
      * @param sprite the sprite
      */
     addSprite(sprite) {
-        insertSorted(this.sprites, sprite,SPRITE_Z_INDEX_COMPARATOR);
+        insertSorted(this.sprites, sprite, SPRITE_Z_INDEX_COMPARATOR);
     }
 
     /**
