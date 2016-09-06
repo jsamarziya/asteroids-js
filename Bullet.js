@@ -57,6 +57,14 @@ class Bullet extends Sprite {
      * @override
      * @inheritDoc
      */
+    get z() {
+        return 99;
+    }
+
+    /**
+     * @override
+     * @inheritDoc
+     */
     drawSprite(ctx) {
         ctx.save();
         ctx.fillStyle = "white";

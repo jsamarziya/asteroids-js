@@ -36,7 +36,7 @@ class Asteroids extends Game {
         ship.x = REFERENCE_WIDTH / 2;
         ship.y = REFERENCE_HEIGHT / 2;
         this.ship = ship;
-        this.sprites.push(ship);
+        this.addSprite(ship);
     }
 
     /**
@@ -61,7 +61,7 @@ class Asteroids extends Game {
         asteroid.dx = (0.5 - Math.random() ) * 200;
         asteroid.dy = (0.5 - Math.random() ) * 400;
         asteroid.rpm = (0.5 - Math.random()) * 8;
-        this.sprites.push(asteroid);
+        this.addSprite(asteroid);
     }
 
     /**

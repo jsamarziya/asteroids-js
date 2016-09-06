@@ -21,6 +21,13 @@ const REFERENCE_WIDTH = 4000;
  * @type {number}
  */
 const REFERENCE_HEIGHT = 3000;
+/**
+ * The comparator function used to keep the sprite array in sorted order.
+ */
+const SPRITE_Z_INDEX_COMPARATOR = function (a, b) {
+    //noinspection JSConstructorReturnsPrimitive
+    return a.z - b.z;
+};
 
 /**
  * The game engine object.
@@ -256,6 +263,14 @@ class Game {
      */
     toggleDrawDebug() {
         this.drawDebug = !this.drawDebug;
+    }
+
+    /**
+     * Adds a sprite to this game.
+     * @param {Sprite} sprite the sprite
+     */
+    addSprite(sprite) {
+        insertSorted(this.sprites, sprite, SPRITE_Z_INDEX_COMPARATOR);
     }
 
     /**

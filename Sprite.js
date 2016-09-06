@@ -64,6 +64,15 @@ class Sprite {
     }
 
     /**
+     * Returns the z-index (stack order) of this sprite.
+     * A sprite with a higher stack order is always in front of a sprite with a lower stack order.
+     * @return {number} the z-index
+     */
+    get z() {
+        return 0;
+    }
+
+    /**
      * Returns the direction that this sprite is traveling.
      * @returns {number} the direction, in radians
      */

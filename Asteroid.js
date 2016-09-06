@@ -32,9 +32,9 @@ const MIN_SPREAD = toRadians(20);
 const MAX_SPREAD = toRadians(150);
 
 const ASTEROID_TYPE = {};
-ASTEROID_TYPE.SMALL = {size: 57, children: 0, child: null, speedMultiplier: 1.5};
-ASTEROID_TYPE.MEDIUM = {size: 115, children: 2, child: ASTEROID_TYPE.SMALL, speedMultiplier: 2};
-ASTEROID_TYPE.LARGE = {size: 230, children: 2, child: ASTEROID_TYPE.MEDIUM};
+ASTEROID_TYPE.SMALL = {size: 57, z: 2, children: 0, child: null, speedMultiplier: 1.5};
+ASTEROID_TYPE.MEDIUM = {size: 115, z: 1, children: 2, child: ASTEROID_TYPE.SMALL, speedMultiplier: 2};
+ASTEROID_TYPE.LARGE = {size: 230, z: 0, children: 2, child: ASTEROID_TYPE.MEDIUM};
 
 /**
  * The asteroid sprite.
@@ -83,6 +83,14 @@ class Asteroid extends Sprite {
      */
     set y(y) {
         this.hitRegion.pos.y = y;
+    }
+
+    /**
+     * @override
+     * @inheritDoc
+     */
+    get z() {
+        return this.type.z;
     }
 
     /**
@@ -199,7 +207,7 @@ class Asteroid extends Sprite {
             child.dx = Math.cos(direction) * speed;
             child.dy = Math.sin(direction) * speed;
             child.rpm = (0.5 - Math.random()) * 20;
-            this.game.sprites.push(child);
+            this.game.addSprite(child);
         }
     }
 }
