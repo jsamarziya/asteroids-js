@@ -182,8 +182,9 @@ class Ship extends Sprite {
      */
     collisionDetected(sprite) {
         // TODO add explosion
-        // TODO notify the game that we lost a life
+        this.game.objectDestroyedByPlayer(sprite);
         this.game.removeSprite(this);
+        this.game.playerDestroyed();
     }
 
     /**

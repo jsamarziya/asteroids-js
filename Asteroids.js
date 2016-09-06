@@ -44,7 +44,7 @@ class Asteroids extends Game {
      */
     createAsteroids() {
         for (let i = 0; i < this.asteroidCount; i++) {
-            this.createAsteroid(ASTEROID_TYPE.LARGE, (0.5 - Math.random()) * REFERENCE_WIDTH/2.5, Math.random() * REFERENCE_HEIGHT);
+            this.createAsteroid(ASTEROID_TYPE.LARGE, (0.5 - Math.random()) * REFERENCE_WIDTH / 2.5, Math.random() * REFERENCE_HEIGHT);
         }
     }
 
@@ -97,5 +97,34 @@ class Asteroids extends Game {
         this.debugContext.fillText("v: (" + Math.round(this.getScaledWidth(this.ship.dx)) + ", " + Math.round(this.getScaledHeight(this.ship.dy)) + ")", 0, 0, 100);
         this.debugContext.translate(100, 0);
         this.debugContext.fillText("\u03b8: " + Math.floor(this.ship.rotation * 180 / Math.PI) + "\xB0", 0, 0, 100);
+    }
+
+    /**
+     * @override
+     * @inheritDoc
+     */
+    removeSprite(sprite) {
+        super.removeSprite(sprite);
+        if (sprite instanceof Asteroid) {
+            this.asteroidDestroyed();
+        }
+    }
+
+    /**
+     * Called to notify this game that an asteroid was destroyed.
+     */
+    asteroidDestroyed() {
+        if (this.getSpriteCount(Asteroid) == 0) {
+            this.scheduler.schedule(this.createAsteroids.bind(this), 2000);
+        }
+    }
+
+    /**
+     * @override
+     * @inheritDoc
+     */
+    playerDestroyed() {
+        super.playerDestroyed();
+        // TODO implement me
     }
 }

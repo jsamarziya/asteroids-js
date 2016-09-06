@@ -293,4 +293,17 @@ class Game {
             }
         }
     }
+
+    /**
+     * Called to notify this game that the player destroyed an object.
+     * @param {Sprite} sprite the object that the player destroyed
+     */
+    objectDestroyedByPlayer(sprite) {
+    }
+
+    /**
+     * Called to notify this game that the player was destroyed.
+     */
+    playerDestroyed() {
+    }
 }
