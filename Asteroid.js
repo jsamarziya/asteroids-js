@@ -21,10 +21,20 @@ const SLICE_UNIT_WIDTH = Math.sin(ASTEROID_SEGMENT_ROTATION);
  */
 const SLICE_UNIT_HEIGHT = Math.cos(ASTEROID_SEGMENT_ROTATION);
 /**
- * The size of a large asteroid.
- * @type {number}
+ * The minimum directional spread of spawned child asteroids.
+ * @type {number} the minimum spread (in radians)
  */
-const ASTEROID_SIZE_LARGE = 230;
+const MIN_SPREAD = toRadians(20);
+/**
+ * The maximum directional spread of spawned child asteroids.
+ * @type {number} the maximum spread (in radians)
+ */
+const MAX_SPREAD = toRadians(150);
+
+const ASTEROID_TYPE = {};
+ASTEROID_TYPE.SMALL = {size: 57, children: 0, child: null, speedMultiplier: 1.5};
+ASTEROID_TYPE.MEDIUM = {size: 115, children: 2, child: ASTEROID_TYPE.SMALL, speedMultiplier: 2};
+ASTEROID_TYPE.LARGE = {size: 230, children: 2, child: ASTEROID_TYPE.MEDIUM};
 
 /**
  * The asteroid sprite.
@@ -33,11 +43,11 @@ class Asteroid extends Sprite {
     /**
      * Constructs a new Asteroid.
      * @param {Game} game the Game to which the sprite will belong
-     * @param {number} size the size (radius) of the asteroid
+     * @param {Object} type the asteroid type
      */
-    constructor(game, size) {
+    constructor(game, type) {
         super(game);
-        this.radius = size;
+        this.type = type;
         this.radii = this.createRadii();
         this.hitRegion = new SAT.Circle(new SAT.Vector(super.x, super.y), this.radius);
         this.boundingRegions = this.createBoundingRegions();
@@ -73,6 +83,14 @@ class Asteroid extends Sprite {
      */
     set y(y) {
         this.hitRegion.pos.y = y;
+    }
+
+    /**
+     * @override
+     * @inheritDoc
+     */
+    get radius() {
+        return this.type.size;
     }
 
     /**
@@ -158,8 +176,30 @@ class Asteroid extends Sprite {
      * @override
      */
     collisionDetected(sprite) {
-        // TODO add explosion
-        // TODO if LARGE or MEDIUM, add two new asteroids
-        this.isRemoveFromWorld = true;
+        Shrapnel.createExplosion(this.game, this.x, this.y);
+        this.spawnChildren();
+        this.removeFromWorld = true;
+    }
+
+    /**
+     * Creates new children of this sprite.
+     */
+    spawnChildren() {
+        if (this.type.children < 1) {
+            return;
+        }
+        const speed = this.speed * this.type.child.speedMultiplier;
+        const myDirection = this.direction;
+        const spread = Math.max(Math.random() * MAX_SPREAD, MIN_SPREAD);
+        for (let i = 0; i < this.type.children; i++) {
+            const child = new Asteroid(this.game, this.type.child);
+            child.x = this.x;
+            child.y = this.y;
+            const direction = myDirection + (i / Math.max(this.type.children - 1, 1) - 0.5) * spread;
+            child.dx = Math.cos(direction) * speed;
+            child.dy = Math.sin(direction) * speed;
+            child.rpm = (0.5 - Math.random()) * 20;
+            this.game.sprites.push(child);
+        }
     }
 }

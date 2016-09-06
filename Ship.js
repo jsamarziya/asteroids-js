@@ -9,7 +9,7 @@ const SHIP_DECELERATION = 1 - 1 / 400;
  * The number of rotations per minute the ship rotates while turning.
  * @type {number}
  */
-const SHIP_RPM = 23;
+const SHIP_RPM = 30;
 /**
  * The maximum number of bullets allowed at any given time.
  * @type {number}
@@ -31,7 +31,6 @@ class Ship extends Sprite {
         this.thrust = false;
         this.thrustDrawChance = 0;
         this.shotTaken = false;
-        this.radius = 80;
         this.hitRegion = new SAT.Circle(new SAT.Vector(super.x, super.y), this.radius);
         this.boundingRegions = Ship.createBoundingRegions();
     }
@@ -66,6 +65,14 @@ class Ship extends Sprite {
      */
     set y(y) {
         this.hitRegion.pos.y = y;
+    }
+
+    /**
+     * @override
+     * @inheritDoc
+     */
+    get radius() {
+        return 80;
     }
 
     /**
@@ -168,7 +175,7 @@ class Ship extends Sprite {
     collisionDetected(sprite) {
         // TODO add explosion
         // TODO notify the game that we lost a life
-        this.isRemoveFromWorld = true;
+        this.removeFromWorld = true;
     }
 
     /**
