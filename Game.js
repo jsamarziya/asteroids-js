@@ -215,6 +215,8 @@ class Game {
         this.debugContext.translate(100, 0);
         this.debugContext.fillText("Update: " + gameUpdateElapsed.duration.toFixed(2) + "ms", 0, 0, 100);
         this.debugContext.translate(100, 0);
+        this.debugContext.fillText("Sprites: " + this.sprites.length, 0, 0, 100);
+        this.debugContext.translate(100, 0);
         this.drawDebugLayerExtensions();
         this.debugContext.restore();
     }
