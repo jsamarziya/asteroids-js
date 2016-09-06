@@ -8,7 +8,7 @@ const FULL_CIRCLE = 2 * Math.PI;
 
 /**
  * Converts the specified angle (in degrees) into radians.
- * @param degrees the angle
+ * @param {number} degrees the angle
  */
 function toRadians(degrees) {
     return FULL_CIRCLE * degrees / 360;
@@ -16,9 +16,9 @@ function toRadians(degrees) {
 
 /**
  * Inserts an element into an array that is in sorted order.
- * @param array the array
- * @param item the item to insert
- * @param comparator the function that defines the sort order
+ * @param {Array} array the array
+ * @param {*} item the item to insert
+ * @param {function} comparator the function that defines the sort order
  */
 function insertSorted(array, item, comparator) {
     let min = 0;
