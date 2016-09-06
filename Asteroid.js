@@ -184,7 +184,7 @@ class Asteroid extends Sprite {
      * @override
      */
     collisionDetected(sprite) {
-        Shrapnel.createExplosion(this.game, this.x, this.y);
+        Shrapnel.createExplosion(this.game, this.radius, this.x, this.y);
         this.spawnChildren();
         this.game.removeSprite(this);
     }

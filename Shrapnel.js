@@ -16,7 +16,6 @@ class Shrapnel extends Sprite {
      */
     constructor(game) {
         super(game);
-        this.timeRemaining = 400;
     }
 
     /**
@@ -49,12 +48,14 @@ class Shrapnel extends Sprite {
     /**
      * Creates an explosion.
      * @param {Game} game the Game to add the explosion to
+     * @param {number} size the size of the explosion
      * @param {number} x the x-coordinate of the position of the explosion
      * @param {number} y the y-coordinate of the position of the explosion
      */
-    static createExplosion(game, x, y) {
+    static createExplosion(game, size, x, y) {
         for (let i = 0; i < 10; i++) {
             const shrapnel = new Shrapnel(game);
+            shrapnel.timeRemaining = Math.max((Math.random() * 3 + 1) * size, 300);
             const direction = Math.random() * FULL_CIRCLE;
             const speed = MAX_SHRAPNEL_SPEED * (Math.random() * 0.75 + 0.25);
             shrapnel.x = x;
