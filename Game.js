@@ -267,7 +267,7 @@ class Game {
 
     /**
      * Adds a sprite to this game.
-     * @param sprite the sprite
+     * @param {Sprite} sprite the sprite
      */
     addSprite(sprite) {
         insertSorted(this.sprites, sprite, SPRITE_Z_INDEX_COMPARATOR);
