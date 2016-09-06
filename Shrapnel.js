@@ -23,6 +23,14 @@ class Shrapnel extends Sprite {
      * @override
      * @inheritDoc
      */
+    get z() {
+        return 100;
+    }
+
+    /**
+     * @override
+     * @inheritDoc
+     */
     drawSprite(ctx) {
         ctx.save();
         ctx.fillStyle = "#eeeeee";
@@ -53,7 +61,7 @@ class Shrapnel extends Sprite {
             shrapnel.y = y;
             shrapnel.dx = speed * Math.cos(direction);
             shrapnel.dy = speed * Math.sin(direction);
-            game.sprites.push(shrapnel);
+            game.addSprite(shrapnel);
         }
     }
 

@@ -71,6 +71,14 @@ class Ship extends Sprite {
      * @override
      * @inheritDoc
      */
+    get z() {
+        return 98;
+    }
+
+    /**
+     * @override
+     * @inheritDoc
+     */
     get radius() {
         return 80;
     }
@@ -190,7 +198,7 @@ class Ship extends Sprite {
             bullet.y = this.y + Math.floor(dy * 80);
             bullet.dx = dx * BULLET_SPEED;
             bullet.dy = dy * BULLET_SPEED;
-            this.game.sprites.push(bullet);
+            this.game.addSprite(bullet);
         }
     }
 
