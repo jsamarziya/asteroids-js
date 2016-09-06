@@ -372,7 +372,7 @@ class Sprite {
         } else if (region1 instanceof SAT.Vector) {
             if (region2 instanceof SAT.Circle) {
                 return SAT.pointInCircle(region1, region2);
-            } else if (region2 instanceof Polygon) {
+            } else if (region2 instanceof SAT.Polygon) {
                 return SAT.pointInPolygon(region1, region2);
             } else if (region2 instanceof SAT.Vector) {
                 return region1.x == region2.x && region1.y == region2.y;
