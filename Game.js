@@ -197,7 +197,6 @@ class Game {
     drawGameLayer() {
         this.gameContext.clearRect(0, 0, this.gameCanvas.width, this.gameCanvas.height);
         this.drawBackground();
-        // TODO: sprite needs z-index
         this.sprites.forEach(sprite => {
             sprite.draw();
         });
