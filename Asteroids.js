@@ -14,12 +14,13 @@ class Asteroids extends Game {
      * Constructs a new Asteroids game.
      * @param {HTMLElement} container the HTML element that is the parent of the canvas elements
      * @param {HTMLCanvasElement} gameCanvas the canvas on which the game is drawn
+     * @param {HTMLCanvasElement} overlayCanvas the canvas on which the overlay is drawn
      * @param {HTMLCanvasElement} debugCanvas the canvas on which the debug layer is drawn
      */
-    constructor(container, gameCanvas, debugCanvas) {
-        super(container, gameCanvas, debugCanvas);
+    constructor(container, gameCanvas, overlayCanvas, debugCanvas) {
+        super(container, gameCanvas, overlayCanvas, debugCanvas);
         this.createStars();
-        this.scheduleCreateAsteroids();
+        this.createAsteroids();
     }
 
     /**
@@ -30,6 +31,16 @@ class Asteroids extends Game {
         super.initializeGameContext();
         this.gameContext.strokeStyle = "white";
         this.gameContext.fillStyle = "black";
+    }
+
+    /**
+     * @override
+     * @inheritDoc
+     */
+    initializeOverlayContext() {
+        super.initializeOverlayContext();
+        this.overlayContext.fillStyle = "#A0A0A0";
+        this.overlayContext.font = "16px sans-serif";
     }
 
     /**
@@ -52,7 +63,8 @@ class Asteroids extends Game {
         // TODO we should maybe keep the existing array and just remove all of its elements?
         this.sprites = [];
         this.createShip();
-        this.scheduleCreateAsteroids();
+        this.scheduler.schedule(this.createAsteroids.bind(this), TRANSITION_DELAY);
+        this.updateOverlay = true;
     }
 
     /**
@@ -65,13 +77,6 @@ class Asteroids extends Game {
         ship.y = REFERENCE_HEIGHT / 2;
         this.ship = ship;
         this.addSprite(ship);
-    }
-
-    /**
-     * Schedules a createAsteroids() call.
-     */
-    scheduleCreateAsteroids() {
-        this.scheduler.schedule(this.createAsteroids.bind(this), TRANSITION_DELAY);
     }
 
     /**
@@ -113,6 +118,7 @@ class Asteroids extends Game {
     /**
      * Draws the background.
      */
+    // TODO why do we always draw background on game context? shouldn't this be in another layer?
     drawBackground() {
         const ctx = this.gameContext;
         ctx.save();
@@ -121,6 +127,19 @@ class Asteroids extends Game {
             ctx.fillRect(this.getScaledWidth(star.x), this.getScaledHeight(star.y), 1, 1);
         });
         ctx.restore();
+    }
+
+    /**
+     * @override
+     * @inheritDoc
+     */
+    drawOverlayLayer() {
+        // TODO find a good font, or draw vector numbers
+        const player = this.player;
+        this.overlayContext.clearRect(0, 0, this.overlayCanvas.width, this.overlayCanvas.height);
+        this.overlayContext.fillText("Score: " + (player ? player.score : 0), 10, 20);
+        this.overlayContext.fillText("Lives: " + (player ? player.lives : "-"), 200, 20);
+        this.overlayContext.fillText("Level: " + (player ? player.level : "-"), 400, 20);
     }
 
     /**
@@ -160,8 +179,27 @@ class Asteroids extends Game {
      */
     asteroidDestroyed() {
         if (this.getSpriteCount(Asteroid) == 0) {
-            this.scheduleCreateAsteroids();
+            this.scheduler.schedule(this.nextLevel.bind(this), TRANSITION_DELAY);
         }
+    }
+
+    /**
+     * Increments the player's level and adds asteroids to the play field.
+     */
+    nextLevel() {
+        this.player.level++;
+        this.updateOverlay = true;
+        this.createAsteroids();
+    }
+
+    /**
+     * @override
+     * @inheritDoc
+     */
+    objectDestroyedByPlayer(sprite) {
+        super.objectDestroyedByPlayer(sprite);
+        this.player.score += sprite.points;
+        this.updateOverlay = true;
     }
 
     /**

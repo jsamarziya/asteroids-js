@@ -37,13 +37,16 @@ class Game {
      * Constructs a new Game.
      * @param {HTMLElement} container the HTML element that is the parent of the canvas elements
      * @param {HTMLCanvasElement} gameCanvas the canvas on which the game is drawn
+     * @param {HTMLCanvasElement} overlayCanvas the canvas on which the overlay is drawn
      * @param {HTMLCanvasElement} debugCanvas the canvas on which the debug layer is drawn
      */
-    constructor(container, gameCanvas, debugCanvas) {
+    constructor(container, gameCanvas, overlayCanvas, debugCanvas) {
         this.container = container;
         this.gameCanvas = gameCanvas;
+        this.overlayCanvas = overlayCanvas;
         this.debugCanvas = debugCanvas;
         this.gameContext = gameCanvas.getContext("2d");
+        this.overlayContext = overlayCanvas.getContext("2d");
         this.debugContext = debugCanvas.getContext("2d");
         this.inputManager = new InputManager();
         this.scheduler = new Scheduler();
@@ -60,6 +63,7 @@ class Game {
      */
     initializeContexts() {
         this.initializeGameContext();
+        this.initializeOverlayContext();
         this.initializeDebugContext();
     }
 
@@ -67,6 +71,13 @@ class Game {
      * Initializes the game canvas graphics context.
      */
     initializeGameContext() {
+    }
+
+    /**
+     * Initializes the overlay canvas graphics context.
+     */
+    initializeOverlayContext() {
+        this.updateOverlay = true;
     }
 
     /**
@@ -127,7 +138,7 @@ class Game {
     resizeDisplayElements(width, height) {
         this.container.style.width = width + "px";
         this.container.style.height = height + "px";
-        [this.gameCanvas, this.debugCanvas].forEach(element=> {
+        [this.gameCanvas, this.overlayCanvas, this.debugCanvas].forEach(element => {
             element.width = width;
             element.height = height;
         });
@@ -157,11 +168,15 @@ class Game {
         this.requestAnimationFrame();
         const dt = timestamp - this.lastUpdate;
         this.lastUpdate = timestamp;
+        this.fps = 1000 / dt;
         if (!this.paused && dt <= MAX_DELTA_TIME) {
             this.updateState(dt);
+            if (this.updateOverlay) {
+                this.drawOverlayLayer();
+                this.updateOverlay = false;
+            }
             this.drawGameLayer();
         }
-        this.fps = 1000 / dt;
         if (this.showDebug) {
             this.drawDebugLayer();
         }
@@ -181,6 +196,12 @@ class Game {
             sprite.update(dt);
         });
         this.detectCollisions();
+    }
+
+    /**
+     * Draws the overlay layer.
+     */
+    drawOverlayLayer() {
     }
 
     /**
