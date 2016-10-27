@@ -192,9 +192,7 @@ class Game {
      */
     updateState(dt) {
         this.scheduler.advanceTime(dt);
-        this.sprites.forEach(sprite => {
-            sprite.update(dt);
-        });
+        this.sprites.forEach(sprite => sprite.update(dt));
         this.detectCollisions();
     }
 
@@ -210,9 +208,7 @@ class Game {
     drawGameLayer() {
         this.gameContext.clearRect(0, 0, this.gameCanvas.width, this.gameCanvas.height);
         this.drawBackground();
-        this.sprites.forEach(sprite => {
-            sprite.draw();
-        });
+        this.sprites.forEach(sprite => sprite.draw());
     }
 
     /**

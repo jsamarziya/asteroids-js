@@ -16,7 +16,7 @@ class InputManager {
      * @param {Window} window the window to add event listeners to
      * @param {Document} document the document to add event listeners to
      */
-    addEventListeners(window, document){
+    addEventListeners(window, document) {
         document.addEventListener('keydown', this.keyDown.bind(this));
         document.addEventListener('keyup', this.keyUp.bind(this));
         window.addEventListener('blur', this.clearKeysDown.bind(this));
@@ -48,9 +48,7 @@ class InputManager {
      * Fires a keyUp for all registered keys.
      */
     clearKeysDown() {
-        Object.values(this.keyMap).forEach(key => {
-            key.fireKeyUp();
-        });
+        Object.values(this.keyMap).forEach(key => key.fireKeyUp());
     }
 
     /**
