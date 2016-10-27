@@ -388,6 +388,6 @@ class Sprite {
      * @param {Object} region the region
      */
     static unhandledRegionType(region) {
-        throw new Error("unhandled region type " + region.constructor.name);
+        throw new Error(`unhandled region type ${region.constructor.name}`);
     }
 }

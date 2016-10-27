@@ -136,10 +136,19 @@ class Asteroids extends Game {
     drawOverlayLayer() {
         // TODO find a good font, or draw vector numbers
         const player = this.player;
+        let score, lives, level;
+        if (player) {
+            score = player.score;
+            lives = player.lives;
+            level = player.level;
+        } else {
+            score = 0;
+            lives = level = "-";
+        }
         this.overlayContext.clearRect(0, 0, this.overlayCanvas.width, this.overlayCanvas.height);
-        this.overlayContext.fillText("Score: " + (player ? player.score : 0), 10, 20);
-        this.overlayContext.fillText("Lives: " + (player ? player.lives : "-"), 200, 20);
-        this.overlayContext.fillText("Level: " + (player ? player.level : "-"), 400, 20);
+        this.overlayContext.fillText(`Score: ${score}`, 10, 20);
+        this.overlayContext.fillText(`Lives: ${lives}`, 200, 20);
+        this.overlayContext.fillText(`Level: ${level}`, 400, 20);
     }
 
     /**
@@ -150,17 +159,26 @@ class Asteroids extends Game {
         const ship = this.ship;
         let pos, v, heading;
         if (ship) {
-            pos = '(' + Math.floor(ship.scaledX) + ', ' + Math.floor(ship.scaledY) + ')';
-            v = '(' + Math.round(this.getScaledWidth(ship.dx)) + ', ' + Math.round(this.getScaledHeight(ship.dy)) + ')';
-            heading = Math.floor(ship.rotation * 180 / Math.PI) + "\xB0";
+            const location = {
+                x: Math.floor(ship.scaledX),
+                y: Math.floor(ship.scaledY)
+            };
+            const velocity = {
+                x: Math.round(this.getScaledWidth(ship.dx)),
+                y: Math.round(this.getScaledHeight(ship.dy))
+            };
+            const rotationDegrees = Math.floor(ship.rotation * 180 / Math.PI);
+            pos = `(${location.x}, ${location.y})`;
+            v = `(${velocity.x}, ${velocity.y})`;
+            heading = `${rotationDegrees}\xB0`;
         } else {
             pos = v = heading = '-';
         }
-        this.debugContext.fillText("pos: " + pos, 0, 0, 100);
+        this.debugContext.fillText(`pos: ${pos}`, 0, 0, 100);
         this.debugContext.translate(100, 0);
-        this.debugContext.fillText("v: " + v, 0, 0, 100);
+        this.debugContext.fillText(`v: ${v}`, 0, 0, 100);
         this.debugContext.translate(100, 0);
-        this.debugContext.fillText("\u03b8: " + heading, 0, 0, 100);
+        this.debugContext.fillText(`\u03b8: ${heading}`, 0, 0, 100);
     }
 
     /**

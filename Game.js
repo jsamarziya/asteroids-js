@@ -136,8 +136,8 @@ class Game {
      * @param {number} height the height
      */
     resizeDisplayElements(width, height) {
-        this.container.style.width = width + "px";
-        this.container.style.height = height + "px";
+        this.container.style.width = `${width}px`;
+        this.container.style.height = `${height}px`;
         [this.gameCanvas, this.overlayCanvas, this.debugCanvas].forEach(element => {
             element.width = width;
             element.height = height;
@@ -226,11 +226,11 @@ class Game {
         this.debugContext.save();
         this.debugContext.clearRect(0, 0, this.debugCanvas.width, this.debugCanvas.height);
         this.debugContext.translate(10, this.debugCanvas.height - 10);
-        this.debugContext.fillText("FPS: " + this.fps.toFixed(3), 0, 0, 100);
+        this.debugContext.fillText(`FPS: ${this.fps.toFixed(3)}`, 0, 0, 100);
         this.debugContext.translate(100, 0);
-        this.debugContext.fillText("Update: " + gameUpdateElapsed.duration.toFixed(2) + "ms", 0, 0, 100);
+        this.debugContext.fillText(`Update: ${gameUpdateElapsed.duration.toFixed(2)}ms`, 0, 0, 100);
         this.debugContext.translate(100, 0);
-        this.debugContext.fillText("Sprites: " + this.sprites.length, 0, 0, 100);
+        this.debugContext.fillText(`Sprites: ${this.sprites.length}`, 0, 0, 100);
         this.debugContext.translate(100, 0);
         this.drawDebugLayerExtensions();
         this.debugContext.restore();
