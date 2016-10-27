@@ -129,14 +129,17 @@ class Asteroids extends Game {
      */
     drawDebugLayerExtensions() {
         const ship = this.ship;
-        const x = ship ? Math.floor(ship.scaledX) : '-';
-        const y = ship ? Math.floor(ship.scaledY) : '-';
-        const dx = ship ? Math.round(this.getScaledWidth(ship.dx)) : '-';
-        const dy = ship ? Math.round(this.getScaledHeight(ship.dy)) : '-';
-        const heading = ship ? Math.floor(ship.rotation * 180 / Math.PI) + "\xB0" : '-';
-        this.debugContext.fillText("pos: (" + x + ", " + y + ")", 0, 0, 100);
+        let pos, v, heading;
+        if (ship) {
+            pos = '(' + Math.floor(ship.scaledX) + ', ' + Math.floor(ship.scaledY) + ')';
+            v = '(' + Math.round(this.getScaledWidth(ship.dx)) + ', ' + Math.round(this.getScaledHeight(ship.dy)) + ')';
+            heading = Math.floor(ship.rotation * 180 / Math.PI) + "\xB0";
+        } else {
+            pos = v = heading = '-';
+        }
+        this.debugContext.fillText("pos: " + pos, 0, 0, 100);
         this.debugContext.translate(100, 0);
-        this.debugContext.fillText("v: (" + dx + ", " + dy + ")", 0, 0, 100);
+        this.debugContext.fillText("v: " + v, 0, 0, 100);
         this.debugContext.translate(100, 0);
         this.debugContext.fillText("\u03b8: " + heading, 0, 0, 100);
     }
