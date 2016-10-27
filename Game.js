@@ -278,7 +278,7 @@ class Game {
      * @returns {number} the number of sprites of the specified type currently in existence
      */
     getSpriteCount(type) {
-        return this.sprites.reduce((prev, curr)=> {
+        return this.sprites.reduce((prev, curr) => {
             return prev + (curr instanceof type);
         }, 0);
     }
