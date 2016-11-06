@@ -31,11 +31,10 @@ const MIN_SPREAD = toRadians(20);
  */
 const MAX_SPREAD = toRadians(150);
 
-// TODO check on correct point values
 const ASTEROID_TYPE = {};
-ASTEROID_TYPE.SMALL = {size: 57, z: 2, children: 0, child: null, speedMultiplier: 1.5, points: 200};
-ASTEROID_TYPE.MEDIUM = {size: 115, z: 1, children: 2, child: ASTEROID_TYPE.SMALL, speedMultiplier: 2, points: 100};
-ASTEROID_TYPE.LARGE = {size: 230, z: 0, children: 2, child: ASTEROID_TYPE.MEDIUM, points: 50};
+ASTEROID_TYPE.SMALL = {size: 57, z: 2, children: 0, child: null, speedMultiplier: 1.5, points: 100};
+ASTEROID_TYPE.MEDIUM = {size: 115, z: 1, children: 2, child: ASTEROID_TYPE.SMALL, speedMultiplier: 2, points: 50};
+ASTEROID_TYPE.LARGE = {size: 230, z: 0, children: 2, child: ASTEROID_TYPE.MEDIUM, points: 20};
 
 /**
  * The asteroid sprite.
