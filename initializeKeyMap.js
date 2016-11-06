@@ -53,7 +53,6 @@ function initializeKeyMap(asteroids) {
     function createShootKey() {
         const key = new Key(" ");
         key.addKeyDownListener(function () {
-            // TODO is there a simpler syntax for invoking a method on a possibly undefined object?
             const ship = asteroids.ship;
             if (ship) {
                 ship.shoot();
