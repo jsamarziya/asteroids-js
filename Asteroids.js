@@ -70,7 +70,6 @@ class Asteroids extends Game {
      * Creates the player's ship.
      */
     createShip() {
-        // TODO check for clear area before creating ship
         const ship = new Ship(this);
         ship.x = REFERENCE_WIDTH / 2;
         ship.y = REFERENCE_HEIGHT / 2;
@@ -94,7 +93,6 @@ class Asteroids extends Game {
      * @param {number} y the y-coordinate of the asteroid's position
      */
     createAsteroid(type, x, y) {
-        // TODO check for proximity to ship before placing? or caveat player?
         const asteroid = new Asteroid(this, type);
         asteroid.x = x;
         asteroid.y = y;
@@ -117,7 +115,6 @@ class Asteroids extends Game {
     /**
      * Draws the background.
      */
-    // TODO why do we always draw background on game context? shouldn't this be in another layer?
     drawBackground() {
         const ctx = this.gameContext;
         ctx.save();
@@ -133,7 +130,6 @@ class Asteroids extends Game {
      * @inheritDoc
      */
     drawOverlayLayer() {
-        // TODO find a good font, or draw vector numbers
         const player = this.player;
         let score, lives, level;
         if (player) {
