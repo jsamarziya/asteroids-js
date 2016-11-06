@@ -60,8 +60,7 @@ class Asteroids extends Game {
             return;
         }
         this.player = new Player();
-        // TODO we should maybe keep the existing array and just remove all of its elements?
-        this.sprites = [];
+        this.sprites.length = 0;
         this.createShip();
         this.scheduler.schedule(this.createAsteroids.bind(this), TRANSITION_DELAY);
         this.updateOverlay = true;
@@ -225,8 +224,7 @@ class Asteroids extends Game {
      * @inheritDoc
      */
     playerDestroyed() {
-        // TODO is this the preferred way to remove a property from an object?
-        this.ship = undefined;
+        delete this.ship;
         super.playerDestroyed();
         if (--this.player.lives) {
             this.scheduler.schedule(this.createShip.bind(this), TRANSITION_DELAY);
