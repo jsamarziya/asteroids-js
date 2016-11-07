@@ -304,9 +304,10 @@ class Game {
      * Detects collisions between sprites.
      */
     detectCollisions() {
-        for (let i = 0; i < this.sprites.length; i++) {
-            for (let j = i + 1; j < this.sprites.length; j++) {
-                this.sprites[i].checkForCollision(this.sprites[j]);
+        const sprites = this.sprites.slice();
+        for (let i = 0; i < sprites.length; i++) {
+            for (let j = i + 1; j < sprites.length; j++) {
+                sprites[i].checkForCollision(sprites[j]);
             }
         }
     }
