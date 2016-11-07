@@ -181,9 +181,8 @@ class Ship extends Sprite {
      * @override
      */
     collisionDetected(sprite) {
-        // TODO add explosion
-        // TODO notify the game that we lost a life
-        this.removeFromWorld = true;
+        this.game.objectDestroyedByPlayer(sprite);
+        this.game.removeSprite(this);
     }
 
     /**

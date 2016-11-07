@@ -59,9 +59,7 @@ class Key {
     fireKeyDown() {
         if (this.autoRepeatEnabled || !this.isKeyDown) {
             this.isKeyDown = true;
-            this.keyDownListeners.forEach(listener => {
-                listener();
-            });
+            this.keyDownListeners.forEach(listener => listener());
         }
     }
 
@@ -70,8 +68,6 @@ class Key {
      */
     fireKeyUp() {
         this.isKeyDown = false;
-        this.keyUpListeners.forEach(listener => {
-            listener();
-        });
+        this.keyUpListeners.forEach(listener => listener());
     }
 }

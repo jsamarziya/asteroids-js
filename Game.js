@@ -37,13 +37,16 @@ class Game {
      * Constructs a new Game.
      * @param {HTMLElement} container the HTML element that is the parent of the canvas elements
      * @param {HTMLCanvasElement} gameCanvas the canvas on which the game is drawn
+     * @param {HTMLCanvasElement} overlayCanvas the canvas on which the overlay is drawn
      * @param {HTMLCanvasElement} debugCanvas the canvas on which the debug layer is drawn
      */
-    constructor(container, gameCanvas, debugCanvas) {
+    constructor(container, gameCanvas, overlayCanvas, debugCanvas) {
         this.container = container;
         this.gameCanvas = gameCanvas;
+        this.overlayCanvas = overlayCanvas;
         this.debugCanvas = debugCanvas;
         this.gameContext = gameCanvas.getContext("2d");
+        this.overlayContext = overlayCanvas.getContext("2d");
         this.debugContext = debugCanvas.getContext("2d");
         this.inputManager = new InputManager();
         this.scheduler = new Scheduler();
@@ -60,6 +63,7 @@ class Game {
      */
     initializeContexts() {
         this.initializeGameContext();
+        this.initializeOverlayContext();
         this.initializeDebugContext();
     }
 
@@ -67,6 +71,13 @@ class Game {
      * Initializes the game canvas graphics context.
      */
     initializeGameContext() {
+    }
+
+    /**
+     * Initializes the overlay canvas graphics context.
+     */
+    initializeOverlayContext() {
+        this.updateOverlay = true;
     }
 
     /**
@@ -125,9 +136,9 @@ class Game {
      * @param {number} height the height
      */
     resizeDisplayElements(width, height) {
-        this.container.style.width = width + "px";
-        this.container.style.height = height + "px";
-        [this.gameCanvas, this.debugCanvas].forEach(element=> {
+        this.container.style.width = `${width}px`;
+        this.container.style.height = `${height}px`;
+        [this.gameCanvas, this.overlayCanvas, this.debugCanvas].forEach(element => {
             element.width = width;
             element.height = height;
         });
@@ -157,11 +168,15 @@ class Game {
         this.requestAnimationFrame();
         const dt = timestamp - this.lastUpdate;
         this.lastUpdate = timestamp;
+        this.fps = 1000 / dt;
         if (!this.paused && dt <= MAX_DELTA_TIME) {
             this.updateState(dt);
+            if (this.updateOverlay) {
+                this.drawOverlayLayer();
+                this.updateOverlay = false;
+            }
             this.drawGameLayer();
         }
-        this.fps = 1000 / dt;
         if (this.showDebug) {
             this.drawDebugLayer();
         }
@@ -177,18 +192,14 @@ class Game {
      */
     updateState(dt) {
         this.scheduler.advanceTime(dt);
-        this.sprites.forEach((sprite, index, array) => {
-            sprite.update(dt);
-            if (sprite.removeFromWorld) {
-                array.splice(index, 1);
-            }
-        });
+        this.sprites.slice().forEach(sprite => sprite.update(dt));
         this.detectCollisions();
-        this.sprites.forEach((sprite, index, array) => {
-            if (sprite.removeFromWorld) {
-                array.splice(index, 1);
-            }
-        });
+    }
+
+    /**
+     * Draws the overlay layer.
+     */
+    drawOverlayLayer() {
     }
 
     /**
@@ -197,9 +208,7 @@ class Game {
     drawGameLayer() {
         this.gameContext.clearRect(0, 0, this.gameCanvas.width, this.gameCanvas.height);
         this.drawBackground();
-        this.sprites.forEach(sprite => {
-            sprite.draw();
-        });
+        this.sprites.slice().forEach(sprite => sprite.draw());
     }
 
     /**
@@ -217,11 +226,11 @@ class Game {
         this.debugContext.save();
         this.debugContext.clearRect(0, 0, this.debugCanvas.width, this.debugCanvas.height);
         this.debugContext.translate(10, this.debugCanvas.height - 10);
-        this.debugContext.fillText("FPS: " + this.fps.toFixed(3), 0, 0, 100);
+        this.debugContext.fillText(`FPS: ${this.fps.toFixed(3)}`, 0, 0, 100);
         this.debugContext.translate(100, 0);
-        this.debugContext.fillText("Update: " + gameUpdateElapsed.duration.toFixed(2) + "ms", 0, 0, 100);
+        this.debugContext.fillText(`Update: ${gameUpdateElapsed.duration.toFixed(2)}ms`, 0, 0, 100);
         this.debugContext.translate(100, 0);
-        this.debugContext.fillText("Sprites: " + this.sprites.length, 0, 0, 100);
+        this.debugContext.fillText(`Sprites: ${this.sprites.length}`, 0, 0, 100);
         this.debugContext.translate(100, 0);
         this.drawDebugLayerExtensions();
         this.debugContext.restore();
@@ -273,12 +282,20 @@ class Game {
     }
 
     /**
+     * Removes a sprite from this game.
+     * @param {Sprite} sprite the sprite
+     */
+    removeSprite(sprite) {
+        remove(this.sprites, sprite);
+    }
+
+    /**
      * Returns the number of sprites of the specified type currently in existence.
      * @param {function} type the type of sprite to count
      * @returns {number} the number of sprites of the specified type currently in existence
      */
     getSpriteCount(type) {
-        return this.sprites.reduce((prev, curr)=> {
+        return this.sprites.reduce((prev, curr) => {
             return prev + (curr instanceof type);
         }, 0);
     }
@@ -287,10 +304,24 @@ class Game {
      * Detects collisions between sprites.
      */
     detectCollisions() {
-        for (let i = 0; i < this.sprites.length; i++) {
-            for (let j = i + 1; j < this.sprites.length; j++) {
-                this.sprites[i].checkForCollision(this.sprites[j]);
+        const sprites = this.sprites.slice();
+        for (let i = 0; i < sprites.length; i++) {
+            for (let j = i + 1; j < sprites.length; j++) {
+                sprites[i].checkForCollision(sprites[j]);
             }
         }
+    }
+
+    /**
+     * Called to notify this game that the player destroyed an object.
+     * @param {Sprite} sprite the object that the player destroyed
+     */
+    objectDestroyedByPlayer(sprite) {
+    }
+
+    /**
+     * Called to notify this game that the player was destroyed.
+     */
+    playerDestroyed() {
     }
 }

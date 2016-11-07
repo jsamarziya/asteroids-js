@@ -8,6 +8,7 @@ function initializeKeyMap(asteroids) {
     asteroids.inputManager.keyMap = {
         drawDebug: createDrawDebugKey(),
         fullScreen: createRequestFullScreenModeKey(),
+        newGame: createNewGameKey(),
         pause: createPauseKey(),
         shoot: createShootKey(),
         showDebug: createShowDebugKey(),
@@ -33,6 +34,14 @@ function initializeKeyMap(asteroids) {
         return key;
     }
 
+    function createNewGameKey() {
+        const key = new Key("s");
+        key.addKeyDownListener(function () {
+            asteroids.startNewGame();
+        });
+        return key;
+    }
+
     function createPauseKey() {
         const key = new Key("p");
         key.addKeyDownListener(function () {
@@ -44,7 +53,10 @@ function initializeKeyMap(asteroids) {
     function createShootKey() {
         const key = new Key(" ");
         key.addKeyDownListener(function () {
-            asteroids.ship.shoot();
+            const ship = asteroids.ship;
+            if (ship) {
+                ship.shoot();
+            }
         });
         return key;
     }
@@ -60,10 +72,16 @@ function initializeKeyMap(asteroids) {
     function createThrustKey() {
         const key = new Key("ArrowUp");
         key.addKeyDownListener(function () {
-            asteroids.ship.setThrust(true);
+            const ship = asteroids.ship;
+            if (ship) {
+                ship.setThrust(true);
+            }
         });
         key.addKeyUpListener(function () {
-            asteroids.ship.setThrust(false);
+            const ship = asteroids.ship;
+            if (ship) {
+                ship.setThrust(false);
+            }
         });
         return key;
     }
@@ -71,10 +89,16 @@ function initializeKeyMap(asteroids) {
     function createTurnShipLeftKey() {
         const key = new Key("ArrowLeft");
         key.addKeyDownListener(function () {
-            asteroids.ship.setTurnLeft(true);
+            const ship = asteroids.ship;
+            if (ship) {
+                ship.setTurnLeft(true);
+            }
         });
         key.addKeyUpListener(function () {
-            asteroids.ship.setTurnLeft(false);
+            const ship = asteroids.ship;
+            if (ship) {
+                ship.setTurnLeft(false);
+            }
         });
         return key;
     }
@@ -82,10 +106,16 @@ function initializeKeyMap(asteroids) {
     function createTurnShipRightKey() {
         const key = new Key("ArrowRight");
         key.addKeyDownListener(function () {
-            asteroids.ship.setTurnRight(true);
+            const ship = asteroids.ship;
+            if (ship) {
+                ship.setTurnRight(true);
+            }
         });
         key.addKeyUpListener(function () {
-            asteroids.ship.setTurnRight(false);
+            const ship = asteroids.ship;
+            if (ship) {
+                ship.setTurnRight(false);
+            }
         });
         return key;
     }

@@ -4,6 +4,7 @@
     window.asteroids = new Asteroids(
         document.getElementById("canvasDiv"),
         document.getElementById("gameCanvas"),
+        document.getElementById("overlayCanvas"),
         document.getElementById("debugCanvas"));
     window.addEventListener("resize", function () {
         window.asteroids.resizeDisplayElementsToWindow(window);

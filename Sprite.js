@@ -145,22 +145,6 @@ class Sprite {
     }
 
     /**
-     * Returns <code>true</code> if this sprite should be removed from the world.
-     * @return {boolean} <code>true</code> if this sprite should be removed, <code>false</code> otherwise
-     */
-    get removeFromWorld() {
-        return this._removeFromWorld;
-    }
-
-    /**
-     * Sets the flag indicating whether this sprite should be removed from the world.
-     * @param {boolean} remove <code>true</code> if this sprite should be removed from the world
-     */
-    set removeFromWorld(remove) {
-        this._removeFromWorld = remove;
-    }
-
-    /**
      * Updates the state of this sprite.
      * @param {number} dt the time delta
      */
@@ -168,7 +152,7 @@ class Sprite {
         if (this.timeRemaining != null) {
             this.timeRemaining -= dt;
             if (this.timeRemaining <= 0) {
-                this.removeFromWorld = true;
+                this.expired();
                 return;
             }
         }
@@ -253,12 +237,18 @@ class Sprite {
     }
 
     /**
+     * Called to indicate that this sprite has expired (i.e. its time remaining has elapsed)
+     */
+    expired() {
+        this.game.removeSprite(this);
+    }
+
+    /**
      * Checks for a collision between this sprite and another sprite.
      * @param {Sprite} sprite the sprite to check
      */
     checkForCollision(sprite) {
-        if (!this.removeFromWorld && !sprite.removeFromWorld
-            && this.canCollideWith(sprite) && this.isColliding(sprite)) {
+        if (this.canCollideWith(sprite) && this.isColliding(sprite)) {
             this.collisionDetected(sprite);
             sprite.collisionDetected(this);
         }
@@ -398,6 +388,6 @@ class Sprite {
      * @param {Object} region the region
      */
     static unhandledRegionType(region) {
-        throw new Error("unhandled region type " + region.constructor.name);
+        throw new Error(`unhandled region type ${region.constructor.name}`);
     }
 }
