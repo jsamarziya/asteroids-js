@@ -184,6 +184,8 @@ class Asteroids extends Game {
         super.removeSprite(sprite);
         if (sprite instanceof Asteroid) {
             this.asteroidDestroyed();
+        } else if (sprite instanceof Ship) {
+            this.playerDestroyed();
         }
     }
 

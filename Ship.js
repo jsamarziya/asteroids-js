@@ -183,7 +183,6 @@ class Ship extends Sprite {
     collisionDetected(sprite) {
         this.game.objectDestroyedByPlayer(sprite);
         this.game.removeSprite(this);
-        this.game.playerDestroyed();
     }
 
     /**
