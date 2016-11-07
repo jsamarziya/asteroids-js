@@ -47,7 +47,7 @@ class Asteroids extends Game {
      * Returns the number of asteroids created by createAsteroids() at the start of a level.
      * @return {number} the number of asteroids
      */
-    get createAsteroidCount() {
+    get newAsteroidCount() {
         const level = this.player ? this.player.level : 1;
         return Math.min((level + 1) * 2, 14);
     }
@@ -81,7 +81,7 @@ class Asteroids extends Game {
      * Creates some large asteroids and adds them to the play field.
      */
     createAsteroids() {
-        for (let i = 0; i < this.createAsteroidCount; i++) {
+        for (let i = 0; i < this.newAsteroidCount; i++) {
             this.createAsteroid(ASTEROID_TYPE.LARGE, (0.5 - Math.random()) * REFERENCE_WIDTH / 2.5, Math.random() * REFERENCE_HEIGHT);
         }
     }
