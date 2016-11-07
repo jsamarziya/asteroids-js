@@ -192,9 +192,7 @@ class Game {
      */
     updateState(dt) {
         this.scheduler.advanceTime(dt);
-        for (let i = this.sprites.length - 1; i >= 0; i--) {
-            this.sprites[i].update(dt);
-        }
+        this.sprites.slice().forEach(sprite => sprite.update(dt));
         this.detectCollisions();
     }
 
