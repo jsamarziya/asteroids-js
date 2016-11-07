@@ -130,8 +130,8 @@ class Asteroids extends Game {
      * @inheritDoc
      */
     drawOverlayLayer() {
-        const player = this.player;
         let score, lives, level;
+        const player = this.player;
         if (player) {
             score = player.score;
             lives = player.lives;
