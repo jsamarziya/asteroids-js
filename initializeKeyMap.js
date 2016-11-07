@@ -36,7 +36,7 @@ function initializeKeyMap(asteroids) {
 
     function createNewGameKey() {
         const key = new Key("s");
-        key.addKeyUpListener(function () {
+        key.addKeyDownListener(function () {
             asteroids.startNewGame();
         });
         return key;
