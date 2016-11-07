@@ -208,7 +208,7 @@ class Game {
     drawGameLayer() {
         this.gameContext.clearRect(0, 0, this.gameCanvas.width, this.gameCanvas.height);
         this.drawBackground();
-        this.sprites.forEach(sprite => sprite.draw());
+        this.sprites.slice().forEach(sprite => sprite.draw());
     }
 
     /**
