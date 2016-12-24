@@ -60,10 +60,11 @@ class Key {
      */
     matches(event) {
         return this.key == event.key
-            && this.alt == event.altKey
+            && (event.type == 'keyup'
+            || this.alt == event.altKey
             && this.ctrl == event.ctrlKey
             && this.meta == event.metaKey
-            && this.shift == event.shiftKey;
+            && this.shift == event.shiftKey);
     }
 
     /**
