@@ -129,6 +129,15 @@ class Sprite {
     }
 
     /**
+     * Returns true if this sprite is visible. Sprites that are not visible are not drawn, and cannot collide with other
+     * sprites.
+     * @return {boolean} <code>true</code> if this sprite is visible, <code>false</code> otherwise
+     */
+    get visible() {
+        return true;
+    }
+
+    /**
      * Returns the hit region of this sprite.
      * @return {SAT.Circle|SAT.Vector} the hit region, or <code>null</code> if this sprite has no hit region
      */
@@ -181,6 +190,9 @@ class Sprite {
      * Draws this sprite on the game canvas.
      */
     draw() {
+        if (!this.visible) {
+            return;
+        }
         const ctx = this.game.gameContext;
         ctx.save();
         ctx.translate(this.scaledX, this.scaledY);
@@ -248,7 +260,7 @@ class Sprite {
      * @param {Sprite} sprite the sprite to check
      */
     checkForCollision(sprite) {
-        if (this.canCollideWith(sprite) && this.isColliding(sprite)) {
+        if (this.visible && sprite.visible && this.canCollideWith(sprite) && this.isColliding(sprite)) {
             this.collisionDetected(sprite);
             sprite.collisionDetected(this);
         }
