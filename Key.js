@@ -14,12 +14,17 @@ class Key {
      */
     constructor(key, alt, ctrl, meta, shift) {
         this.key = key;
+        //noinspection PointlessBooleanExpressionJS
         this.alt = !!alt;
+        //noinspection PointlessBooleanExpressionJS
         this.ctrl = !!ctrl;
+        //noinspection PointlessBooleanExpressionJS
         this.meta = !!meta;
+        //noinspection PointlessBooleanExpressionJS
         this.shift = !!shift;
         this.keyDownListeners = [];
         this.keyUpListeners = [];
+        this.keyPressListeners = [];
         this.isKeyDown = false;
         this.autoRepeatEnabled = false;
     }
@@ -38,6 +43,14 @@ class Key {
      */
     addKeyUpListener(listener) {
         this.keyUpListeners.push(listener);
+    }
+
+    /**
+     * Adds a callback function to the list of callbacks invoked when a keyUp event occurs after a keyDown event.
+     * @param {function} listener the callback
+     */
+    addKeyPressListener(listener) {
+        this.keyPressListeners.push(listener);
     }
 
     /**
@@ -64,10 +77,15 @@ class Key {
     }
 
     /**
-     * Calls all of the registered keyUp listener callback functions.
+     * Calls all of the registered keyUp listener callback functions (and all keyPress listener callback functions when
+     * appropriate)
      */
     fireKeyUp() {
+        let isKeyPress = this.isKeyDown;
         this.isKeyDown = false;
         this.keyUpListeners.forEach(listener => listener());
+        if (isKeyPress) {
+            this.keyPressListeners.forEach(listener => listener());
+        }
     }
 }
