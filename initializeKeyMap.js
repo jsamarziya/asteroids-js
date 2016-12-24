@@ -21,7 +21,7 @@ function initializeKeyMap(asteroids) {
     function createDrawDebugKey() {
         const key = new Key("D");
         key.shift = true;
-        key.addKeyDownListener(function () {
+        key.addKeyPressListener(function () {
             asteroids.toggleDrawDebug();
         });
         return key;
@@ -29,7 +29,7 @@ function initializeKeyMap(asteroids) {
 
     function createRequestFullScreenModeKey() {
         const key = new Key("f");
-        key.addKeyDownListener(function () {
+        key.addKeyPressListener(function () {
             asteroids.requestFullScreenMode();
         });
         return key;
@@ -38,7 +38,6 @@ function initializeKeyMap(asteroids) {
     function createHyperspaceKey() {
         const key = new Key("ArrowDown");
         key.addKeyDownListener(function () {
-            console.log("hyperspace");
             const ship = asteroids.ship;
             if (ship) {
                 ship.initiateHyperspace();
@@ -49,7 +48,7 @@ function initializeKeyMap(asteroids) {
 
     function createNewGameKey() {
         const key = new Key("s");
-        key.addKeyDownListener(function () {
+        key.addKeyPressListener(function () {
             asteroids.startNewGame();
         });
         return key;
@@ -76,7 +75,7 @@ function initializeKeyMap(asteroids) {
 
     function createShowDebugKey() {
         const key = new Key("d");
-        key.addKeyDownListener(function () {
+        key.addKeyPressListener(function () {
             asteroids.toggleShowDebug();
         });
         return key;
