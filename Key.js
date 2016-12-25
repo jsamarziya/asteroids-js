@@ -14,9 +14,13 @@ class Key {
      */
     constructor(key, alt, ctrl, meta, shift) {
         this.key = key;
+        //noinspection PointlessBooleanExpressionJS
         this.alt = !!alt;
+        //noinspection PointlessBooleanExpressionJS
         this.ctrl = !!ctrl;
+        //noinspection PointlessBooleanExpressionJS
         this.meta = !!meta;
+        //noinspection PointlessBooleanExpressionJS
         this.shift = !!shift;
         this.keyDownListeners = [];
         this.keyUpListeners = [];
@@ -47,10 +51,11 @@ class Key {
      */
     matches(event) {
         return this.key == event.key
-            && this.alt == event.altKey
+            && (event.type == 'keyup'
+            || this.alt == event.altKey
             && this.ctrl == event.ctrlKey
             && this.meta == event.metaKey
-            && this.shift == event.shiftKey;
+            && this.shift == event.shiftKey);
     }
 
     /**
@@ -67,7 +72,9 @@ class Key {
      * Calls all of the registered keyUp listener callback functions.
      */
     fireKeyUp() {
-        this.isKeyDown = false;
-        this.keyUpListeners.forEach(listener => listener());
+        if (this.isKeyDown) {
+            this.isKeyDown = false;
+            this.keyUpListeners.forEach(listener => listener());
+        }
     }
 }

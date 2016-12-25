@@ -171,12 +171,12 @@ class Game {
         this.fps = 1000 / dt;
         if (!this.paused && dt <= MAX_DELTA_TIME) {
             this.updateState(dt);
-            if (this.updateOverlay) {
-                this.drawOverlayLayer();
-                this.updateOverlay = false;
-            }
-            this.drawGameLayer();
         }
+        if (this.updateOverlay) {
+            this.drawOverlayLayer();
+            this.updateOverlay = false;
+        }
+        this.drawGameLayer();
         if (this.showDebug) {
             this.drawDebugLayer();
         }

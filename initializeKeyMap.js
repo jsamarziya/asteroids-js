@@ -38,10 +38,11 @@ function initializeKeyMap(asteroids) {
     function createHyperspaceKey() {
         const key = new Key("ArrowDown");
         key.addKeyDownListener(function () {
-            console.log("hyperspace");
-            const ship = asteroids.ship;
-            if (ship) {
-                ship.initiateHyperspace();
+            if (!asteroids.paused) {
+                const ship = asteroids.ship;
+                if (ship) {
+                    ship.initiateHyperspace();
+                }
             }
         });
         return key;
@@ -49,8 +50,10 @@ function initializeKeyMap(asteroids) {
 
     function createNewGameKey() {
         const key = new Key("s");
-        key.addKeyDownListener(function () {
-            asteroids.startNewGame();
+        key.addKeyUpListener(function () {
+            if (!asteroids.paused) {
+                asteroids.startNewGame();
+            }
         });
         return key;
     }
@@ -66,9 +69,11 @@ function initializeKeyMap(asteroids) {
     function createShootKey() {
         const key = new Key(" ");
         key.addKeyDownListener(function () {
-            const ship = asteroids.ship;
-            if (ship) {
-                ship.shoot();
+            if (!asteroids.paused) {
+                const ship = asteroids.ship;
+                if (ship) {
+                    ship.shoot();
+                }
             }
         });
         return key;
