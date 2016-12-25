@@ -153,7 +153,7 @@ class Asteroids extends Game {
     drawDebugLayerExtensions() {
         const ship = this.ship;
         let pos, v, heading;
-        if (ship) {
+        if (ship && ship.visible) {
             const location = {
                 x: Math.floor(ship.scaledX),
                 y: Math.floor(ship.scaledY)

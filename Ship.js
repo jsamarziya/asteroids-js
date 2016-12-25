@@ -15,6 +15,11 @@ const SHIP_RPM = 30;
  * @type {number}
  */
 const MAX_BULLETS = 4;
+/**
+ * The amount of time (in milliseconds) that a hyperspace jump lasts.
+ * @type {number}
+ */
+const HYPERSPACE_DELAY = 3000;
 
 /**
  * The ship sprite.
@@ -84,6 +89,14 @@ class Ship extends Sprite {
     }
 
     /**
+     * @override
+     * @inheritDoc
+     */
+    get visible() {
+        return !this.hyperspaceInitiated;
+    }
+
+    /**
      * Sets the flag which indicates that the ship is turning left.
      * @param {boolean} turn true if turning left, false if not
      */
@@ -112,7 +125,16 @@ class Ship extends Sprite {
      * Sets the flag which indicates that a shot is being taken.
      */
     shoot() {
-        this.shotTaken = true;
+        if (!this.hyperspaceInitiated) {
+            this.shotTaken = true;
+        }
+    }
+
+    /**
+     * Sets the flag which indicates that hyperspace has been initiated.
+     */
+    initiateHyperspace() {
+        this.hyperspaceInitiated = true;
     }
 
     /**
@@ -120,7 +142,7 @@ class Ship extends Sprite {
      * @inheritDoc
      */
     get rpm() {
-        return ((this.turnRight | 0 ) - (this.turnLeft | 0)) * SHIP_RPM;
+        return this.hyperspaceInitiated ? 0 : ((this.turnRight | 0 ) - (this.turnLeft | 0)) * SHIP_RPM;
     }
 
     /**
@@ -128,6 +150,39 @@ class Ship extends Sprite {
      * @inheritDoc
      */
     update(dt) {
+        if (this.hyperspaceInitiated) {
+            this.doHyperspaceUpdate(dt);
+        } else {
+            this.doNormalUpdate(dt);
+        }
+        super.update(dt)
+    }
+
+    /**
+     * Updates the state of this ship when the ship is in hyperspace.
+     * @param {number} dt the time delta
+     */
+    doHyperspaceUpdate(dt) {
+        if (this.hyperspaceTimeRemaining) {
+            this.hyperspaceTimeRemaining -= dt;
+            if (this.hyperspaceTimeRemaining <= 0) {
+                delete this.hyperspaceTimeRemaining;
+                this.hyperspaceInitiated = false;
+            }
+        } else {
+            this.hyperspaceTimeRemaining = HYPERSPACE_DELAY;
+            this.x = Math.random() * REFERENCE_WIDTH;
+            this.y = Math.random() * REFERENCE_HEIGHT;
+            this.dx = 0;
+            this.dy = 0;
+        }
+    }
+
+    /**
+     * Updates the state of this ship when the ship is not in hyperspace.
+     * @param {number} dt the time delta
+     */
+    doNormalUpdate(dt) {
         const timeUnits = dt / REFERENCE_DELTA_TIME;
         if (this.thrust) {
             this.dx += Math.sin(this.rotation) * timeUnits * 5;
@@ -145,7 +200,6 @@ class Ship extends Sprite {
             this.thrustDrawChance = 0.3;
             this.thrustLength = Math.random();
         }
-        super.update(dt)
     }
 
     /**

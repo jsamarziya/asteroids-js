@@ -8,6 +8,7 @@ function initializeKeyMap(asteroids) {
     asteroids.inputManager.keyMap = {
         drawDebug: createDrawDebugKey(),
         fullScreen: createRequestFullScreenModeKey(),
+        hyperspace: createHyperspaceKey(),
         newGame: createNewGameKey(),
         pause: createPauseKey(),
         shoot: createShootKey(),
@@ -30,6 +31,18 @@ function initializeKeyMap(asteroids) {
         const key = new Key("f");
         key.addKeyDownListener(function () {
             asteroids.requestFullScreenMode();
+        });
+        return key;
+    }
+
+    function createHyperspaceKey() {
+        const key = new Key("ArrowDown");
+        key.addKeyDownListener(function () {
+            console.log("hyperspace");
+            const ship = asteroids.ship;
+            if (ship) {
+                ship.initiateHyperspace();
+            }
         });
         return key;
     }
