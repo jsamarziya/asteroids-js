@@ -78,15 +78,17 @@ class Key {
     }
 
     /**
-     * Calls all of the registered keyUp listener callback functions (and all keyPress listener callback functions when
-     * appropriate)
+     * Calls all of the registered keyUp listener callback functions.
      */
     fireKeyUp() {
-        let isKeyPress = this.isKeyDown;
         this.isKeyDown = false;
         this.keyUpListeners.forEach(listener => listener());
-        if (isKeyPress) {
-            this.keyPressListeners.forEach(listener => listener());
-        }
+    }
+
+    /**
+     * Calls all of the registered keyPress listener callback functions.
+     */
+    fireKeyPress() {
+        this.keyPressListeners.forEach(listener => listener());
     }
 }

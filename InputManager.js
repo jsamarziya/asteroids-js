@@ -39,8 +39,15 @@ class InputManager {
      */
     keyUp(event) {
         Object.values(this.keyMap).forEach(key => {
-            key.matches(event) && key.fireKeyUp();
-        });
+                if (key.matches(event)) {
+                    let isKeyPress = key.isKeyDown;
+                    key.fireKeyUp();
+                    if (isKeyPress) {
+                        key.fireKeyPress();
+                    }
+                }
+            }
+        );
         InputManager.preventDefaultEventActionIfRequired(event);
     }
 
