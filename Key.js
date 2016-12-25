@@ -24,7 +24,6 @@ class Key {
         this.shift = !!shift;
         this.keyDownListeners = [];
         this.keyUpListeners = [];
-        this.keyPressListeners = [];
         this.isKeyDown = false;
         this.autoRepeatEnabled = false;
     }
@@ -43,14 +42,6 @@ class Key {
      */
     addKeyUpListener(listener) {
         this.keyUpListeners.push(listener);
-    }
-
-    /**
-     * Adds a callback function to the list of callbacks invoked when a keyUp event occurs after a keyDown event.
-     * @param {function} listener the callback
-     */
-    addKeyPressListener(listener) {
-        this.keyPressListeners.push(listener);
     }
 
     /**
@@ -81,14 +72,9 @@ class Key {
      * Calls all of the registered keyUp listener callback functions.
      */
     fireKeyUp() {
-        this.isKeyDown = false;
-        this.keyUpListeners.forEach(listener => listener());
-    }
-
-    /**
-     * Calls all of the registered keyPress listener callback functions.
-     */
-    fireKeyPress() {
-        this.keyPressListeners.forEach(listener => listener());
+        if (this.isKeyDown) {
+            this.isKeyDown = false;
+            this.keyUpListeners.forEach(listener => listener());
+        }
     }
 }

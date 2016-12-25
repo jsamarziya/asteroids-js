@@ -21,7 +21,7 @@ function initializeKeyMap(asteroids) {
     function createDrawDebugKey() {
         const key = new Key("D");
         key.shift = true;
-        key.addKeyPressListener(function () {
+        key.addKeyDownListener(function () {
             asteroids.toggleDrawDebug();
         });
         return key;
@@ -29,7 +29,7 @@ function initializeKeyMap(asteroids) {
 
     function createRequestFullScreenModeKey() {
         const key = new Key("f");
-        key.addKeyPressListener(function () {
+        key.addKeyDownListener(function () {
             asteroids.requestFullScreenMode();
         });
         return key;
@@ -50,7 +50,7 @@ function initializeKeyMap(asteroids) {
 
     function createNewGameKey() {
         const key = new Key("s");
-        key.addKeyPressListener(function () {
+        key.addKeyUpListener(function () {
             if (!asteroids.paused) {
                 asteroids.startNewGame();
             }
@@ -81,7 +81,7 @@ function initializeKeyMap(asteroids) {
 
     function createShowDebugKey() {
         const key = new Key("d");
-        key.addKeyPressListener(function () {
+        key.addKeyDownListener(function () {
             asteroids.toggleShowDebug();
         });
         return key;
