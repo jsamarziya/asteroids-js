@@ -117,12 +117,14 @@ class Ship extends Sprite {
      * @param {boolean} thrust true if thrusting, false if not
      */
     setThrust(thrust) {
-        this.thrust = thrust;
-        this.thrustDrawChance = thrust | 0;
-        if (thrust) {
-            this.game.sounds.thrust.play();
-        } else {
-            this.game.sounds.thrust.stop();
+        if (!this.hyperspaceInitiated) {
+            this.thrust = thrust;
+            this.thrustDrawChance = thrust | 0;
+            if (thrust) {
+                this.game.sounds.thrust.play();
+            } else {
+                this.game.sounds.thrust.stop();
+            }
         }
     }
 
@@ -139,6 +141,7 @@ class Ship extends Sprite {
      * Sets the flag which indicates that hyperspace has been initiated.
      */
     initiateHyperspace() {
+        this.setThrust(false);
         this.hyperspaceInitiated = true;
     }
 
