@@ -32,9 +32,32 @@ const MIN_SPREAD = toRadians(20);
 const MAX_SPREAD = toRadians(150);
 
 const ASTEROID_TYPE = {};
-ASTEROID_TYPE.SMALL = {size: 57, z: 2, children: 0, child: null, speedMultiplier: 1.5, points: 100};
-ASTEROID_TYPE.MEDIUM = {size: 115, z: 1, children: 2, child: ASTEROID_TYPE.SMALL, speedMultiplier: 2, points: 50};
-ASTEROID_TYPE.LARGE = {size: 230, z: 0, children: 2, child: ASTEROID_TYPE.MEDIUM, points: 20};
+ASTEROID_TYPE.SMALL = {
+    size: 57,
+    z: 2,
+    children: 0,
+    child: null,
+    speedMultiplier: 1.5,
+    points: 100,
+    sound: 'explosion1'
+};
+ASTEROID_TYPE.MEDIUM = {
+    size: 115,
+    z: 1,
+    children: 2,
+    child: ASTEROID_TYPE.SMALL,
+    speedMultiplier: 2,
+    points: 50,
+    sound: 'explosion1'
+};
+ASTEROID_TYPE.LARGE = {
+    size: 230,
+    z: 0,
+    children: 2,
+    child: ASTEROID_TYPE.MEDIUM,
+    points: 20,
+    sound: 'explosion2'
+};
 
 /**
  * The asteroid sprite.
@@ -193,6 +216,7 @@ class Asteroid extends Sprite {
      */
     collisionDetected(sprite) {
         Shrapnel.createExplosion(this.game, this.radius, this.x, this.y);
+        this.game.sounds[this.type.sound].play();
         this.spawnChildren();
         this.game.removeSprite(this);
     }

@@ -44,6 +44,23 @@ class Asteroids extends Game {
     }
 
     /**
+     * @override
+     * @inheritDoc
+     */
+    initializeAudio() {
+        super.initializeAudio();
+        this.sounds.bullet = new Howl({
+            src: ['sounds/sfx_wpn_laser8.wav']
+        });
+        this.sounds.explosion1 = new Howl({
+            src: ['sounds/sfx_exp_various1.wav']
+        });
+        this.sounds.explosion2 = new Howl({
+            src: ['sounds/sfx_exp_odd7.wav']
+        });
+    }
+
+    /**
      * Returns the number of asteroids created by createAsteroids() at the start of a level.
      * @return {number} the number of asteroids
      */
