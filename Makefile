@@ -15,8 +15,12 @@ subtree-pull: check-vars
 	git subtree pull --prefix $(prefix) $(url) $(branch) --squash
 
 subtree-update: \
+subtree-pull-howler-js \
 subtree-pull-object-values-entries \
 subtree-pull-sat-js
+
+subtree-pull-howler-js:
+	$(MAKE) subtree-pull prefix=howler.js url=https://github.com/goldfire/howler.js
 
 subtree-pull-object-values-entries:
 	$(MAKE) subtree-pull prefix=shims/object-values-entries url=https://github.com/tc39/proposal-object-values-entries
