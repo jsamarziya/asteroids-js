@@ -119,6 +119,11 @@ class Ship extends Sprite {
     setThrust(thrust) {
         this.thrust = thrust;
         this.thrustDrawChance = thrust | 0;
+        if (thrust) {
+            this.game.sounds.thrust.play();
+        } else {
+            this.game.sounds.thrust.stop();
+        }
     }
 
     /**
@@ -235,6 +240,7 @@ class Ship extends Sprite {
      * @override
      */
     collisionDetected(sprite) {
+        this.setThrust(false);
         this.game.objectDestroyedByPlayer(sprite);
         this.game.removeSprite(this);
     }

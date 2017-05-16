@@ -58,6 +58,11 @@ class Asteroids extends Game {
         this.sounds.explosion2 = new Howl({
             src: ['sounds/sfx_exp_odd7.wav']
         });
+        this.sounds.thrust = new Howl({
+            src: ['sounds/qubodupFireLoop.ogg'],
+            loop: true,
+            volume: 0.2
+        });
     }
 
     /**
@@ -210,7 +215,7 @@ class Asteroids extends Game {
      * Called to notify this game that an asteroid was destroyed.
      */
     asteroidDestroyed() {
-        if (this.getSpriteCount(Asteroid) == 0) {
+        if (this.getSpriteCount(Asteroid) === 0) {
             this.scheduler.schedule(this.nextLevel.bind(this), TRANSITION_DELAY);
         }
     }
