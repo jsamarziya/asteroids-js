@@ -34,6 +34,7 @@ class Ship extends Sprite {
         this.turnLeft = false;
         this.turnRight = false;
         this.thrust = false;
+        this.thrustUpdate = false;
         this.thrustDrawChance = 0;
         this.shotTaken = false;
         this.hitRegion = new SAT.Circle(new SAT.Vector(super.x, super.y), this.radius);
@@ -120,11 +121,7 @@ class Ship extends Sprite {
         if (!this.hyperspaceInitiated) {
             this.thrust = thrust;
             this.thrustDrawChance = thrust | 0;
-            if (thrust) {
-                this.game.audioManager.play("thrust");
-            } else {
-                this.game.audioManager.stop("thrust");
-            }
+            this.thrustUpdate = true;
         }
     }
 
@@ -162,6 +159,14 @@ class Ship extends Sprite {
             this.doHyperspaceUpdate(dt);
         } else {
             this.doNormalUpdate(dt);
+        }
+        if (this.thrustUpdate) {
+            this.thrustUpdate = false;
+            if (this.thrust) {
+                this.game.audioManager.play("thrust");
+            } else {
+                this.game.audioManager.stop("thrust");
+            }
         }
         super.update(dt)
     }
