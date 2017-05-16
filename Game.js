@@ -50,7 +50,7 @@ class Game {
         this.debugContext = debugCanvas.getContext("2d");
         this.inputManager = new InputManager();
         this.scheduler = new Scheduler();
-        this.sounds = {};
+        this.audioManager = new AudioManager();
         this.lastUpdate = 0;
         this.paused = false;
         this.showDebug = false;

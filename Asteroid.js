@@ -216,7 +216,7 @@ class Asteroid extends Sprite {
      */
     collisionDetected(sprite) {
         Shrapnel.createExplosion(this.game, this.radius, this.x, this.y);
-        this.game.sounds[this.type.sound].play();
+        this.game.audioManager.play(this.type.sound);
         this.spawnChildren();
         this.game.removeSprite(this);
     }

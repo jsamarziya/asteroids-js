@@ -121,9 +121,9 @@ class Ship extends Sprite {
             this.thrust = thrust;
             this.thrustDrawChance = thrust | 0;
             if (thrust) {
-                this.game.sounds.thrust.play();
+                this.game.audioManager.play("thrust");
             } else {
-                this.game.sounds.thrust.stop();
+                this.game.audioManager.stop("thrust");
             }
         }
     }
@@ -261,7 +261,7 @@ class Ship extends Sprite {
             bullet.dx = dx * BULLET_SPEED;
             bullet.dy = dy * BULLET_SPEED;
             this.game.addSprite(bullet);
-            this.game.sounds.bullet.play();
+            this.game.audioManager.play("bullet");
         }
     }
 
