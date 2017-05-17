@@ -63,6 +63,9 @@ class Asteroids extends Game {
         this.audioManager.addSound("explosion3", new Howl({
             src: ['sounds/sfx_exp_odd7.wav']
         }));
+        this.audioManager.addSound("explosion4", new Howl({
+            src: ['sounds/sfx_exp_odd3.wav']
+        }));
         this.audioManager.addSound("thrust", new Howl({
             src: ['sounds/qubodupFireLoop.ogg'],
             loop: true,

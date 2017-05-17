@@ -251,6 +251,7 @@ class Ship extends Sprite {
         this.setThrust(false);
         this.game.objectDestroyedByPlayer(sprite);
         this.game.removeSprite(this);
+        this.game.audioManager.play("explosion4");
     }
 
     /**
