@@ -266,6 +266,7 @@ class Ship extends Sprite {
             bullet.y = this.y + Math.floor(dy * 80);
             bullet.dx = dx * BULLET_SPEED;
             bullet.dy = dy * BULLET_SPEED;
+            bullet.rotation = this.rotation;
             this.game.addSprite(bullet);
             this.game.audioManager.play("bullet");
         }
