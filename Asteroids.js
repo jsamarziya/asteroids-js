@@ -53,15 +53,19 @@ class Asteroids extends Game {
             src: ['sounds/sfx_wpn_laser8.wav']
         }));
         this.audioManager.addSound("explosion1", new Howl({
-            src: ['sounds/sfx_exp_various1.wav']
+            src: ['sounds/sfx_exp_various1.wav'],
+            volume: 0.35
         }));
         this.audioManager.addSound("explosion2", new Howl({
+            src: ['sounds/sfx_exp_various1.wav']
+        }));
+        this.audioManager.addSound("explosion3", new Howl({
             src: ['sounds/sfx_exp_odd7.wav']
         }));
         this.audioManager.addSound("thrust", new Howl({
             src: ['sounds/qubodupFireLoop.ogg'],
             loop: true,
-            volume: 0.2
+            volume: 0.15
         }));
     }
 

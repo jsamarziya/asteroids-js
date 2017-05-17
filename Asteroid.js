@@ -48,7 +48,7 @@ ASTEROID_TYPE.MEDIUM = {
     child: ASTEROID_TYPE.SMALL,
     speedMultiplier: 2,
     points: 50,
-    sound: 'explosion1'
+    sound: 'explosion2'
 };
 ASTEROID_TYPE.LARGE = {
     size: 230,
@@ -56,7 +56,7 @@ ASTEROID_TYPE.LARGE = {
     children: 2,
     child: ASTEROID_TYPE.MEDIUM,
     points: 20,
-    sound: 'explosion2'
+    sound: 'explosion3'
 };
 
 /**
