@@ -44,6 +44,44 @@ class Asteroids extends Game {
     }
 
     /**
+     * @override
+     * @inheritDoc
+     */
+    initializeAudio() {
+        super.initializeAudio();
+        this.audioManager.addSound("bullet", new Howl({
+            src: ['sounds/sfx_wpn_laser8.wav'],
+            volume: 0.8
+        }));
+        this.audioManager.addSound("explosion1", new Howl({
+            src: ['sounds/sfx_exp_various1.wav'],
+            volume: 0.35
+        }));
+        this.audioManager.addSound("explosion2", new Howl({
+            src: ['sounds/sfx_exp_various1.wav']
+        }));
+        this.audioManager.addSound("explosion3", new Howl({
+            src: ['sounds/sfx_exp_odd7.wav']
+        }));
+        this.audioManager.addSound("explosion4", new Howl({
+            src: ['sounds/sfx_exp_odd3.wav']
+        }));
+        this.audioManager.addSound("thrust", new Howl({
+            src: ['sounds/qubodupFireLoop.ogg'],
+            loop: true,
+            volume: 0.15
+        }));
+        this.audioManager.setPauseSound(new Howl({
+            src: ['sounds/sfx_sounds_pause1_out.wav'],
+            volume: 0.5
+        }));
+        this.audioManager.setResumeSound(new Howl({
+            src: ['sounds/sfx_sounds_pause1_in.wav'],
+            volume: 0.5
+        }));
+    }
+
+    /**
      * Returns the number of asteroids created by createAsteroids() at the start of a level.
      * @return {number} the number of asteroids
      */
@@ -193,7 +231,7 @@ class Asteroids extends Game {
      * Called to notify this game that an asteroid was destroyed.
      */
     asteroidDestroyed() {
-        if (this.getSpriteCount(Asteroid) == 0) {
+        if (this.getSpriteCount(Asteroid) === 0) {
             this.scheduler.schedule(this.nextLevel.bind(this), TRANSITION_DELAY);
         }
     }

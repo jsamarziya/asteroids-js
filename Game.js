@@ -50,6 +50,7 @@ class Game {
         this.debugContext = debugCanvas.getContext("2d");
         this.inputManager = new InputManager();
         this.scheduler = new Scheduler();
+        this.audioManager = new AudioManager();
         this.lastUpdate = 0;
         this.paused = false;
         this.showDebug = false;
@@ -65,6 +66,7 @@ class Game {
         this.initializeGameContext();
         this.initializeOverlayContext();
         this.initializeDebugContext();
+        this.initializeAudio();
     }
 
     /**
@@ -85,6 +87,12 @@ class Game {
      */
     initializeDebugContext() {
         this.debugContext.fillStyle = "#A0A0A0";
+    }
+
+    /**
+     * Initializes the audio system.
+     */
+    initializeAudio() {
     }
 
     //noinspection JSMethodCanBeStatic
@@ -256,6 +264,11 @@ class Game {
      */
     togglePaused() {
         this.paused = !this.paused;
+        if (this.paused) {
+            this.audioManager.pause();
+        } else {
+            this.audioManager.resume();
+        }
     }
 
     /**

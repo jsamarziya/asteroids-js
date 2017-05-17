@@ -34,6 +34,7 @@ class Ship extends Sprite {
         this.turnLeft = false;
         this.turnRight = false;
         this.thrust = false;
+        this.thrustUpdate = false;
         this.thrustDrawChance = 0;
         this.shotTaken = false;
         this.hitRegion = new SAT.Circle(new SAT.Vector(super.x, super.y), this.radius);
@@ -117,8 +118,11 @@ class Ship extends Sprite {
      * @param {boolean} thrust true if thrusting, false if not
      */
     setThrust(thrust) {
-        this.thrust = thrust;
-        this.thrustDrawChance = thrust | 0;
+        if (!this.hyperspaceInitiated) {
+            this.thrust = thrust;
+            this.thrustDrawChance = thrust | 0;
+            this.thrustUpdate = true;
+        }
     }
 
     /**
@@ -134,6 +138,7 @@ class Ship extends Sprite {
      * Sets the flag which indicates that hyperspace has been initiated.
      */
     initiateHyperspace() {
+        this.setThrust(false);
         this.hyperspaceInitiated = true;
     }
 
@@ -154,6 +159,14 @@ class Ship extends Sprite {
             this.doHyperspaceUpdate(dt);
         } else {
             this.doNormalUpdate(dt);
+        }
+        if (this.thrustUpdate) {
+            this.thrustUpdate = false;
+            if (this.thrust) {
+                this.game.audioManager.play("thrust");
+            } else {
+                this.game.audioManager.stop("thrust");
+            }
         }
         super.update(dt)
     }
@@ -235,8 +248,10 @@ class Ship extends Sprite {
      * @override
      */
     collisionDetected(sprite) {
+        this.setThrust(false);
         this.game.objectDestroyedByPlayer(sprite);
         this.game.removeSprite(this);
+        this.game.audioManager.play("explosion4");
     }
 
     /**
@@ -252,6 +267,7 @@ class Ship extends Sprite {
             bullet.dx = dx * BULLET_SPEED;
             bullet.dy = dy * BULLET_SPEED;
             this.game.addSprite(bullet);
+            this.game.audioManager.play("bullet");
         }
     }
 
