@@ -264,6 +264,11 @@ class Game {
      */
     togglePaused() {
         this.paused = !this.paused;
+        if (this.paused) {
+            this.audioManager.pause();
+        } else {
+            this.audioManager.resume();
+        }
     }
 
     /**
