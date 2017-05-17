@@ -50,7 +50,8 @@ class Asteroids extends Game {
     initializeAudio() {
         super.initializeAudio();
         this.audioManager.addSound("bullet", new Howl({
-            src: ['sounds/sfx_wpn_laser8.wav']
+            src: ['sounds/sfx_wpn_laser8.wav'],
+            volume: 0.8
         }));
         this.audioManager.addSound("explosion1", new Howl({
             src: ['sounds/sfx_exp_various1.wav'],
@@ -66,6 +67,14 @@ class Asteroids extends Game {
             src: ['sounds/qubodupFireLoop.ogg'],
             loop: true,
             volume: 0.15
+        }));
+        this.audioManager.setPauseSound(new Howl({
+            src: ['sounds/sfx_sounds_pause1_out.wav'],
+            volume: 0.5
+        }));
+        this.audioManager.setResumeSound(new Howl({
+            src: ['sounds/sfx_sounds_pause1_in.wav'],
+            volume: 0.5
         }));
     }
 
