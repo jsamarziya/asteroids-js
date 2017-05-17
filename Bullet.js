@@ -17,7 +17,10 @@ class Bullet extends Sprite {
     constructor(game) {
         super(game);
         this.timeRemaining = 1200;
-        this.hitRegion = new SAT.Vector(super.x, super.y);
+        this.hitRegion = new SAT.Polygon(new SAT.Vector(0, 0), [
+            new SAT.Vector(0, BULLET_SPEED / REFERENCE_DELTA_TIME / 2),
+            new SAT.Vector(0, -BULLET_SPEED / REFERENCE_DELTA_TIME / 2)
+        ]);
         this.boundingRegions = [this.hitRegion];
     }
 
@@ -26,7 +29,7 @@ class Bullet extends Sprite {
      * @inheritDoc
      */
     get x() {
-        return this.hitRegion.x;
+        return this.hitRegion.pos.x;
     }
 
     /**
@@ -34,7 +37,7 @@ class Bullet extends Sprite {
      * @inheritDoc
      */
     set x(x) {
-        this.hitRegion.x = x;
+        this.hitRegion.pos.x = x;
     }
 
     /**
@@ -42,7 +45,7 @@ class Bullet extends Sprite {
      * @inheritDoc
      */
     get y() {
-        return this.hitRegion.y;
+        return this.hitRegion.pos.y;
     }
 
     /**
@@ -50,7 +53,7 @@ class Bullet extends Sprite {
      * @inheritDoc
      */
     set y(y) {
-        this.hitRegion.y = y;
+        this.hitRegion.pos.y = y;
     }
 
     /**
