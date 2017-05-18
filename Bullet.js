@@ -7,6 +7,12 @@
 const BULLET_SPEED = 2000;
 
 /**
+ * The length of a bullet's "tail" (used in collision detection)
+ * @type {number}
+ */
+const TAIL_LENGTH = BULLET_SPEED * SPRITE_VELOCITY_FACTOR * REFERENCE_DELTA_TIME;
+
+/**
  * The bullet sprite.
  */
 class Bullet extends Sprite {
@@ -19,7 +25,7 @@ class Bullet extends Sprite {
         this.timeRemaining = 1200;
         this.hitRegion = new SAT.Polygon(new SAT.Vector(0, 0), [
             new SAT.Vector(0, 0),
-            new SAT.Vector(0, BULLET_SPEED * SPRITE_VELOCITY_FACTOR * REFERENCE_DELTA_TIME)
+            new SAT.Vector(0, TAIL_LENGTH)
         ]);
         this.boundingRegions = [this.hitRegion];
     }
@@ -73,6 +79,15 @@ class Bullet extends Sprite {
         ctx.fillStyle = "white";
         ctx.fillRect(0, 0, 2, 2);
         ctx.restore();
+        if (this.game.drawDebug) {
+            ctx.save();
+            ctx.strokeStyle = this.game.drawDebugStyle;
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(0, Math.floor(this.game.getScaledHeight(TAIL_LENGTH)));
+            ctx.stroke();
+            ctx.restore();
+        }
     }
 
     /**
